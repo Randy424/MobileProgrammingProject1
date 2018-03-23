@@ -1,4 +1,4 @@
-package com.example.mobile.project1;
+package edu.fsu.cs.mobileprogrammingproject;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

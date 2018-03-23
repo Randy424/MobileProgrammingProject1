@@ -1,4 +1,4 @@
-package com.example.mobile.project1;
+package edu.fsu.cs.mobileprogrammingproject;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

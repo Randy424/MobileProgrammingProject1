@@ -1,4 +1,4 @@
-package com.example.mobile.project1;
+package edu.fsu.cs.mobileprogrammingproject;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
