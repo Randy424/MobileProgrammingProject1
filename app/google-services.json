@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "81681811296-j23srhc6su8p49iip8i8nehjrdo94dbb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fsu.cs.mobile.mobileprogrammingproject",
+            "certificate_hash": "7414cd1a683e090ff404ac4905988c232b67c945"
+          }
+        },
+        {
           "client_id": "81681811296-b1qj6a0d888aleg1uc25q6cnl0b7veuj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81681811296-b1qj6a0d888aleg1uc25q6cnl0b7veuj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
