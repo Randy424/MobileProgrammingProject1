@@ -26,6 +26,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +43,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    private DatabaseReference mDatabase;
+
 
 
     /**
@@ -80,6 +89,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.setValue("DERP1");
+
+        Toast.makeText(this, mDatabase.toString(), Toast.LENGTH_SHORT).show();
+
         // end dustin's code
 
 //        mPasswordView = (EditText) findViewById(R.id.password);
@@ -93,14 +108,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                return false;
 //            }
 //        });
-//
-//        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-//        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                attemptLogin();
-//            }
-//        });
+
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               //attemptLogin();
+                //Toast.makeText)
+
+
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                            Toast.makeText(getApplicationContext(),  messageSnapshot.child("location").getValue().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), (String) messageSnapshot.child("name").getValue(), Toast.LENGTH_SHORT).show();
+                            //String name = (String) messageSnapshot.child("name").getValue();
+                            //String message = (String) messageSnapshot.child("message").getValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+                });
+
+
+           }
+        });
 
 
     }

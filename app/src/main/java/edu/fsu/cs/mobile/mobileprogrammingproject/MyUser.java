@@ -33,7 +33,14 @@ public class MyUser {
         result.put("name", mName);
         result.put("password", mPassword);
         result.put("major", mMajor);
-        result.put("location", mLocation);
+        result.put("phone", mPhone);
+
+
+
+        //result.put("lat", Double.toString(mLocation.getLatitude()));
+        //result.put("long", Double.toString(mLocation.getLongitude()));
+
+
 
         return result;
     }

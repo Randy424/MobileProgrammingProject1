@@ -20,11 +20,13 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText email, name, password, major, phone;
     private DatabaseReference mDatabase;
+    LocationManager mLocationManager;
 
 
     @Override
@@ -43,7 +45,34 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                Toast.makeText(getApplicationContext(), "Setting it to NULL in my if check", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
     /*public void resetClick(View view)
     {
         emp_id.setText("");
@@ -60,21 +89,14 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerClick(View view) {
 
 
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Location lastLoc = getLastKnownLocation();
 
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
 
-        Location lastLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                // lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
 
         MyUser user = new MyUser(email.getText().toString().trim(),
@@ -85,7 +107,12 @@ public class RegisterActivity extends AppCompatActivity {
                 phone.getText().toString().trim());
 
         Map<String, Object > postValues = user.toMap();
+        if (lastLoc == null) {
+            Toast.makeText(getApplicationContext(), "Location is null", Toast.LENGTH_SHORT).show();
+        }
+
         mDatabase.child(phone.getText().toString().trim()).setValue(postValues);
+        //mDatabase.child(phone.getText().toString().trim()).setValue(user);
 
         //mDatabase.child(email.getText().toString()).setValue("Dustin");
     }
