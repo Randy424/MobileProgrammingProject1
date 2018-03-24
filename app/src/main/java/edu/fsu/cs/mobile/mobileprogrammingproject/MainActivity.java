@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //DatabaseReference childRef = myRef.child
         //Toast.makeText(this, myRef.toString(), Toast.LENGTH_LONG).show();
         //DatabaseReference myRef = database.getReference(FIREBASE_TABLE);
-        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+        Intent i = new Intent(MainActivity.this, MapsActivity.class);
         startActivity(i);
     }
 }
