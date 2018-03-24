@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "81681811296",
+    "firebase_url": "https://axiomatic-robot-198702.firebaseio.com",
+    "project_id": "axiomatic-robot-198702",
+    "storage_bucket": "axiomatic-robot-198702.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81681811296:android:d8728abdc9ee0d36",
+        "android_client_info": {
+          "package_name": "edu.fsu.cs.mobile.mobileprogrammingproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81681811296-b1qj6a0d888aleg1uc25q6cnl0b7veuj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7D91Npg07cx9h_4Fy4HLGCBn_e-CJOaU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
