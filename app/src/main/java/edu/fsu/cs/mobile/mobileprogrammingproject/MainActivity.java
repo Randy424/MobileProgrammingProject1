@@ -1,10 +1,16 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,11 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
     //static final String FIREBASE_TABLE = "";
     private DatabaseReference mDatabase;
 
-    private Button mFirebaseBtn;
     public HashMap<String, String> currentData;
 
     @Override
@@ -27,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        mFirebaseBtn = (Button) findViewById(R.id.firebase_btn);
 
         // Write a message to the database
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -36,33 +40,35 @@ public class MainActivity extends AppCompatActivity {
         //myRef.setValue("I am the best");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mFirebaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                //Toast.makeText(getApplicationContext(), "Im working", Toast.LENGTH_LONG).show();
-                //1 - Create child in root object
-                //2 Assign some value to the child object
-
-                mDatabase.child("Name").setValue("Dustin");
-
-
-            }
-        });
-
-        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null") // IF NOTHING STORED
+        if((PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null")) == "null") // IF NOTHING STORED
         {
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            String x = PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null");
+
+            Log.d("MAIN LOG", x);
+
+            Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+
             startActivity(i);
         }
         else
         {
 
-            Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
-            int value = bundle.getInt("myData");//<extract values from Bundle using key
+
+            ProfileFragment profile = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
+
+
+//            FragmentManager manager = getFragmentManager();
+//            FragmentTransaction transaction = manager.beginTransaction();
+//            transaction.add(R.id.fragment_frame, profile);
+//            transaction.commit();
+
+
         }
-        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-        startActivity(i);
+       // Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+      //  startActivity(i);
+
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -70,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         //DatabaseReference childRef = myRef.child
         //Toast.makeText(this, myRef.toString(), Toast.LENGTH_LONG).show();
         //DatabaseReference myRef = database.getReference(FIREBASE_TABLE);
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
