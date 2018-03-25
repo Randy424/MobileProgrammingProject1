@@ -26,16 +26,16 @@ public class SimpleLoginActivity extends AppCompatActivity {
     private Button loginButton;
     private DatabaseReference mDatabase;
     private String field;
-    public boolean verified;
+    public boolean verified = true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        verified = false;
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.setValue("TEST WORKED");
         Toast.makeText(this, mDatabase.toString(), Toast.LENGTH_SHORT).show();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +43,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mEmail = (EditText) findViewById(R.id.email);
                 mPassword =(EditText) findViewById(R.id.password);
-                if(Verify(mEmail.getText().toString(), "email"))
-                    Toast.makeText(getApplicationContext(), "It's a match!", Toast.LENGTH_SHORT).show();
-                //Verify(mPassword.getText().toString(), "password");
+                Verify(mEmail.getText().toString(),mPassword.getText().toString());
             }
         });
 
@@ -61,17 +59,19 @@ public class SimpleLoginActivity extends AppCompatActivity {
 
     }
 
-    boolean Verify(String field, String key)
+    void Verify(String field, String password)
     {
-        final String inKey = key;
+        final String pass = password;
         final String entry = field; //converting to final allows for inner class usage.
-        verified = false;
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    if(entry.equals((String) messageSnapshot.child(inKey).getValue()))
-                        verified = true;
+                    if(entry.equals((String) messageSnapshot.child("email").getValue()) && pass.equals((String) messageSnapshot.child("password").getValue()))
+                    {
+                        Intent i = new Intent(SimpleLoginActivity.this, MapsActivity.class);
+                        startActivity(i);
+                    }
                     //String name = (String) messageSnapshot.child("name").getValue();
                     //String message = (String) messageSnapshot.child("message").getValue();
                 }
@@ -81,7 +81,5 @@ public class SimpleLoginActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
 
         });
-        return verified;
-
     }
 }
