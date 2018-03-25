@@ -70,6 +70,8 @@ public class SimpleLoginActivity extends AppCompatActivity {
                     if(entry.equals((String) messageSnapshot.child("email").getValue()) && pass.equals((String) messageSnapshot.child("password").getValue()))
                     {
                         Intent i = new Intent(SimpleLoginActivity.this, MapsActivity.class);
+                        Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
+                        MapsActivity.updateMarkers(dataSnapshot);
                         startActivity(i);
                     }
                     //String name = (String) messageSnapshot.child("name").getValue();

@@ -12,11 +12,14 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     //static final String FIREBASE_TABLE = "";
     private DatabaseReference mDatabase;
 
     private Button mFirebaseBtn;
+    public HashMap<String, String> currentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null")
+        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null") // IF NOTHING STORED
         {
-            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
         }
         else
