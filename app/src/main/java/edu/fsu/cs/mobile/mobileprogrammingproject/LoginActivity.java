@@ -126,13 +126,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                //attemptLogin();
                 //Toast.makeText)
 
-
+            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+            intent.putExtra("myPhoneNum", "8508432000");
+            startActivity(intent);
 
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                            Toast.makeText(getApplicationContext(),  messageSnapshot.child("location").getValue().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
+                            MapsActivity.updateMarkers(dataSnapshot);
+                            //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
+                            //if(messageSnapshot.child("email").getValue().toString().equals(mEmailView.getText().toString().trim())) {
+                                //Toast.makeText(getApplicationContext(),  "Email Matches!", Toast.LENGTH_SHORT).show();
+
+                            //}
                             //Toast.makeText(getApplicationContext(), (String) messageSnapshot.child("name").getValue(), Toast.LENGTH_SHORT).show();
                             //String name = (String) messageSnapshot.child("name").getValue();
                             //String message = (String) messageSnapshot.child("message").getValue();

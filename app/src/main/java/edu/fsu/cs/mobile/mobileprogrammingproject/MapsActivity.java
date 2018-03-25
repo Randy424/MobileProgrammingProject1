@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +25,12 @@ import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-    private GoogleMap mMap;
-    private MarkerOptions options = new MarkerOptions();
+    static private GoogleMap mMap;
+    static private MarkerOptions options = new MarkerOptions();
     Map<LatLng,String> latlngsMap = new HashMap<>();
     private ArrayList<LatLng> latlngs = new ArrayList<>();
     private LatLng schoolLocate;
+    static private ArrayList<LatLng> dbLatLngs = new ArrayList<>();
 
 
 
@@ -40,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("myPhoneNum"), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -57,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //printing markers on map
-        for (LatLng point : latlngs) {
+        for (LatLng point : dbLatLngs) {
             options.position(point);
             options.title("KIM JON IL");
             options.snippet("ILLING IT OUT");
@@ -65,9 +68,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng custom = new LatLng(20, 85);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(custom));
 
         mMap.setOnInfoWindowClickListener(this);
 
@@ -84,8 +87,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.LENGTH_SHORT).show();
 
 
-
     }
+
+    static public boolean updateMarkers(DataSnapshot allData) {
+        ArrayList<LatLng> newLatLngs = new ArrayList<>();
+        for (DataSnapshot messageSnapshot: allData.getChildren()) {
+            newLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
+            //printing markers on map
+            /*while(mMap == null);
+            for (LatLng point : newLatLngs) {
+                options.position(point);
+                options.title("KIM JON IL");
+                options.snippet("ILLING IT OUT");
+                mMap.addMarker(options);*/
+            //}
+            //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(,  "FINISHED POPULATING aRRAY WITH MARKER INFO", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
