@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
                         if(regComplete == false) {
-                            Toast.makeText(getApplicationContext(), "INserting user to database now", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
                             MyUser user = new MyUser(email.getText().toString().trim(),
                                     name.getText().toString().trim(),
                                     password.getText().toString().trim(),

@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -85,7 +87,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onInfoWindowClick(Marker marker) {
         Toast.makeText(this, "Info window clicked",
                 Toast.LENGTH_SHORT).show();
+    LatLng target = marker.getPosition();
 
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("Lat", target.latitude);
+        bundle.putDouble("Long", target.longitude);
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("Stuff", bundle);
+        startActivity(i);
 
     }
 

@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null")
+        {
+            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(i);
+        }
+        else
+        {
+
+            Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
+            int value = bundle.getInt("myData");//<extract values from Bundle using key
+        }
+
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -52,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         //DatabaseReference childRef = myRef.child
         //Toast.makeText(this, myRef.toString(), Toast.LENGTH_LONG).show();
         //DatabaseReference myRef = database.getReference(FIREBASE_TABLE);
-        Intent i = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(i);
+
     }
 }
