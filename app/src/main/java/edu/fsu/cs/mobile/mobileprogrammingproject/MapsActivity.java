@@ -76,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         mMap.addCircle(new CircleOptions()
-                .center(sydney)
+                .center(custom)
                 .radius(3000000)
                 .strokeWidth(0f)
                 .fillColor(0x550000FF));
@@ -114,7 +114,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public double findDistance(LatLng i, LatLng ii){
-        return Math.sqrt((i.latitude-ii.latitude)*(i.latitude-ii.latitude) + (i.longitude-ii.longitude)*(i.longitude-i.longitude));
 
+     double lat1, lat2, lon1, lon2, el1, el2;
+
+
+        lat1 = i.latitude;
+        lat2 = ii.latitude;
+        lon1 = i.longitude;
+        lon2 = ii.longitude;
+
+        el1 = 1;
+        el2 = 1;
+
+            final int R = 6371; // Radius of the earth
+
+            double latDistance = Math.toRadians(lat2 - lat1);
+            double lonDistance = Math.toRadians(lon2 - lon1);
+            double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                    * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            double distance = R * c * 1000; // convert to meters
+
+            double height = el1 - el2;
+
+            distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+            return Math.sqrt(distance);
     }
 }
