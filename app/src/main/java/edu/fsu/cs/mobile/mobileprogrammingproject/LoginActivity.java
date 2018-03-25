@@ -26,6 +26,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +44,10 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    private DatabaseReference mDatabase;
+    private GoogleApiClient mGoogleApiClient;
+    public static final String TAG = MapsActivity.class.getSimpleName();
+
 
 
     /**
@@ -80,26 +92,68 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-/*
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();*/
+
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //mDatabase.setValue("DERP1");
+
+        Toast.makeText(this, mDatabase.toString(), Toast.LENGTH_SHORT).show();
+
+        // end dustin's code
+
+//        mPasswordView = (EditText) findViewById(R.id.password);
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
-            }
-        });*/
+               //attemptLogin();
+                //Toast.makeText)
+
+            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+            intent.putExtra("myPhoneNum", "8508432000");
+            startActivity(intent);
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                            Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
+                            MapsActivity.updateMarkers(dataSnapshot);
+                            //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
+                            //if(messageSnapshot.child("email").getValue().toString().equals(mEmailView.getText().toString().trim())) {
+                                //Toast.makeText(getApplicationContext(),  "Email Matches!", Toast.LENGTH_SHORT).show();
+
+                            //}
+                            //Toast.makeText(getApplicationContext(), (String) messageSnapshot.child("name").getValue(), Toast.LENGTH_SHORT).show();
+                            //String name = (String) messageSnapshot.child("name").getValue();
+                            //String message = (String) messageSnapshot.child("message").getValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+                });
+
+
+           }
+        });
 
 
     }

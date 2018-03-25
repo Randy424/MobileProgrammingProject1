@@ -1,18 +1,40 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    private GoogleMap mMap;
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+
+    static private GoogleMap mMap;
+    static private MarkerOptions options = new MarkerOptions();
+    Map<LatLng,String> latlngsMap = new HashMap<>();
+    private ArrayList<LatLng> latlngs = new ArrayList<>();
+    private LatLng schoolLocate;
+    static private ArrayList<LatLng> dbLatLngs = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +44,113 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("myPhoneNum"), Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng PreClickValue = new LatLng(0,0);
+
+        //for storing lat and long into dictionary with database key
+        latlngsMap.put(new LatLng(-27.4698, 153.0251), "Ron");
+
+        //for storing lat and long for google maps use
+        latlngs.add(new LatLng(-27.4698, 153.0251)); //some latitude and logitude value
+
+        schoolLocate = new LatLng(30.445349, -84.299542);
+
+
+        //printing markers on map
+        for (LatLng point : dbLatLngs) {
+            options.position(point);
+            options.title("KIM JON IL");
+            options.snippet("ILLING IT OUT");
+            googleMap.addMarker(options);
+        }
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng custom = new LatLng(20, 85);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(custom));
+
+        mMap.setOnInfoWindowClickListener(this);
+
+
+        mMap.addCircle(new CircleOptions()
+                .center(custom)
+                .radius(3000000)
+                .strokeWidth(0f)
+                .fillColor(0x550000FF));
+    }
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
+    LatLng target = marker.getPosition();
+
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("Lat", target.latitude);
+        bundle.putDouble("Long", target.longitude);
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("Stuff", bundle);
+        startActivity(i);
+
+    }
+
+    static public boolean updateMarkers(DataSnapshot allData) {
+        ArrayList<LatLng> newLatLngs = new ArrayList<>();
+        for (DataSnapshot messageSnapshot: allData.getChildren()) {
+            newLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
+            //printing markers on map
+            /*while(mMap == null);
+            for (LatLng point : newLatLngs) {
+                options.position(point);
+                options.title("KIM JON IL");
+                options.snippet("ILLING IT OUT");
+                mMap.addMarker(options);*/
+            //}
+            //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(,  "FINISHED POPULATING aRRAY WITH MARKER INFO", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public double findDistance(LatLng i, LatLng ii){
+
+     double lat1, lat2, lon1, lon2, el1, el2;
+
+
+        lat1 = i.latitude;
+        lat2 = ii.latitude;
+        lon1 = i.longitude;
+        lon2 = ii.longitude;
+
+        el1 = 1;
+        el2 = 1;
+
+            final int R = 6371; // Radius of the earth
+
+            double latDistance = Math.toRadians(lat2 - lat1);
+            double lonDistance = Math.toRadians(lon2 - lon1);
+            double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                    * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            double distance = R * c * 1000; // convert to meters
+
+            double height = el1 - el2;
+
+            distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+            return Math.sqrt(distance);
     }
 }
