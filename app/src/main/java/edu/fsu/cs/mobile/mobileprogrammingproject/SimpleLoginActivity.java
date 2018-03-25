@@ -26,7 +26,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
     private Button loginButton;
     private DatabaseReference mDatabase;
     private String field;
-    public boolean verified = true;
+    static public boolean verified;
 
 
     @Override
@@ -59,6 +59,11 @@ public class SimpleLoginActivity extends AppCompatActivity {
 
     }
 
+    public void updateLoginStatus() {
+        verified = true;
+    }
+
+
     void Verify(String field, String password)
     {
         final String pass = password;
@@ -67,11 +72,14 @@ public class SimpleLoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    if(entry.equals((String) messageSnapshot.child("email").getValue()) && pass.equals((String) messageSnapshot.child("password").getValue()))
+                    Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
+                    MapsActivity.updateMarkers(dataSnapshot);
+                    //if(verified == false && entry.equals((String) messageSnapshot.child("email").getValue()) && pass.equals((String) messageSnapshot.child("password").getValue()))
+                    if(verified == false)
                     {
                         Intent i = new Intent(SimpleLoginActivity.this, MapsActivity.class);
-                        Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
-                        MapsActivity.updateMarkers(dataSnapshot);
+
+                        updateLoginStatus();
                         startActivity(i);
                     }
                     //String name = (String) messageSnapshot.child("name").getValue();
