@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     private DatabaseReference mDatabase;
+    private GoogleApiClient mGoogleApiClient;
+    public static final String TAG = MapsActivity.class.getSimpleName();
 
 
 
@@ -89,9 +92,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();*/
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.setValue("DERP1");
+        //mDatabase.setValue("DERP1");
 
         Toast.makeText(this, mDatabase.toString(), Toast.LENGTH_SHORT).show();
 

@@ -15,15 +15,19 @@ public class MyUser {
     private String mPassword;
     private String mMajor;
     private String mPhone;
-    private Location mLocation;
+    //private Location mLocation;
+    private String mLatitude;
+    private String mLongitude;
 
-    public MyUser(String email, String name, String password, String major, Location location, String phone) {
+    public MyUser(String email, String name, String password, String major, String phone, String latitude, String longitude) {
         mEmail = email;
         mName = name;
         mPassword = password;
         mMajor = major;
-        mLocation = location;
+        //mLocation = location;
         mPhone = phone;
+        mLatitude = latitude;
+        mLongitude = longitude;
     }
 
 
@@ -34,6 +38,8 @@ public class MyUser {
         result.put("password", mPassword);
         result.put("major", mMajor);
         result.put("phone", mPhone);
+        result.put("latitude", mLatitude);
+        result.put("longitude", mLongitude);
 
 
 
