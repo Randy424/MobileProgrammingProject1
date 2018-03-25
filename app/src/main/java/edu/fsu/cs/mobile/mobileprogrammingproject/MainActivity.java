@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null") // IF NOTHING STORED
         {
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+            //startActivity(i);
+            Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
             startActivity(i);
         }
         else
@@ -61,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
             int value = bundle.getInt("myData");//<extract values from Bundle using key
         }
-        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-        startActivity(i);
+
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
