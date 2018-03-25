@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mFirebaseBtn = (Button) findViewById(R.id.firebase_btn);
 
         // Write a message to the database
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
             int value = bundle.getInt("myData");//<extract values from Bundle using key
         }
-
+        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+        startActivity(i);
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
