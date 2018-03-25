@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -27,6 +28,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private MarkerOptions options = new MarkerOptions();
     Map<LatLng,String> latlngsMap = new HashMap<>();
     private ArrayList<LatLng> latlngs = new ArrayList<>();
+    private LatLng schoolLocate;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //for storing lat and long for google maps use
         latlngs.add(new LatLng(-27.4698, 153.0251)); //some latitude and logitude value
 
+        schoolLocate = new LatLng(30.445349, -84.299542);
+
+
         //printing markers on map
         for (LatLng point : latlngs) {
             options.position(point);
@@ -64,6 +71,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setOnInfoWindowClickListener(this);
 
+
+        mMap.addCircle(new CircleOptions()
+                .center(sydney)
+                .radius(3000000)
+                .strokeWidth(0f)
+                .fillColor(0x550000FF));
     }
     @Override
     public void onInfoWindowClick(Marker marker) {
@@ -76,6 +89,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public double findDistance(LatLng i, LatLng ii){
+        return Math.sqrt((i.latitude-ii.latitude)*(i.latitude-ii.latitude) + (i.longitude-ii.longitude)*(i.longitude-i.longitude));
 
     }
 }
