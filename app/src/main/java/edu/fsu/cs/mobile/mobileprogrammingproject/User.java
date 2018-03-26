@@ -26,6 +26,27 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
+    public static String FindName(String key)
+    {
+        return userList.get(key).name;
+    }
+    public static String FindLongitude(String key)
+    {
+        return userList.get(key).longitude;
+    }
+    public static String FindLatitude(String key)
+    {
+        return userList.get(key).latitutde;
+    }
+    public static String FindEmail(String key)
+    {
+        return userList.get(key).email;
+    }
+    public static String FindPassword(String key)
+    {
+        return userList.get(key).password;
+    }
+
     public User(String name, String email, String password, String longitude, String latitutde, String major) {
         this.name = name;
         this.email = email;
