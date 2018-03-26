@@ -18,11 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     //static final String FIREBASE_TABLE = "";
     private DatabaseReference mDatabase;
 
     private Button mFirebaseBtn;
+    public HashMap<String, String> currentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null")
+        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null") // IF NOTHING STORED
         {
-            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+            //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+            //startActivity(i);
+            Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
             startActivity(i);
         }
         else
