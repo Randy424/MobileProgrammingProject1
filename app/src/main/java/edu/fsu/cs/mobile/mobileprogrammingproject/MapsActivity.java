@@ -36,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static private ArrayList<String> dbPhone = new ArrayList<>();
     static private ArrayList<String> dbName = new ArrayList<>();
     static int iterate;
+    static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
+    public HashMap<String, Marker> myMarkers= new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    static public boolean updateMarkers(DataSnapshot allData) {
+    /*static public boolean updateMarkers(DataSnapshot allData) {
         //ArrayList<LatLng> newLatLngs = new ArrayList<>();
         for (DataSnapshot messageSnapshot: allData.getChildren()) {
             dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
@@ -115,13 +117,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 options.position(point);
                 options.title("KIM JON IL");
                 options.snippet("ILLING IT OUT");
-                mMap.addMarker(options);*/
+                mMap.addMarker(options);
             //}
             //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
             //Toast.makeText(,  "FINISHED POPULATING aRRAY WITH MARKER INFO", Toast.LENGTH_SHORT).show();
         }
-        return true;
-    }
+        return true
+    }*/
 
 
     @Override
