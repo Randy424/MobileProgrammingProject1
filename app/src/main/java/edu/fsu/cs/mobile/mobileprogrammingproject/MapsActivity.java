@@ -32,6 +32,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Map<LatLng,String> latlngsMap = new HashMap<>();
     private ArrayList<LatLng> latlngs = new ArrayList<>();
     private LatLng schoolLocate;
+    static private ArrayList<LatLng> dbLatLngs = new ArrayList<>();
+    static private ArrayList<String> dbPhone = new ArrayList<>();
+    static private ArrayList<String> dbName = new ArrayList<>();
+    static int iterate;
     static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
     public HashMap<String, Marker> myMarkers= new HashMap<>();
     static public ArrayList<String> dbPhone = new ArrayList<>();
@@ -63,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         schoolLocate = new LatLng(30.445349, -84.299542);
 
-
+        iterate = 0;
         //printing markers on map
         iterate = 0;
         //printing markers on map
@@ -100,12 +104,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng target = marker.getPosition();
 
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("UserProfile", marker.getSnippet()).apply();
 
-        Bundle bundle = new Bundle();
-        bundle.putDouble("Lat", target.latitude);
-        bundle.putDouble("Long", target.longitude);
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("Stuff", bundle);
         startActivity(i);
 
     }
@@ -113,7 +114,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /*static public boolean updateMarkers(DataSnapshot allData) {
         //ArrayList<LatLng> newLatLngs = new ArrayList<>();
         for (DataSnapshot messageSnapshot: allData.getChildren()) {
-
+            dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
+            dbName.add(messageSnapshot.child("name").getValue().toString());
+            dbPhone.add(messageSnapshot.child("phone").getValue().toString());
             //printing markers on map
             /*while(mMap == null);
             for (LatLng point : newLatLngs) {
