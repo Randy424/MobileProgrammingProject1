@@ -1,10 +1,16 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,11 +27,10 @@ import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
     //static final String FIREBASE_TABLE = "";
     private DatabaseReference mDatabase;
 
-    private Button mFirebaseBtn;
     public HashMap<String, String> currentData;
 
     @Override
@@ -34,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        mFirebaseBtn = (Button) findViewById(R.id.firebase_btn);
 
         // Write a message to the database
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -43,33 +47,28 @@ public class MainActivity extends AppCompatActivity {
         //myRef.setValue("I am the best");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mFirebaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                //Toast.makeText(getApplicationContext(), "Im working", Toast.LENGTH_LONG).show();
-                //1 - Create child in root object
-                //2 Assign some value to the child object
-
-                mDatabase.child("Name").setValue("Dustin");
-
-
-            }
-        });
-
-        if(PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null") == "null") // IF NOTHING STORED
+        if((PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null")) == "null") // IF NOTHING STORED
         {
-            //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-            //startActivity(i);
+            String x = PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null");
+
+            Log.d("MAIN LOG", x);
+
             Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+
             startActivity(i);
         }
         else
         {
 
-            Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
-            //int value = bundle.getInt("myData");//<extract values from Bundle using key
+
+            ProfileFragment profile = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
+
+
         }
+       // Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+      //  startActivity(i);
 
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -88,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 //String message = (String) messageSnapshot.child("message").getValue();
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                     MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
-
+                    MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
+                    MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
 
                 userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
                         (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
@@ -104,9 +104,14 @@ public class MainActivity extends AppCompatActivity {
 
     });
 
-        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+        //startActivity(i);
 
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
