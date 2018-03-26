@@ -35,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
     static public ArrayList<String> dbPhone = new ArrayList<>();
     static public ArrayList<String> dbName = new ArrayList<>();
+    static public ArrayList<String> dbMajor = new ArrayList<>();
     static int iterate;
 
 
@@ -70,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (LatLng point : dbLatLngs) {
             if((findDistance(schoolLocate, point) < 1000)) {
                 options.position(point);
-                options.title(dbName.get(iterate));
+                options.title(dbName.get(iterate)+" - "+dbMajor.get(iterate));
                 options.snippet(dbPhone.get(iterate));
                 googleMap.addMarker(options);
             }
