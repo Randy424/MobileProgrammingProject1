@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        key = new String("empty");
          key = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("UserProfile", "null");
          DatabaseReference mDatabase;
          mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -51,7 +51,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        key = new String("empty");
         //Textview updates
         name = (TextView) view.findViewById(R.id.nameText);
         phone = (TextView) view.findViewById(R.id.phoneText);
