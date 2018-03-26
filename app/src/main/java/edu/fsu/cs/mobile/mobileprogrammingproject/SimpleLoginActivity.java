@@ -15,6 +15,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
     private Button loginButton;
     private DatabaseReference mDatabase;
     private String field;
+    private String thisUsersNumber;
     public boolean verified = true;
 
 
@@ -54,6 +56,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         verified = false;
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +85,26 @@ public class SimpleLoginActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if(mTrackingLocation == true) {
                     Location myLocation = locationResult.getLastLocation();
-                    Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
                     if (myLocation != null) {
+                        Toast.makeText(getApplicationContext(), "Updating Location Info In Firebase", Toast.LENGTH_SHORT).show();
+                        String theNumber = thisUsersNumber;
+
+                        MyUser user = new MyUser(User.userList.get(theNumber).email,
+                                User.userList.get(theNumber).name,
+                                User.userList.get(theNumber).password,
+                                User.userList.get(theNumber).major,
+                                theNumber,
+                                Double.toString(myLocation.getLatitude()),
+                                Double.toString(myLocation.getLongitude()));
+
+                        Map<String, Object > postValues = user.toMap();
+
+
+                        mDatabase.child(theNumber).setValue(postValues);
                         showUpdatedLocation(myLocation);
 
-                        Toast.makeText(getApplicationContext(), "INSIDE ONLOCATION RESULT WITH NONNULL LOCATION", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "INSIDE ONLOCATION RESULT WITH NONNULL LOCATION", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -150,23 +168,12 @@ public class SimpleLoginActivity extends AppCompatActivity {
             for (int i = 0; i < phoneList.size(); i++)
             {
                 if(userList.get(phoneList.get(i)).email.equals(field) && userList.get(phoneList.get(i)).password.equals(password)) {
-                    Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
-                    String theNumber = phoneList.get(i);
-
-                    MyUser user = new MyUser(User.userList.get(theNumber).email,
-                            User.userList.get(theNumber).name,
-                            User.userList.get(theNumber).password,
-                            User.userList.get(theNumber).major,
-                            theNumber,
-                            User.userList.get(theNumber).latitutde,
-                            User.userList.get(theNumber).longitude);
-
-                    Map<String, Object > postValues = user.toMap();
-
-
-                    mDatabase.child(theNumber).setValue(postValues);
-
-
+                    if (!mTrackingLocation) {
+                        getLocation();
+                    } else {
+                        stopTrackingLocation();
+                    }
+                    thisUsersNumber = phoneList.get(i);
                     return true;
 
                 }
