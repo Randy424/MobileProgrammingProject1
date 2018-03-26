@@ -3,6 +3,7 @@ package edu.fsu.cs.mobile.mobileprogrammingproject;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -40,7 +41,34 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                MapsActivity.dbLatLngs.clear();
+                //MapsActivity.updateMarkers(dataSnapshot);
+                //String name = (String) messageSnapshot.child("name").getValue();
+                //String message = (String) messageSnapshot.child("message").getValue();
+                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
+                    MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
+                    MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
+                    MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
 
+                    userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
+                            (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
+                            (String) messageSnapshot.child("latitude").getValue(), (String) messageSnapshot.child("major").getValue() ));
+
+                    phoneList.add((String) messageSnapshot.child("phone").getValue());
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+
+        });
+
+
+/*
         if((PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null")) == "null") // IF NOTHING STORED
         {
             String x = PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null");
@@ -59,33 +87,15 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
 
 
-        }
+        }*/
+        ProfileFragment profile = new ProfileFragment();
+        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                MapsActivity.dbLatLngs.clear();
-                //MapsActivity.updateMarkers(dataSnapshot);
-                //String name = (String) messageSnapshot.child("name").getValue();
-                //String message = (String) messageSnapshot.child("message").getValue();
-                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
-                    MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
-                    MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
-                    MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
+        if(getIntent().getAction().equals("MAPS"))
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
+        else
+        startActivity(i);
 
-                userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
-                        (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
-                        (String) messageSnapshot.child("latitude").getValue(), (String) messageSnapshot.child("major").getValue() ));
-
-                    phoneList.add((String) messageSnapshot.child("phone").getValue());
-                }
-            }
-
-
-        @Override
-        public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
-
-    });
 
     }
 

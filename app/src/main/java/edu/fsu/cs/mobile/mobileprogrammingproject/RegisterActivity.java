@@ -71,7 +71,9 @@ public class RegisterActivity extends AppCompatActivity {
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
                         if(regComplete == false) {
+                            //Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
                             Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase", Toast.LENGTH_SHORT).show();
+
                             MyUser user = new MyUser(email.getText().toString().trim(),
                                     name.getText().toString().trim(),
                                     password.getText().toString().trim(),
@@ -100,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void getLocation(){
 
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             ActivityCompat.requestPermissions(this,
@@ -120,7 +123,9 @@ public class RegisterActivity extends AppCompatActivity {
         (getLocationRequest(), mLocationCallback,
                 null /* Looper */);
             Intent i = new Intent(RegisterActivity.this ,MapsActivity.class);
+
             startActivity(i);
+
 
         }
     }
@@ -134,8 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
             } else {
                 stopTrackingLocation();
             }
-
-    }
+        }
 
     private LocationRequest getLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();

@@ -118,8 +118,8 @@ public class SimpleLoginActivity extends AppCompatActivity {
     private void showUpdatedLocation(Location testLoc) {
         Toast.makeText(getApplicationContext(), "Updated location Latitude/Longitude: " + Double.toString(testLoc.getLatitude()) + '/' + Double.toString(testLoc.getLongitude()), Toast.LENGTH_SHORT).show();
     }
-
     public void getLocation(){
+
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
