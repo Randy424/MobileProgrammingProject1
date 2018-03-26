@@ -64,10 +64,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iterate = 0;
         //printing markers on map
         for (LatLng point : dbLatLngs) {
-            options.position(point);
-            options.title(dbName.get(iterate));
-            options.snippet(dbPhone.get(iterate));
-            googleMap.addMarker(options);
+            if((findDistance(schoolLocate, point) < 1000)) {
+                options.position(point);
+                options.title(dbName.get(iterate));
+                options.snippet(dbPhone.get(iterate));
+                googleMap.addMarker(options);
+            }
             iterate++;
         }
 

@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileFragment extends Fragment {
     static String key;
-
+    private DatabaseReference mDatabase;
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -31,6 +31,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
          key = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("UserProfile", "null");
          DatabaseReference mDatabase;

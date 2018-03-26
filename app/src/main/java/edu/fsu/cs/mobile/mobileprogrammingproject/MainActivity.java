@@ -65,12 +65,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
 
 
-//            FragmentManager manager = getFragmentManager();
-//            FragmentTransaction transaction = manager.beginTransaction();
-//            transaction.add(R.id.fragment_frame, profile);
-//            transaction.commit();
-
-
         }
        // Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
       //  startActivity(i);
