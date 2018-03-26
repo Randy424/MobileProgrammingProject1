@@ -46,6 +46,11 @@ public class User {
     {
         return userList.get(key).password;
     }
+    public static String FindMajor(String key)
+    {
+        return userList.get(key).major;
+    }
+
 
     public User(String name, String email, String password, String longitude, String latitutde, String major) {
         this.name = name;
