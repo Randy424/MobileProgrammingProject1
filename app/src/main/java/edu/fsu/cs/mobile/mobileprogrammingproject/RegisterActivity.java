@@ -14,11 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+
 import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
+
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,14 +24,10 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -42,9 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     LocationManager mLocationManager;
     private FusedLocationProviderClient mFusedLocationClient;
-    //public double testLat;
+
     private final int REQUEST_LOCATION_PERMISSION = 7;
-    double currLat, currLong;
+
     boolean mTrackingLocation;
     boolean regComplete;
 
@@ -71,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
                         if(regComplete == false) {
-                            //Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
+
                             Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase", Toast.LENGTH_SHORT).show();
 
                             MyUser user = new MyUser(email.getText().toString().trim(),

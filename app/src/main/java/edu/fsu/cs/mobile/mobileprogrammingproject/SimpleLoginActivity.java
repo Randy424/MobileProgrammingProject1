@@ -158,9 +158,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
             mTrackingLocation = false;
             Toast.makeText(getApplicationContext(), "STOPPING TRACKING", Toast.LENGTH_SHORT).show();
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-            //mLocationButton.setText(R.string.start_tracking_location);
-            //mLocationTextView.setText(R.string.textview_hint);
-            //mRotateAnim.end();
+
         }
     }
     boolean Verify(String field, String password)

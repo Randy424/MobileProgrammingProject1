@@ -48,19 +48,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //Toast.makeText(getApplicationContext(), getIntent().getStringExtra("myPhoneNum"), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng PreClickValue = new LatLng(0,0);
-
-        //for storing lat and long into dictionary with database key
-        //latlngsMap.put(new LatLng(-27.4698, 153.0251), "Ron");
-
-        //for storing lat and long for google maps use
-        //latlngs.add(new LatLng(-27.4698, 153.0251)); //some latitude and logitude value
 
         schoolLocate = new LatLng(30.445349, -84.299542);
 
@@ -78,13 +72,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             iterate++;
         }
 
-        // Add a marker in Sydney and move the camera
-        //LatLng custom = new LatLng(20, 85);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+
         float zoomLevel = (float) 15.0;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
 
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+
         mMap.setOnInfoWindowClickListener(this);
 
 
@@ -98,11 +90,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onInfoWindowClick(Marker marker) {
         Toast.makeText(this, "Info window clicked",
                 Toast.LENGTH_SHORT).show();
-    LatLng target = marker.getPosition();
+        LatLng target = marker.getPosition();
 
-
-        //PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
-        //PreferenceManager.getDefaultSharedPreferences(this).edit().putString("UserProfile", marker.getSnippet()).apply();
 
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("UserProfile", marker.getSnippet()).apply();
@@ -113,26 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(i);
 
     }
-
-    /*static public boolean updateMarkers(DataSnapshot allData) {
-        //ArrayList<LatLng> newLatLngs = new ArrayList<>();
-        for (DataSnapshot messageSnapshot: allData.getChildren()) {
-            dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
-            dbName.add(messageSnapshot.child("name").getValue().toString());
-            dbPhone.add(messageSnapshot.child("phone").getValue().toString());
-            //printing markers on map
-            /*while(mMap == null);
-            for (LatLng point : newLatLngs) {
-                options.position(point);
-                options.title("KIM JON IL");
-                options.snippet("ILLING IT OUT");
-                mMap.addMarker(options);
-            //}
-            //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
-            //Toast.makeText(,  "FINISHED POPULATING aRRAY WITH MARKER INFO", Toast.LENGTH_SHORT).show();
-        }
-        return true
-    }*/
 
 
     @Override
