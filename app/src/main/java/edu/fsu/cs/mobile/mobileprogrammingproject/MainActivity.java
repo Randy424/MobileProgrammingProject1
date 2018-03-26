@@ -28,7 +28,7 @@ import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
-    //static final String FIREBASE_TABLE = "";
+    
     private DatabaseReference mDatabase;
 
     public HashMap<String, String> currentData;
@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-        // Write a message to the database
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference myRef = database.getReference("message");
-
-        //myRef.setValue("I am the best");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -67,16 +60,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
 
         }
-       // Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-      //  startActivity(i);
-
-
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        //DatabaseReference myRef = database.getReference();
-        //DatabaseReference childRef = myRef.child
-        //Toast.makeText(this, myRef.toString(), Toast.LENGTH_LONG).show();
-        //DatabaseReference myRef = database.getReference(FIREBASE_TABLE);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,10 +86,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
         public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
 
     });
-
-        //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-        //startActivity(i);
-
 
     }
 
