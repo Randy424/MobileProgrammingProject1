@@ -15,8 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
+import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 
 import java.util.HashMap;
 
@@ -76,6 +82,30 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
         //DatabaseReference childRef = myRef.child
         //Toast.makeText(this, myRef.toString(), Toast.LENGTH_LONG).show();
         //DatabaseReference myRef = database.getReference(FIREBASE_TABLE);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //String name = (String) messageSnapshot.child("name").getValue();
+                //String message = (String) messageSnapshot.child("message").getValue();
+                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
+                userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
+                        (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
+                        (String) messageSnapshot.child("latitude").getValue()));
+
+                    phoneList.add((String) messageSnapshot.child("phone").getValue());
+                }
+            }
+
+
+        @Override
+        public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+
+    });
+
+        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+        startActivity(i);
+
 
     }
 
