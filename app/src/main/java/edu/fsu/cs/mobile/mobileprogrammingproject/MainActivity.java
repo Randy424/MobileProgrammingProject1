@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
     });
 
-        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
+        //startActivity(i);
 
 
     }
