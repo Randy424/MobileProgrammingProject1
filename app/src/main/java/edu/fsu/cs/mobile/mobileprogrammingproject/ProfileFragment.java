@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -17,6 +20,8 @@ public class ProfileFragment extends Fragment {
     static String key;
     private DatabaseReference mDatabase;
     private OnFragmentInteractionListener mListener;
+    private Button back;
+    private TextView name, phone, major;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -33,7 +38,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        key = new String("empty");
          key = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("UserProfile", "null");
          DatabaseReference mDatabase;
          mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -45,8 +50,27 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        //Textview updates
+        name = (TextView) view.findViewById(R.id.nameText);
+        phone = (TextView) view.findViewById(R.id.phoneText);
+        major = (TextView) view.findViewById(R.id.majorText);
+
+        name.setText(User.FindName(key));
+        major.setText(User.FindMajor(key));
+        phone.setText(key);
+
+        //Back Button
+        back = (Button) view.findViewById(R.id.backButton);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), MapsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        return view;
     }
 
 
