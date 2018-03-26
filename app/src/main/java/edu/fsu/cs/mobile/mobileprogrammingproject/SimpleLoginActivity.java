@@ -156,7 +156,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
                     MyUser user = new MyUser(User.userList.get(theNumber).email,
                             User.userList.get(theNumber).name,
                             User.userList.get(theNumber).password,
-                            "NEED ADD MAJOR",
+                            User.userList.get(theNumber).major,
                             theNumber,
                             User.userList.get(theNumber).latitutde,
                             User.userList.get(theNumber).longitude);
