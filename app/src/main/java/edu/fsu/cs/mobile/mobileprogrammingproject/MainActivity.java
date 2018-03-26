@@ -28,7 +28,7 @@ import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
-    
+
     private DatabaseReference mDatabase;
 
     public HashMap<String, String> currentData;
