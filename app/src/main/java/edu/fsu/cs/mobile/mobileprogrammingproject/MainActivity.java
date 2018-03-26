@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                 userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
                         (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
-                        (String) messageSnapshot.child("latitude").getValue()));
+                        (String) messageSnapshot.child("latitude").getValue(), (String) messageSnapshot.child("major").getValue() ));
 
                     phoneList.add((String) messageSnapshot.child("phone").getValue());
                 }

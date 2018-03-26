@@ -16,6 +16,7 @@ public class User {
     public String password;
     public String longitude;
     public String latitutde;
+    public String major;
     public static Vector<String> phoneList = new Vector<>();
     public static HashMap<String, User> userList = new HashMap<>();
     public Map<String, Boolean> stars = new HashMap<>();
@@ -25,12 +26,13 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public User(String name, String email, String password, String longitude, String latitutde) {
+    public User(String name, String email, String password, String longitude, String latitutde, String major) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.longitude = longitude;
         this.latitutde = latitutde;
+        this.major = major;
     }
 
 }
