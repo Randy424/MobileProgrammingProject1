@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         //Textview updates
         name = (TextView) view.findViewById(R.id.nameText);
-        phone = (TextView) view.findViewById(R.id.phoneText);
+        //phone = (TextView) view.findViewById(R.id.phoneText);
         major = (TextView) view.findViewById(R.id.majorText);
 
         name.setText(User.FindName(key));
@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         phone.setText(key);
 
         //Back Button
-        back = (Button) view.findViewById(R.id.backButton);
+        //back = (Button) view.findViewById(R.id.backButton);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
