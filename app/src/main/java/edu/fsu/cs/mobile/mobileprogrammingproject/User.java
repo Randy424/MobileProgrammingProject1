@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created by Aaron on 3/25/2018.
@@ -15,8 +16,8 @@ public class User {
     public String password;
     public String longitude;
     public String latitutde;
-    public String number;
-    public static HashMap<String, User> userList;
+    public static Vector<String> phoneList = new Vector<>();
+    public static HashMap<String, User> userList = new HashMap<>();
     public Map<String, Boolean> stars = new HashMap<>();
 
     public User() {

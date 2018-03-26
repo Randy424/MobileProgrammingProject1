@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,10 +78,13 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //String name = (String) messageSnapshot.child("name").getValue();
                 //String message = (String) messageSnapshot.child("message").getValue();
-                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() )
+                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                 userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
                         (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
                         (String) messageSnapshot.child("latitude").getValue()));
+
+                    phoneList.add((String) messageSnapshot.child("phone").getValue());
+                }
             }
 
 

@@ -16,6 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
+import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
+import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
+
 /**
  * Created by Aaron on 3/24/2018.
  */
@@ -35,15 +38,15 @@ public class SimpleLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         verified = false;
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        Toast.makeText(this, mDatabase.toString(), Toast.LENGTH_SHORT).show();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent maplaunch = new Intent(SimpleLoginActivity.this, MapsActivity.class);
                 mEmail = (EditText) findViewById(R.id.email);
                 mPassword =(EditText) findViewById(R.id.password);
-                Verify(mEmail.getText().toString(),mPassword.getText().toString());
+                if(Verify(mEmail.getText().toString(),mPassword.getText().toString()))
+                    startActivity(maplaunch);
             }
         });
 
@@ -59,27 +62,14 @@ public class SimpleLoginActivity extends AppCompatActivity {
 
     }
 
-    void Verify(String field, String password)
+    boolean Verify(String field, String password)
     {
-        final String pass = password;
-        final String entry = field; //converting to final allows for inner class usage.
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    if(entry.equals((String) messageSnapshot.child("email").getValue()) && pass.equals((String) messageSnapshot.child("password").getValue()))
-                    {
-                        Intent i = new Intent(SimpleLoginActivity.this, MapsActivity.class);
-                        startActivity(i);
-                    }
-                    //String name = (String) messageSnapshot.child("name").getValue();
-                    //String message = (String) messageSnapshot.child("message").getValue();
-                }
-
+            for (int i = 0; i < phoneList.size(); i++)
+            {
+                if(userList.get(phoneList.get(i)).email.equals(field) && userList.get(phoneList.get(i)).password.equals(password))
+                    return true;
             }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+            return false;
 
-        });
     }
 }
