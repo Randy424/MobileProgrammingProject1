@@ -47,6 +47,8 @@ public class SimpleLoginActivity extends AppCompatActivity {
                 mPassword =(EditText) findViewById(R.id.password);
                 if(Verify(mEmail.getText().toString(),mPassword.getText().toString()))
                     startActivity(maplaunch);
+                else
+                    Toast.makeText(SimpleLoginActivity.this, "INVALID EMAIL OR PASSWORD", Toast.LENGTH_SHORT).show();
             }
         });
 
