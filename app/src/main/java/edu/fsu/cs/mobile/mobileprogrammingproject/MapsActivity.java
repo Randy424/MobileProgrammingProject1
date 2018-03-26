@@ -32,15 +32,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Map<LatLng,String> latlngsMap = new HashMap<>();
     private ArrayList<LatLng> latlngs = new ArrayList<>();
     private LatLng schoolLocate;
-    static private ArrayList<LatLng> dbLatLngs = new ArrayList<>();
-    static private ArrayList<String> dbPhone = new ArrayList<>();
-    static private ArrayList<String> dbName = new ArrayList<>();
-    static int iterate;
     static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
-    public HashMap<String, Marker> myMarkers= new HashMap<>();
     static public ArrayList<String> dbPhone = new ArrayList<>();
     static public ArrayList<String> dbName = new ArrayList<>();
     static int iterate;
+
 
 
     @Override
