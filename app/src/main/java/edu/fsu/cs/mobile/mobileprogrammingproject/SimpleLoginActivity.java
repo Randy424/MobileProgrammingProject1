@@ -85,9 +85,9 @@ public class SimpleLoginActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if(mTrackingLocation == true) {
                     Location myLocation = locationResult.getLastLocation();
-                    Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
                     if (myLocation != null) {
-                        Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Updating Location Info In Firebase", Toast.LENGTH_SHORT).show();
                         String theNumber = thisUsersNumber;
 
                         MyUser user = new MyUser(User.userList.get(theNumber).email,
@@ -104,7 +104,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
                         mDatabase.child(theNumber).setValue(postValues);
                         showUpdatedLocation(myLocation);
 
-                        Toast.makeText(getApplicationContext(), "INSIDE ONLOCATION RESULT WITH NONNULL LOCATION", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "INSIDE ONLOCATION RESULT WITH NONNULL LOCATION", Toast.LENGTH_SHORT).show();
 
                     }
 

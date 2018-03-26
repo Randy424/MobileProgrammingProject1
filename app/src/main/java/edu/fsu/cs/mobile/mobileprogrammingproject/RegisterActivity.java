@@ -96,7 +96,58 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Updated location Latittude: " + Double.toString(testLoc.getLatitude()), Toast.LENGTH_SHORT).show();
     }
 
+    private boolean setLocationInfo(double lat, double loong) {
+        Toast.makeText(getApplicationContext(), Double.toString(lat), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), Double.toString(loong), Toast.LENGTH_SHORT).show();
+        currLat = lat;
+        currLong = loong;
+        return true;
+    }
+    /*private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                Toast.makeText(getApplicationContext(), "Setting it to NULL in my if check", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }*/
+    /*public void resetClick(View view)
+    {
+        emp_id.setText("");
+        name.setText("");
+        email.setText("");
+        access_code.setText("");
+        confirm_code.setText("");
 
+        gender.clearCheck();
+        agree.setChecked(false);
+        department.setSelection(0);
+    }*/
+
+    /*public void testFunc(Double lat) {
+        Toast.makeText(getApplicationContext(), Double.toString(lat), Toast.LENGTH_SHORT).show();
+
+    }*/
     public void getLocation(){
 
 
@@ -105,7 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
-
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             Toast.makeText(getApplicationContext(), "IN THE IF CHECK", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -115,6 +171,44 @@ public class RegisterActivity extends AppCompatActivity {
         (getLocationRequest(), mLocationCallback,
                 null /* Looper */);
 
+
+
+            /*mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            Toast.makeText(getApplicationContext(), "IN SUCCESS", Toast.LENGTH_SHORT).show();
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                MyUser user = new MyUser(email.getText().toString().trim(),
+                                        name.getText().toString().trim(),
+                                        password.getText().toString().trim(),
+                                        major.getText().toString().trim(),
+                                        phone.getText().toString().trim(),
+                                        Double.toString(location.getLatitude()),
+                                        Double.toString(location.getLongitude()));
+
+                                Map<String, Object > postValues = user.toMap();
+
+
+                                mDatabase.child(phone.getText().toString().trim()).setValue(postValues);
+
+
+                            } else {
+                                //testFunc(-99999.9);
+                                //Toast.makeText(getApplicationContext(), "LOCATION WAS NULL", Toast.LENGTH_SHORT);
+                            }
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("MapDemoActivity", "Error trying to get last GPS location");
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "SHIT FAILED: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });*/
 
         }
     }

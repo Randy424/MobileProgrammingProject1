@@ -47,7 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("myPhoneNum"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), getIntent().getStringExtra("myPhoneNum"), Toast.LENGTH_SHORT).show();
     }
 
     @Override
