@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 //String message = (String) messageSnapshot.child("message").getValue();
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                     MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
-
+                    MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
+                    MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
 
                 userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
                         (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),

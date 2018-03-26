@@ -34,7 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng schoolLocate;
     static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
     public HashMap<String, Marker> myMarkers= new HashMap<>();
-
+    static public ArrayList<String> dbPhone = new ArrayList<>();
+    static public ArrayList<String> dbName = new ArrayList<>();
+    static int iterate;
 
 
     @Override
@@ -63,11 +65,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //printing markers on map
+        iterate = 0;
+        //printing markers on map
         for (LatLng point : dbLatLngs) {
-            options.position(point);
-            options.title("KIM JON IL");
-            options.snippet("ILLING IT OUT");
-            googleMap.addMarker(options);
+            if((findDistance(schoolLocate, point) < 1000)) {
+                options.position(point);
+                options.title(dbName.get(iterate));
+                options.snippet(dbPhone.get(iterate));
+                googleMap.addMarker(options);
+            }
+            iterate++;
         }
 
         // Add a marker in Sydney and move the camera
