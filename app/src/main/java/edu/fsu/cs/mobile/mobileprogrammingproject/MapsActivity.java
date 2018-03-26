@@ -59,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //for storing lat and long for google maps use
         //latlngs.add(new LatLng(-27.4698, 153.0251)); //some latitude and logitude value
 
-        schoolLocate = new LatLng(30.445349, -84.299542);
+        schoolLocate = new LatLng(330.445349, -84.299542);
 
 
         //printing markers on map
