@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -66,11 +67,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if(mTrackingLocation == true) {
                     Location myLocation = locationResult.getLastLocation();
-                    Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
                         if(regComplete == false) {
-                            Toast.makeText(getApplicationContext(), "Inserting user to database now", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase", Toast.LENGTH_SHORT).show();
                             MyUser user = new MyUser(email.getText().toString().trim(),
                                     name.getText().toString().trim(),
                                     password.getText().toString().trim(),
@@ -96,16 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Updated location Latitude/Longitude: " + Double.toString(testLoc.getLatitude()) + '/' + Double.toString(testLoc.getLongitude()), Toast.LENGTH_SHORT).show();
     }
 
-    private boolean setLocationInfo(double lat, double loong) {
-        Toast.makeText(getApplicationContext(), Double.toString(lat), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), Double.toString(loong), Toast.LENGTH_SHORT).show();
-        currLat = lat;
-        currLong = loong;
-        return true;
-    }
 
     public void getLocation(){
-
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -126,6 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
             mFusedLocationClient.requestLocationUpdates
         (getLocationRequest(), mLocationCallback,
                 null /* Looper */);
+            Intent i = new Intent(RegisterActivity.this ,MapsActivity.class);
+            startActivity(i);
 
         }
     }
@@ -134,11 +129,13 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerClick(View view) {
 
             if (!mTrackingLocation) {
+                Toast.makeText(getApplicationContext(), "INSERTING YOUR INFORMATION INTO OUR SYSTEM", Toast.LENGTH_SHORT).show();
                 getLocation();
             } else {
                 stopTrackingLocation();
             }
-        }
+
+    }
 
     private LocationRequest getLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();

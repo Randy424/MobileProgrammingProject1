@@ -101,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("Profile", "Ready").apply();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("UserProfile", marker.getSnippet()).apply();
-
+        
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
