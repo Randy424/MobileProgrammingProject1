@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                             Toast.makeText(getApplicationContext(),  "IN THE ON DATA CHANGE (ADD VALUE EVENT LISTENER)", Toast.LENGTH_SHORT).show();
-                            MapsActivity.updateMarkers(dataSnapshot);
+                            //MapsActivity.updateMarkers(dataSnapshot);
                             //Toast.makeText(getApplicationContext(),  messageSnapshot.child("name").getValue().toString(), Toast.LENGTH_SHORT).show();
                             //if(messageSnapshot.child("email").getValue().toString().equals(mEmailView.getText().toString().trim())) {
                                 //Toast.makeText(getApplicationContext(),  "Email Matches!", Toast.LENGTH_SHORT).show();
