@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         {
 
             Bundle bundle = getIntent().getBundleExtra("xy");   //<< get Bundle from Intent
-            int value = bundle.getInt("myData");//<extract values from Bundle using key
+            //int value = bundle.getInt("myData");//<extract values from Bundle using key
         }
 
 
