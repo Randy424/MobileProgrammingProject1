@@ -1,37 +1,21 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
-
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
-
     private DatabaseReference mDatabase;
-
     public HashMap<String, String> currentData;
 
     @Override
@@ -39,15 +23,15 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("users");
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MapsActivity.dbLatLngs.clear();
-                //MapsActivity.updateMarkers(dataSnapshot);
-                //String name = (String) messageSnapshot.child("name").getValue();
-                //String message = (String) messageSnapshot.child("message").getValue();
+
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                     MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
                     MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
@@ -68,27 +52,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
         });
 
-
-/*
-        if((PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null")) == "null") // IF NOTHING STORED
-        {
-            String x = PreferenceManager.getDefaultSharedPreferences(this).getString("Profile", "null");
-
-            Log.d("MAIN LOG", x);
-
-            Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-
-            startActivity(i);
-        }
-        else
-        {
-
-
-            ProfileFragment profile = new ProfileFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
-
-
-        }*/
         ProfileFragment profile = new ProfileFragment();
         Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
 

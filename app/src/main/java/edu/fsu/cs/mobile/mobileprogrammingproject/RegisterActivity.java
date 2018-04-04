@@ -1,30 +1,20 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
 import android.widget.EditText;
-
 import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
     public LocationCallback mLocationCallback;
     EditText email, name, password, major, phone;
     private DatabaseReference mDatabase;
-    LocationManager mLocationManager;
     private FusedLocationProviderClient mFusedLocationClient;
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -48,7 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         regComplete = false;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("users");
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
 
         email = (EditText) findViewById(R.id.email);
         name = (EditText) findViewById(R.id.name);
@@ -59,12 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                if(mTrackingLocation == true) {
+                if(mTrackingLocation ) { //refactored from == true, said it was redundant
                     Location myLocation = locationResult.getLastLocation();
-                    //Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
+
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
-                        if(regComplete == false) {
+                        if(!regComplete) { // same refactor as above
 
                             Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase", Toast.LENGTH_SHORT).show();
 
@@ -80,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                             mDatabase.child(phone.getText().toString().trim()).setValue(postValues);
+                            //mDatabase.child("BRAINS").child("users").setValue("TEST WIN22");
                         }
                     }
 
@@ -142,6 +135,8 @@ public class RegisterActivity extends AppCompatActivity {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
     }
+
+
     /**
      * Method that stops tracking the device. It removes the location
      * updates, stops the animation and reset the UI.
@@ -155,11 +150,5 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isEmpty(EditText et) {
-        if (et.getText().toString().trim().length() > 0)
-            return false;
-
-        return true;
-    }
 
 }

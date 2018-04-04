@@ -1,18 +1,8 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
-
-
-import com.google.firebase.database.Exclude;
-
-
-
 import java.util.HashMap;
-
 import java.util.Map;
-
 import java.util.Vector;
-
-
 
 /**
 
@@ -30,9 +20,9 @@ public class User {
 
     public String password;
 
-    public String longitude;
+    private String longitude;
 
-    public String latitutde;
+    private String latitutde;
 
     public String major;
 

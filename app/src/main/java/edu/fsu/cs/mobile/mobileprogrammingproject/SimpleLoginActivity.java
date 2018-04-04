@@ -38,7 +38,6 @@ public class SimpleLoginActivity extends AppCompatActivity {
     public LocationCallback mLocationCallback;
     boolean mTrackingLocation;
     private final int REQUEST_LOCATION_PERMISSION = 7;
-    private DatabaseReference getmDatabase;
 
     private EditText mPassword;
     private EditText mEmail;
@@ -53,7 +52,8 @@ public class SimpleLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("users");
         verified = false;
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -85,7 +85,6 @@ public class SimpleLoginActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if(mTrackingLocation == true) {
                     Location myLocation = locationResult.getLastLocation();
-                    //Toast.makeText(getApplicationContext(), "IN THE onLocationResult", Toast.LENGTH_SHORT).show();
                     if (myLocation != null) {
                         Toast.makeText(getApplicationContext(), "Updating Location Info In Firebase", Toast.LENGTH_SHORT).show();
                         String theNumber = thisUsersNumber;
@@ -103,8 +102,6 @@ public class SimpleLoginActivity extends AppCompatActivity {
 
                         mDatabase.child(theNumber).setValue(postValues);
                         showUpdatedLocation(myLocation);
-
-                        //Toast.makeText(getApplicationContext(), "INSIDE ONLOCATION RESULT WITH NONNULL LOCATION", Toast.LENGTH_SHORT).show();
 
                     }
 

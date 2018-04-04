@@ -1,15 +1,10 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,27 +13,16 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-    static private GoogleMap mMap;
     static private MarkerOptions options = new MarkerOptions();
-    Map<LatLng,String> latlngsMap = new HashMap<>();
-    private ArrayList<LatLng> latlngs = new ArrayList<>();
-    private LatLng schoolLocate;
     static public ArrayList<LatLng> dbLatLngs = new ArrayList<>();
     static public ArrayList<String> dbPhone = new ArrayList<>();
     static public ArrayList<String> dbName = new ArrayList<>();
     static public ArrayList<String> dbMajor = new ArrayList<>();
     static int iterate;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +37,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng PreClickValue = new LatLng(0,0);
+        GoogleMap mMap = googleMap;
 
-        schoolLocate = new LatLng(30.445349, -84.299542);
+        LatLng schoolLocate = new LatLng(30.445349, -84.299542);
 
         iterate = 0;
         //printing markers on map
@@ -72,7 +55,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             iterate++;
         }
 
-
         float zoomLevel = (float) 15.0;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
 
@@ -86,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .strokeWidth(0f)
                 .fillColor(0x550000FF));
     }
+
     @Override
     public void onInfoWindowClick(Marker marker) {
         Toast.makeText(this, "Info window clicked",
@@ -103,7 +86,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -112,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double findDistance(LatLng i, LatLng ii){
 
      double lat1, lat2, lon1, lon2, el1, el2;
-
 
         lat1 = i.latitude;
         lat2 = ii.latitude;

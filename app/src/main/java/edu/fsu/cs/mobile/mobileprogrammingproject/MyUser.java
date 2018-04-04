@@ -1,7 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
-import android.location.Location;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +22,6 @@ public class MyUser {
         mName = name;
         mPassword = password;
         mMajor = major;
-        //mLocation = location;
         mPhone = phone;
         mLatitude = latitude;
         mLongitude = longitude;
@@ -40,13 +37,6 @@ public class MyUser {
         result.put("phone", mPhone);
         result.put("latitude", mLatitude);
         result.put("longitude", mLongitude);
-
-
-
-        //result.put("lat", Double.toString(mLocation.getLatitude()));
-        //result.put("long", Double.toString(mLocation.getLongitude()));
-
-
 
         return result;
     }
