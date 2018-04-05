@@ -3,7 +3,6 @@ package edu.fsu.cs.mobile.mobileprogrammingproject;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("users");
+
         //mDatabase = FirebaseDatabase.getInstance().getReference();
 
         email = (EditText) findViewById(R.id.email);
@@ -51,14 +51,13 @@ public class RegisterActivity extends AppCompatActivity {
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                if(mTrackingLocation ) { //refactored from == true, said it was redundant
+                if(mTrackingLocation) { //refactored from == true, said it was redundant
                     Location myLocation = locationResult.getLastLocation();
-
                     if (myLocation != null) {
                         showUpdatedLocation(myLocation);
                         if(!regComplete) { // same refactor as above
 
-                            Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase(RegisterActivity)", Toast.LENGTH_SHORT).show();
 
                             MyUser user = new MyUser(email.getText().toString().trim(),
                                     name.getText().toString().trim(),
@@ -101,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(getApplicationContext(), "IN THE IF CHECK", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "IN THE IF PERMISSIONS CHECK", Toast.LENGTH_SHORT).show();
             return;
         }
         else {
