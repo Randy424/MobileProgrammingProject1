@@ -14,7 +14,9 @@ import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileViewFragment;
+
+public class MainActivity extends AppCompatActivity implements ProfileViewFragment.OnFragmentInteractionListener{
     private DatabaseReference mDatabase;
     public HashMap<String, String> currentData;
 
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
         });
 
-        ProfileFragment profile = new ProfileFragment();
+        ProfileViewFragment profile = new ProfileViewFragment();
         Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
 
         if(getIntent().getAction().equals("MAPS"))

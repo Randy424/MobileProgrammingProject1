@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject;
+package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.fsu.cs.mobile.mobileprogrammingproject.MyItemRecyclerViewAdapter;
+import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 import edu.fsu.cs.mobile.mobileprogrammingproject.dummy.DummyContent;
 import edu.fsu.cs.mobile.mobileprogrammingproject.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.

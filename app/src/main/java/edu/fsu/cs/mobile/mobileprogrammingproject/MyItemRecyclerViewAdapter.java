@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import edu.fsu.cs.mobile.mobileprogrammingproject.ListViewFragment.OnListFragmentInteractionListener;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ListViewFragment.OnListFragmentInteractionListener;
 import edu.fsu.cs.mobile.mobileprogrammingproject.dummy.DummyContent.DummyItem;
 
 import java.util.List;

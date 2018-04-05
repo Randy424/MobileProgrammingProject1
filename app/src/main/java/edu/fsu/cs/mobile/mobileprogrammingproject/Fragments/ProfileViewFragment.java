@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject;
+package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,23 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import static edu.fsu.cs.mobile.mobileprogrammingproject.User.FindMajor;
-import static edu.fsu.cs.mobile.mobileprogrammingproject.User.FindName;
+
+import edu.fsu.cs.mobile.mobileprogrammingproject.MapsActivity;
+import edu.fsu.cs.mobile.mobileprogrammingproject.R;
+
 import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
-public class ProfileFragment extends Fragment {
+public class ProfileViewFragment extends Fragment {
     static String key;
     private DatabaseReference mDatabase;
     private OnFragmentInteractionListener mListener;
     private Button back;
     private TextView name, phone, major;
-    public ProfileFragment() {
+    public ProfileViewFragment() {
         // Required empty public constructor
     }
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static ProfileViewFragment newInstance(String param1, String param2) {
+        ProfileViewFragment fragment = new ProfileViewFragment();
         return fragment;
     }
     @Override

@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.ListViewFragment"
+    tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ListViewFragment"
     tools:listitem="@layout/fragment_item" />
