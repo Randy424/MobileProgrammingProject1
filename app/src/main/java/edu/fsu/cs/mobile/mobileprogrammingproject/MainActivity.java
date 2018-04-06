@@ -10,8 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
-import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
+//import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
+//import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
 import java.util.HashMap;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileViewFragment;
@@ -34,17 +34,27 @@ public class MainActivity extends AppCompatActivity implements ProfileViewFragme
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MapsActivity.dbLatLngs.clear();
 
+                // BEST TO USE .TOSTRING HERE OR (STRING)?
+
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
                     MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
                     MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
                     MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
                     MapsActivity.dbMajor.add(messageSnapshot.child("major").getValue().toString());
 
-                    userList.put((String) messageSnapshot.child("phone").getValue(), new User((String) messageSnapshot.child("name").getValue(),
-                            (String) messageSnapshot.child("email").getValue(),(String) messageSnapshot.child("password").getValue(),(String) messageSnapshot.child("longitude").getValue(),
-                            (String) messageSnapshot.child("latitude").getValue(), (String) messageSnapshot.child("major").getValue() ));
+                    User.userList.put(
+                            (String) messageSnapshot.child("phone").getValue(),
+                            new User(
+                                    (String) messageSnapshot.child("email").getValue(),
+                                    (String) messageSnapshot.child("name").getValue(),
+                                    (String) messageSnapshot.child("password").getValue(),
+                                    (String) messageSnapshot.child("major").getValue(),
+                                    (String) messageSnapshot.child("phone").getValue(),
+                                    (String) messageSnapshot.child("latitude").getValue(),
+                                    (String) messageSnapshot.child("longitude").getValue())
+                                    );
 
-                    phoneList.add((String) messageSnapshot.child("phone").getValue());
+                    User.phoneList.add((String) messageSnapshot.child("phone").getValue());
                 }
             }
 

@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Updating Your Location In Firebase(RegisterActivity)", Toast.LENGTH_SHORT).show();
 
-                            MyUser user = new MyUser(email.getText().toString().trim(),
+                            User user = new User(email.getText().toString().trim(),
                                     name.getText().toString().trim(),
                                     password.getText().toString().trim(),
                                     major.getText().toString().trim(),

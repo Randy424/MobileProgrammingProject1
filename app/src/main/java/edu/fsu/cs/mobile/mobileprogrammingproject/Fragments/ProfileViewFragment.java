@@ -49,8 +49,8 @@ public class ProfileViewFragment extends Fragment {
         name = (TextView) view.findViewById(R.id.nameText);
         phone = (TextView) view.findViewById(R.id.phoneText);
         major = (TextView) view.findViewById(R.id.majorText);
-        name.setText(userList.get(key).name);
-        major.setText(userList.get(key).major);
+        name.setText(userList.get(key).mName);
+        major.setText(userList.get(key).mMajor);
         phone.setText(key);
         //Back Button
         back = (Button) view.findViewById(R.id.backButton);

@@ -89,10 +89,10 @@ public class SimpleLoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Updating Location Info In Firebase", Toast.LENGTH_SHORT).show();
                         String theNumber = thisUsersNumber;
 
-                        MyUser user = new MyUser(User.userList.get(theNumber).email,
-                                User.userList.get(theNumber).name,
-                                User.userList.get(theNumber).password,
-                                User.userList.get(theNumber).major,
+                        User user = new User(User.userList.get(theNumber).mEmail,
+                                User.userList.get(theNumber).mName,
+                                User.userList.get(theNumber).mPassword,
+                                User.userList.get(theNumber).mMajor,
                                 theNumber,
                                 Double.toString(myLocation.getLatitude()),
                                 Double.toString(myLocation.getLongitude()));
@@ -162,7 +162,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
     {
             for (int i = 0; i < phoneList.size(); i++)
             {
-                if(userList.get(phoneList.get(i)).email.equals(field) && userList.get(phoneList.get(i)).password.equals(password)) {
+                if(userList.get(phoneList.get(i)).mEmail.equals(field) && userList.get(phoneList.get(i)).mPassword.equals(password)) {
                     if (!mTrackingLocation) {
                         getLocation();
                     } else {
