@@ -42,5 +42,7 @@
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">MY ACCOUNT FRAGMENT</string>
+    <string name="hello_blank_fragment">blank frag stuff</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileDetailFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/profDetTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to a more detailed profile view" />
+        <TextView
+            android:id="@+id/profDetSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Insert all available user details and a picture here" />
+        <TextView
+            android:id="@+id/profDetEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="At least an email address should be here!" />
+    </LinearLayout>
+
+
+</FrameLayout>

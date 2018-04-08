@@ -26,7 +26,6 @@ public class User {
     }*/
 
     public static String FindName(String key)
-
     {
         return userList.get(key).mName;
     }
@@ -56,6 +55,8 @@ public class User {
         return userList.get(key).mMajor;
     }
 
+
+    // TODO ADD NEW CONSTRUCTOR THAT TAKES IN FIREBASE USER
 
 
     public User(String email, String name, String password, String major, String phone, String latitude, String longitude) {

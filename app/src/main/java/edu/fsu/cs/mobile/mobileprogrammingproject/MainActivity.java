@@ -1,82 +1,67 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-//import static edu.fsu.cs.mobile.mobileprogrammingproject.User.phoneList;
-//import static edu.fsu.cs.mobile.mobileprogrammingproject.User.userList;
-import java.util.HashMap;
+import android.widget.Toast;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.util.Arrays;
+import java.util.List;
 
-import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileViewFragment;
 
-public class MainActivity extends AppCompatActivity implements ProfileViewFragment.OnFragmentInteractionListener{
-    private DatabaseReference mDatabase;
-    public HashMap<String, String> currentData;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mDatabase = FirebaseDatabase.getInstance().getReference();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("users");
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                MapsActivity.dbLatLngs.clear();
-
-                // BEST TO USE .TOSTRING HERE OR (STRING)?
-
-                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren() ){
-                    MapsActivity.dbLatLngs.add(new LatLng(Double.parseDouble(messageSnapshot.child("latitude").getValue().toString()), Double.parseDouble(messageSnapshot.child("longitude").getValue().toString())));
-                    MapsActivity.dbName.add(messageSnapshot.child("name").getValue().toString());
-                    MapsActivity.dbPhone.add(messageSnapshot.child("phone").getValue().toString());
-                    MapsActivity.dbMajor.add(messageSnapshot.child("major").getValue().toString());
-
-                    User.userList.put(
-                            (String) messageSnapshot.child("phone").getValue(),
-                            new User(
-                                    (String) messageSnapshot.child("email").getValue(),
-                                    (String) messageSnapshot.child("name").getValue(),
-                                    (String) messageSnapshot.child("password").getValue(),
-                                    (String) messageSnapshot.child("major").getValue(),
-                                    (String) messageSnapshot.child("phone").getValue(),
-                                    (String) messageSnapshot.child("latitude").getValue(),
-                                    (String) messageSnapshot.child("longitude").getValue())
-                                    );
-
-                    User.phoneList.add((String) messageSnapshot.child("phone").getValue());
-                }
-            }
 
 
-            @Override
-            public void onCancelled(DatabaseError firebaseError) { } // changed type here from original example
+// Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
-        });
-
-        ProfileViewFragment profile = new ProfileViewFragment();
-        Intent i = new Intent(MainActivity.this, SimpleLoginActivity.class);
-
-        if(getIntent().getAction().equals("MAPS"))
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, profile).commit();
-        else
-        startActivity(i);
-
+// Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
 
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // had to make this final to deal with using it in the anon class below
+                Intent i = ProfileActivity.newInstance(MainActivity.this, user);
+                startActivity(i);
+
+
+            } else {
+                // Sign in failed, check response for error code
+                // ...
+                Toast.makeText(this, "OUR FIREBASE AUTH LOGIN FAILED", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
+
+
+
 }
+
