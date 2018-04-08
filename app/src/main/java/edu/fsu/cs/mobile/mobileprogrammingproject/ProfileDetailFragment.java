@@ -66,6 +66,7 @@ public class ProfileDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_profile_detail, container, false);
         TextView emailTextView = (TextView) myView.findViewById(R.id.profDetEmail);
+
         emailTextView.setText(getArguments().getString("email"));
         return myView;
     }
