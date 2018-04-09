@@ -173,6 +173,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         }
     }
     /*@Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.av_menu, menu);

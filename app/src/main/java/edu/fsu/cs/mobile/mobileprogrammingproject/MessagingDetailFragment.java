@@ -3,11 +3,25 @@ package edu.fsu.cs.mobile.mobileprogrammingproject;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 
 /**
@@ -19,6 +33,10 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class MessagingDetailFragment extends Fragment {
+    private final String TAG = "messagedetailtag";
+    private FirebaseFirestore db;
+    private String myUsersEmail;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,10 +82,56 @@ public class MessagingDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        db = FirebaseFirestore.getInstance();
+        myUsersEmail = getArguments().getString("email");
         View myView = inflater.inflate(R.layout.fragment_messaging_detail, container, false);
         TextView yourEmailText = (TextView) myView.findViewById(R.id.yourOwnEmail);
+        final String testReceiver = "adstew96@gmail.com";
+        final String testMessage = "First Message WOOHOO!";
+        yourEmailText.setText("I see you are: " + getArguments().getString("email"));
+        Button sendButt = (Button) myView.findViewById(R.id.sendMessageButton);
+        sendButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.collection("messages")
+                        .document(myUsersEmail + "_" + testReceiver)
+                        .set(new Message(myUsersEmail, testReceiver, testMessage), SetOptions.merge());
+            }
+        });
 
-        yourEmailText.setText(getArguments().getString("email"));
+
+
+        /*db.collection("messages")
+                //.whereEqualTo("capital", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            /Set<String> conversations = new Set<>();
+                            ArrayList<LatLng> positionInfo = new ArrayList<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Message mMessage = document.toObject(Message.class);
+                                if(mMessage.getReceiver().equals(myUsersEmail)) {
+                                    conversations.add(mMessage.getSender());
+                                }
+                                else if (mMessage.getSender().equals(myUsersEmail)){
+                                    conversations.add(mMessage.getReceiver());
+                                }
+
+                                // do stuff in here to show message stuffTextView
+                                //options.position(new LatLng(document.getDouble("latitude"),document.getDouble("longitude")));
+                                //options.title(document.getId());
+                                //googleMap.addMarker(options);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });*/
         return myView;
     }
 
