@@ -6,6 +6,7 @@
     tools:context=".MessagingDetailFragment">
 
     <LinearLayout
+        android:id="@+id/outerProfileLinear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -19,6 +20,37 @@
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/targetRecipient"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email Address Here"
+            />
+
+
+            <Button
+                android:id="@+id/sendMessageButton"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND"/>"
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"/>
+
     </LinearLayout>
+
 
 </FrameLayout>
