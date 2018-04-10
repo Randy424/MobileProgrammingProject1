@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -107,7 +110,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         Intent i = new Intent(context, ProfileActivity.class);
         i.putExtra("userEmail", user.getEmail()); // Could pass in entire user instead here
         String myNum = user.getPhoneNumber();
-        // TODO MAKE Myser parseable so i can pass it in an extra
 
         //if myNum != null
                 //i.putExtr
@@ -159,10 +161,30 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .commit();
                 return true;
 
-            case R.id.action_logout:
+            case R.id.action_logout: {
                 // INSERT LOGIC TO LOGUT
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
+
+                db.collection("users").document(usersEmail).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Logout", "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("Logout", "Error deleting document", e);
+                            }
+                        });
+                FirebaseAuth.getInstance().signOut();
+
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
                 return true;
 
             default:
