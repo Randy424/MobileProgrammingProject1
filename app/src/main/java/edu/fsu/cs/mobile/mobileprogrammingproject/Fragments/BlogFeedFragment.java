@@ -19,6 +19,11 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 public class BlogFeedFragment extends Fragment {
 
+    String[] values = {"Test 1", "Test 2", "Test 3","Test 4", "Test 5"};
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecylerViewAdapter recylerViewAdapter;
+
     private FirebaseFirestore db;
     private List<Post> post;
 
@@ -41,7 +46,6 @@ public class BlogFeedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         db.collection("Blog_Post").get();
 
-
         if (getArguments() != null) {
         }
     }
@@ -51,10 +55,18 @@ public class BlogFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_blog_feed, container, false);
         // Inflate the layout for this fragment
-        RecyclerView rv = rootView.findViewById(R.id.cardView);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(llm);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.cardView);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recylerViewAdapter = new RecylerViewAdapter(getActivity(), values);
+        recyclerView.setAdapter(recylerViewAdapter);
+
+
+
+       // LinearLayoutManager llm = new LinearLayoutManager(getContext());
+      //  rv.setLayoutManager(llm);
 
         return rootView;
     }
