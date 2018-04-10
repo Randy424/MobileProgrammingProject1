@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
+public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private MyProfileListener mListener;
 
     public interface MyProfileListener {
@@ -100,7 +100,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
 
 
-        googleMap.setOnInfoWindowClickListener(this);
+      googleMap.setOnMarkerClickListener(this);
 
 
         googleMap.addCircle(new CircleOptions()
@@ -137,17 +137,20 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         mapView.onCreate(null);
         mapView.getMapAsync(this);
 
-
+        //Starts profile fragment with email as an argument that gets set to @thisUsersEmail
         getFragmentManager().beginTransaction().add(R.id.profile_preview_card, ProfilePreviewFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getEmail())).commit();
         return myView;
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public boolean onMarkerClick(Marker marker) {
         // TODO DO SOMETHING WHEN YOU FIRE THIS
 
         Toast.makeText(getContext(), "Info window clicked",
                 Toast.LENGTH_SHORT).show();
         LatLng target = marker.getPosition();
+
+        getFragmentManager().beginTransaction().replace(R.id.profile_preview_card, ProfilePreviewFragment.newInstance(marker.getTitle())).commit();
+        return true;
     }
 }
