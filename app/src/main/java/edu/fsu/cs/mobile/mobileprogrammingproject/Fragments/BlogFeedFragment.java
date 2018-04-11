@@ -19,7 +19,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 public class BlogFeedFragment extends Fragment {
 
-    String[] values = {"Test 1", "Test 2", "Test 3","Test 4", "Test 5"};
+    String[] values = {"Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9","Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9"};
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecylerViewAdapter recylerViewAdapter;
@@ -34,17 +34,15 @@ public class BlogFeedFragment extends Fragment {
     }
 
 
-    public static BlogFeedFragment newInstance(String param1, String param2) {
+    public static BlogFeedFragment newInstance() {
         BlogFeedFragment fragment = new BlogFeedFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db.collection("Blog_Post").get();
+        //db.collection("Blog_Post").get();
 
         if (getArguments() != null) {
         }
