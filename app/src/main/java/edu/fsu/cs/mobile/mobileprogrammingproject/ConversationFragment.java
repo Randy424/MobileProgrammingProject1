@@ -228,12 +228,12 @@ public class ConversationFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR FIRST CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR FIRST CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                             for (DocumentSnapshot document : task.getResult()) {
 
                                 Message tempMsg = document.toObject(Message.class);
                                 tempMsg.time = document.getDate("time");
-                                Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
                                 msgArrList.add(tempMsg);
                                 //recMsgs.add(document.getId());
                                 Log.d(TAG, document.getId() + " => " + document.getData());
@@ -246,7 +246,7 @@ public class ConversationFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR SECOND CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR SECOND CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                                                 for (DocumentSnapshot document_2 : task.getResult()) {
                                                     Message tempMsg = document_2.toObject(Message.class);
                                                     tempMsg.time = document_2.getDate("time");
@@ -258,7 +258,7 @@ public class ConversationFragment extends Fragment {
 
 
                                                 }
-                                                Toast.makeText(getActivity(), "IN DEEPEST LISTENER SIZE OF WHAT I BUILT IS:" + Integer.toString(msgArrList.size()), Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(getActivity(), "IN DEEPEST LISTENER SIZE OF WHAT I BUILT IS:" + Integer.toString(msgArrList.size()), Toast.LENGTH_SHORT).show();
                                                 printConversation(msgArrList);
                                             } else {
                                                 Log.d(TAG, "Error getting documents: ", task.getException());
