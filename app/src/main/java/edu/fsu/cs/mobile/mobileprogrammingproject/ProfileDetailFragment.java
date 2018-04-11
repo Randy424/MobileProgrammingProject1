@@ -3,11 +3,28 @@ package edu.fsu.cs.mobile.mobileprogrammingproject;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 
 /**
@@ -18,7 +35,7 @@ import android.widget.TextView;
  * Use the {@link ProfileDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileDetailFragment extends Fragment {
+public class ProfileDetailFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,8 +44,13 @@ public class ProfileDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FirebaseFirestore db2;
+    private  String currentUser;
+    private String clickedUser;
+
 
     private OnFragmentInteractionListener mListener;
+    static private Button mFriendButton;
 
     public ProfileDetailFragment() {
         // Required empty public constructor
@@ -63,12 +85,61 @@ public class ProfileDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+       db2 = FirebaseFirestore.getInstance();
+        clickedUser = getArguments().getString("email");
+       currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_profile_detail, container, false);
+        //Assign views to variables
         TextView emailTextView = (TextView) myView.findViewById(R.id.profDetEmail);
+        mFriendButton = (Button) myView.findViewById(R.id.friendButton);
 
-        emailTextView.setText(getArguments().getString("email"));
+        DocumentReference docRef = db2.collection("users").document(currentUser).collection("friends")
+                .document(clickedUser);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        changeButton(mFriendButton);
+                    } else {
+                        Log.d("logger", "No such document");
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+
+        mFriendButton.setOnClickListener(this);
+        emailTextView.setText(clickedUser);
+
         return myView;
+    }
+
+    public void changeButton(Button FriendButton)
+    {
+        FriendButton.setText(R.string.friendAdded);
+
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.friendButton:
+                Map<String, Object> update = new HashMap<>();
+                update.put(clickedUser, true);
+                mFriendButton.setText(R.string.friendAdded);
+                db2.collection("users").document(currentUser)
+                        .collection("friends").document(clickedUser)
+                        .set(update, SetOptions.merge());
+
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

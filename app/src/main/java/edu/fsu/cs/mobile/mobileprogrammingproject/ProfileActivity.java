@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +43,8 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 
 public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,
@@ -108,7 +113,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         Intent i = new Intent(context, ProfileActivity.class);
         i.putExtra("userEmail", user.getEmail()); // Could pass in entire user instead here
         String myNum = user.getPhoneNumber();
-        // TODO MAKE Myser parseable so i can pass it in an extra
 
         //if myNum != null
                 //i.putExtr
@@ -146,7 +150,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_messaging:
+            case R.id.action_messaging: {
                 FragmentManager fm = getSupportFragmentManager();
                 // INSERT LOGIC TO START MESSAGING DETAIL FRAGMENT
                 fm.beginTransaction()
@@ -159,13 +163,49 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .addToBackStack(null)
                         .commit();
                 return true;
-
-            case R.id.action_logout:
+            }
+            case R.id.action_logout: {
                 // INSERT LOGIC TO LOGUT
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                return true;
 
+                db.collection("users").document(usersEmail).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Logout", "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("Logout", "Error deleting document", e);
+                            }
+                        });
+                FirebaseAuth.getInstance().signOut();
+
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                finish();
+                return true;
+            }
+            case R.id.action_Feed: {
+
+                BlogFeedFragment Feed = new BlogFeedFragment();
+
+                FragmentManager fm = getSupportFragmentManager();
+                // INSERT LOGIC TO START MESSAGING DETAIL FRAGMENT
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(fm.findFragmentByTag("outermostFrag"))
+                        .commit();
+
+                fm.beginTransaction()
+                        .add(R.id.outerFrag, Feed, "feedFrag")
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+            }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
