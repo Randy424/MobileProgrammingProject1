@@ -44,7 +44,8 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
-        MessagingDetailFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
+        MessagingDetailFragment.OnFragmentInteractionListener,
+        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -58,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
-        if (count == 0) {
+        if (count != 2) {
             super.onBackPressed();
         }
         else {
@@ -256,6 +257,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
+    }
+
+    @Override
+    public void loadConversationFragment(String firstUserEmail, String secondUserEmail) {
+        FragmentManager fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .replace(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail ))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT
