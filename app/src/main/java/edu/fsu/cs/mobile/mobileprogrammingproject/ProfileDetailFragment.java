@@ -3,16 +3,21 @@ package edu.fsu.cs.mobile.mobileprogrammingproject;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -45,7 +50,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
 
 
     private OnFragmentInteractionListener mListener;
-    private Button mFriendButton;
+    static private Button mFriendButton;
 
     public ProfileDetailFragment() {
         // Required empty public constructor
@@ -81,18 +86,44 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        db2 = FirebaseFirestore.getInstance();
-
+        clickedUser = getArguments().getString("email");
        currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_profile_detail, container, false);
         //Assign views to variables
         TextView emailTextView = (TextView) myView.findViewById(R.id.profDetEmail);
         mFriendButton = (Button) myView.findViewById(R.id.friendButton);
+
+        DocumentReference docRef = db2.collection("users").document(currentUser).collection("friends")
+                .document(clickedUser);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        changeButton(mFriendButton);
+                    } else {
+                        Log.d("logger", "No such document");
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+
         mFriendButton.setOnClickListener(this);
-        clickedUser = getArguments().getString("email");
         emailTextView.setText(clickedUser);
 
         return myView;
+    }
+
+    public void changeButton(Button FriendButton)
+    {
+        FriendButton.setText(R.string.friendAdded);
+
     }
 
     @Override
