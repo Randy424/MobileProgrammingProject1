@@ -50,8 +50,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
         MessagingDetailFragment.OnFragmentInteractionListener,
-        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
-        MessagingDetailFragment.OnFragmentInteractionListener,
+        ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 

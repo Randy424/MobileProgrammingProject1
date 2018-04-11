@@ -1,11 +1,13 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +44,15 @@ public class BlogFeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //db.collection("Blog_Post").get();
-
-        if (getArguments() != null) {
-        }
+//        try {
+//            db.collection("Blog_Post").get();
+//        } catch(Exception e)
+//        {
+//            messageBox("doStuff", e.getMessage());
+//        }
+//
+//        if (getArguments() != null) {
+//        }
     }
 
     @Override
@@ -118,6 +125,16 @@ public class BlogFeedFragment extends Fragment {
         post.add(new Post("Lillie Watts", "35 years old"));
     }
 
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
 
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getActivity());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
+    }
 
 }
