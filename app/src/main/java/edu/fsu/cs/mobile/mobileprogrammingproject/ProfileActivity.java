@@ -50,14 +50,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
         MessagingDetailFragment.OnFragmentInteractionListener,
-<<<<<<< Updated upstream
-        ConversationFragment.OnFragmentInteractionListener,
-        BlogFeedFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
-    // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
-=======
         ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
->>>>>>> Stashed changes
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -159,28 +153,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .commit();
 
                 fm.beginTransaction()
-                        .replace(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
+                        .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
                         .addToBackStack(null)
                         .commit();
 
                 return true;
             }
-
-            case R.id.action_Feed: {
-
-                BlogFeedFragment Feed = new BlogFeedFragment();
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.outerFrag, BlogFeedFragment.newInstance())
-                        .addToBackStack(null).commit();
-                return true;
-            }
-
             case R.id.action_logout: {
                 db.collection("users").document(usersEmail).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -202,9 +180,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 finish();
                 return true;
             }
-<<<<<<< Updated upstream
-
-=======
             case R.id.action_Feed: {
                 BlogFeedFragment Feed = new BlogFeedFragment();
 
@@ -221,7 +196,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .commit();
                 return true;
             }
->>>>>>> Stashed changes
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
