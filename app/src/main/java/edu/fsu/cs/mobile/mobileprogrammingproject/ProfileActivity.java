@@ -49,7 +49,9 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
-        MessagingDetailFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
+        MessagingDetailFragment.OnFragmentInteractionListener,
+        ConversationFragment.OnFragmentInteractionListener,
+        BlogFeedFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -63,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
-        if (count == 0) {
+        if (count != 2) {
             super.onBackPressed();
         }
         else {
@@ -158,11 +160,27 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .commit();
 
                 fm.beginTransaction()
-                        .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
+                        .replace(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
                         .addToBackStack(null)
                         .commit();
                 return true;
             }
+
+            case R.id.action_Feed: {
+
+                BlogFeedFragment Feed = new BlogFeedFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(fm.findFragmentByTag("outermostFrag"))
+                        .commit();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.outerFrag, BlogFeedFragment.newInstance())
+                        .addToBackStack(null).commit();
+                return true;
+            }
+
             case R.id.action_logout: {
                 // INSERT LOGIC TO LOGUT
                 // User chose the "Favorite" action, mark the current item
@@ -188,23 +206,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 finish();
                 return true;
             }
-            case R.id.action_Feed: {
 
-                BlogFeedFragment Feed = new BlogFeedFragment();
-
-                FragmentManager fm = getSupportFragmentManager();
-                // INSERT LOGIC TO START MESSAGING DETAIL FRAGMENT
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
-
-                fm.beginTransaction()
-                        .add(R.id.outerFrag, Feed, "feedFrag")
-                        .addToBackStack(null)
-                        .commit();
-                return true;
-            }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -296,6 +298,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
+    }
+
+    @Override
+    public void loadConversationFragment(String firstUserEmail, String secondUserEmail) {
+        FragmentManager fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .replace(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail ))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT
