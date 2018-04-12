@@ -27,7 +27,6 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="agree_to_terms">Agree to Terms</string>
-    <string name="friendAdded">PlaceholderForAaaronsString</string>
     <string-array name="empids">
         <item>ABC123</item>
         <item>XYZ456</item>
