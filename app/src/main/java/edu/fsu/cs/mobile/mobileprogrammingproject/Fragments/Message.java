@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject;
+package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.ServerTimestamp;

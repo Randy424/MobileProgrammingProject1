@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject;
+package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -28,6 +28,8 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 
 /**

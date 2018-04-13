@@ -25,6 +25,7 @@ import java.util.Queue;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
+import edu.fsu.cs.mobile.mobileprogrammingproject.RecylerViewAdapter;
 
 import static android.content.ContentValues.TAG;
 
