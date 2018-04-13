@@ -140,7 +140,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
             }
         });
 
-        DocumentReference docRef2 = db2.collection("users").document(currentUser).collection("major")
+        DocumentReference docRef2 = db2.collection("users").document(clickedUser).collection("major")
                 .document("major");
         docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
