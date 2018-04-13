@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
+package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 
 /**

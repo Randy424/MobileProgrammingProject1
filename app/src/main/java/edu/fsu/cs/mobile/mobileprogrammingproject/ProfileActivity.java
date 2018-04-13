@@ -7,8 +7,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,19 +21,10 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -46,6 +33,11 @@ import java.util.Map;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ConversationFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MessagingDetailFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileActivityFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileDetailFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfilePreviewFragment;
 
 public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,

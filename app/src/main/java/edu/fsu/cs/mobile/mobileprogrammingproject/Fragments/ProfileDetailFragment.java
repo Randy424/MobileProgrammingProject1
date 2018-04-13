@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.mobileprogrammingproject;
+package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +23,8 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
