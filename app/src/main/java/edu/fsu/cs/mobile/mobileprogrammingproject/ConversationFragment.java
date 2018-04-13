@@ -233,7 +233,7 @@ public class ConversationFragment extends Fragment {
 
                                 Message tempMsg = document.toObject(Message.class);
                                 tempMsg.time = document.getDate("time");
-                                Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
                                 //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
                                 msgArrList.add(tempMsg);
                                 //recMsgs.add(document.getId());
@@ -251,7 +251,7 @@ public class ConversationFragment extends Fragment {
                                                 for (DocumentSnapshot document_2 : task.getResult()) {
                                                     Message tempMsg2 = document_2.toObject(Message.class);
                                                     tempMsg2.time = document_2.getDate("time");
-                                                    Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
                                                     msgArrList.add(tempMsg2);
                                                     //recMsgs.add(document_2.getId());
                                                     Log.d(TAG, document_2.getId() + " => " + document_2.getData());
