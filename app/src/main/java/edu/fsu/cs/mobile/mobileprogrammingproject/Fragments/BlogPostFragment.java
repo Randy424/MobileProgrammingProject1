@@ -17,33 +17,33 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 
-public class BlogPostFragment extends Fragment {
+public class BlogPostFragment extends Fragment{
 
     private ImageButton imageBtn;
     private FirebaseFirestore db;
-    private static final int GALLERY_REQUEST_CODE = 2;
+//    private static final int GALLERY_REQUEST_CODE = 2;
     private Uri uri = null;
     private EditText textTitle;
     private EditText textDesc;
     private Button postBtn;
     //private StorageReference storage;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseRef;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseUsers;
-    private FirebaseUser mCurrentUser;
+//    private FirebaseDatabase database;
+//    private DatabaseReference databaseRef;
+//    private FirebaseAuth mAuth;
+//    private DatabaseReference mDatabaseUsers;
+//    private FirebaseUser mCurrentUser;
 
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -52,7 +52,7 @@ public class BlogPostFragment extends Fragment {
     }
 
 
-    public static BlogPostFragment newInstance(String param1, String param2) {
+    public static BlogPostFragment newInstance() {
         BlogPostFragment fragment = new BlogPostFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -65,14 +65,6 @@ public class BlogPostFragment extends Fragment {
         if (getArguments() != null) {
 
         }
-
-        postBtn = (Button) getView().findViewById(R.id.submit);
-        textTitle = (EditText) getView().findViewById(R.id.title);
-        textDesc = (EditText) getView().findViewById(R.id.desc);
-
-
-
-
     }
 
     @Override
@@ -80,16 +72,44 @@ public class BlogPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_blog_post, container, false);
         // Inflate the layout for this fragment
-
-        View myButton = rootView.findViewById(R.id.submit);
-        View imageButton = rootView.findViewById(R.id.imageButton);
-        rootView.setOnClickListener(new View.OnClickListener() {
-
+        db = FirebaseFirestore.getInstance();
+        Button myButton = (Button) rootView.findViewById(R.id.submit);
+//        View imageButton = rootView.findViewById(R.id.imageButton);
+        textTitle = (EditText) rootView.findViewById(R.id.title);
+        textDesc = (EditText) rootView.findViewById(R.id.desc);
+        myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myClickMethod(v);
-            }
+                switch(v.getId()) {
+                    case R.id.imageButton: {
 
+//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                galleryIntent.setType("image");
+//                startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+                    }
+                    break;
+
+                    case R.id.submit:{
+                        //Do error checking too
+
+               // Toast.makeText(getActivity(), "POSTING...", Toast.LENGTH_LONG).show();
+                 String PostTitle = textTitle.getText().toString().trim();
+                 String PostDesc = textDesc.getText().toString().trim();
+               //String usersEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                Toast.makeText(getActivity(), "POSTING..."+PostTitle, Toast.LENGTH_LONG).show();
+                Map<String, Object> messageIdMap = new HashMap<>();
+                Posts myPost = new Posts(PostTitle, PostDesc);
+
+                db.collection("Blog_Post")
+                        .document()
+                        .set(myPost, SetOptions.merge());
+                    }
+                    break;
+
+                }
+
+            }
         });
 
         return rootView;
@@ -118,36 +138,6 @@ public class BlogPostFragment extends Fragment {
         mListener = null;
     }
 
-    public void myClickMethod(View v) {
-
-        switch(v.getId()) {
-            case R.id.imageButton: {
-
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image");
-                startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-            }
-            break;
-
-            case R.id.submit:{
-                Toast.makeText(getActivity(), "POSTING...", Toast.LENGTH_LONG).show();
-                final String PostTitle = textTitle.getText().toString().trim();
-                final String PostDesc = textDesc.getText().toString().trim();
-               String usersEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-                Map<String, Object> messageIdMap = new HashMap<>();
-                messageIdMap.put("title", PostTitle);
-                messageIdMap.put("description", PostDesc);
-
-                db.collection("Blog_Post")
-                        .document(usersEmail)
-                        .set(PostTitle, SetOptions.merge());
-            }
-            break;
-
-            // Just like you were doing
-        }
-    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
