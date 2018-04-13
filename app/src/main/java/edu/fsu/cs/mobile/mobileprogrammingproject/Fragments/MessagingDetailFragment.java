@@ -177,7 +177,7 @@ public class MessagingDetailFragment extends Fragment {
         sendButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String recipientEmail = recipientEditText.getText().toString();
+                String recipientEmail = recipientEditText.getText().toString().trim();
                 if (recipientEmail.equals(myUsersEmail)) {
                     recipientEditText.setError("You might want to talk to someone about that!");
                 }

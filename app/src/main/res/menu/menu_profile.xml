@@ -8,11 +8,7 @@
         android:title="Action Messaging"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/action_Feed"
-        android:icon="@drawable/ic_public_black_24dp"
-        android:title="Action Feed"
-        app:showAsAction="ifRoom"/>
+
 
     <item
         android:id="@+id/action_Post"

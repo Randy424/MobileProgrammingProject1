@@ -191,22 +191,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 finish();
                 return true;
             }
-            case R.id.action_Feed: {
+            /*case R.id.action_Feed: {
                 BlogFeedFragment Feed = new BlogFeedFragment();
 
                 FragmentManager fm = getSupportFragmentManager();
 
-                /*fm.beginTransaction()
+                fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();*/
+                        .commit();
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, Feed)
                         .addToBackStack(null)
                         .commit();
                 return true;
-            }
+            }*/
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
