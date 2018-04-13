@@ -11,7 +11,13 @@
     <item
         android:id="@+id/action_Feed"
         android:icon="@drawable/ic_public_black_24dp"
-        android:title="Action Messaging"
+        android:title="Action Feed"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_Post"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="Action Post"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
