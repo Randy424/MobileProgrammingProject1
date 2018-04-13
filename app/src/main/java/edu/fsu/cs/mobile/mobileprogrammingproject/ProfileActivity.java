@@ -163,7 +163,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.outerFrag, BlogPostFragment.newInstance())
-                        .addToBackStack(null).commit();
+                        .addToBackStack(null)
+                        .commit();
                 return true;
             }
 
@@ -200,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, Feed)
-
+                        .addToBackStack(null)
                         .commit();
                 return true;
             }
@@ -261,7 +262,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         /*fm.beginTransaction()
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .hide(fm.findFragmentByTag("outermostFrag"))
-                .commit();**/
+                .commit();*/
 
         fm.beginTransaction()
                 .add(R.id.outerFrag, ProfileDetailFragment.newInstance(daEmail))

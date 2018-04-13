@@ -38,12 +38,7 @@ public class BlogPostFragment extends Fragment{
     private EditText textTitle;
     private EditText textDesc;
     private Button postBtn;
-    //private StorageReference storage;
-//    private FirebaseDatabase database;
-//    private DatabaseReference databaseRef;
-//    private FirebaseAuth mAuth;
-//    private DatabaseReference mDatabaseUsers;
-//    private FirebaseUser mCurrentUser;
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -88,13 +83,6 @@ public class BlogPostFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 switch(v.getId()) {
-                    case R.id.imageButton: {
-
-//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                galleryIntent.setType("image");
-//                startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-                    }
-                    break;
 
                     case R.id.submit:{
                         //Do error checking too
