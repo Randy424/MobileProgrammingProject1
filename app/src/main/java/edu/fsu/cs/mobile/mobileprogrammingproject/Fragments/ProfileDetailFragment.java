@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +52,11 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     private FirebaseFirestore db2;
     private  String currentUser;
     private String clickedUser;
+    private TextView mEnterMajor;
+    private EditText mMajorEdit;
+    private Button mSubmit;
+    private TextView mCurrentMajor;
+    private TextView mCurrentName;
 
 
     private OnFragmentInteractionListener mListener;
@@ -95,8 +103,24 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
         //Assign views to variables
-        TextView emailTextView = (TextView) myView.findViewById(R.id.profDetEmail);
-        mFriendButton = (Button) myView.findViewById(R.id.friendButton);
+        TextView emailTextView = (TextView) myView.findViewById(R.id.nameTextview);
+        mCurrentMajor = myView.findViewById(R.id.currentMajorTextview);
+        mCurrentName = myView.findViewById(R.id.nameTextview);
+        mCurrentName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        mFriendButton =  myView.findViewById(R.id.friendButton);
+        mMajorEdit = myView.findViewById(R.id.major_Edittext);
+        mEnterMajor = myView.findViewById(R.id.enterMajorTextview);
+        mSubmit = myView.findViewById(R.id.submitButton);
+
+        if(clickedUser != currentUser) {
+            mEnterMajor.setVisibility(myView.GONE);
+            mMajorEdit.setVisibility(myView.GONE);
+            mSubmit.setVisibility(myView.GONE);
+        }
+        else
+        {
+            mSubmit.setOnClickListener(this);
+        }
 
         DocumentReference docRef = db2.collection("users").document(currentUser).collection("friends")
                 .document(clickedUser);
@@ -107,6 +131,24 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                     DocumentSnapshot document = task.getResult();
                     if (document != null && document.exists()) {
                         changeButton(mFriendButton);
+                    } else {
+                        Log.d("logger", "No such document");
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        DocumentReference docRef2 = db2.collection("users").document(currentUser).collection("major")
+                .document("major");
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        changeMajor(document.getData());
                     } else {
                         Log.d("logger", "No such document");
                     }
@@ -130,6 +172,11 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
 
     }
 
+    public void changeMajor(Map<String, Object> majormap)
+    {
+        mCurrentMajor.setText(majormap.get("major").toString());
+    }
+
     @Override
     public void onClick(View view)
     {
@@ -145,6 +192,14 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 TextView tv = (TextView) getView().getRootView().findViewById(R.id.friendsText);
                 ProfileActivityFragment.totFriendCount = ProfileActivityFragment.totFriendCount + 1;
                 tv.setText("Number of friends: " + Integer.toString(ProfileActivityFragment.totFriendCount));
+                break;
+            case R.id.submitButton:
+                Map<String, Object> update2 = new HashMap<>();
+                update2.put("major", mMajorEdit.getText().toString());
+                mCurrentMajor.setText(mMajorEdit.getText().toString());
+                db2.collection("users").document(currentUser)
+                        .collection("major").document("major").set(update2, SetOptions.merge());
+
 
         }
     }
