@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -90,6 +91,8 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
        currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_profile_detail, container, false);
+        myView.setBackgroundColor(Color.WHITE);
+        myView.setClickable(true);
         //Assign views to variables
         TextView emailTextView = (TextView) myView.findViewById(R.id.profDetEmail);
         mFriendButton = (Button) myView.findViewById(R.id.friendButton);

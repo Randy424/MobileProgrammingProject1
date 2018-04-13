@@ -2,6 +2,7 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -80,6 +81,8 @@ public class BlogPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_blog_post, container, false);
         // Inflate the layout for this fragment
+        rootView.setBackgroundColor(Color.WHITE);
+        rootView.setClickable(true);
 
         View myButton = rootView.findViewById(R.id.submit);
         View imageButton = rootView.findViewById(R.id.imageButton);
