@@ -21,15 +21,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-            app:cardMaxElevation="1dp"
-            app:cardElevation="0.7dp"
-            app:contentPadding="10dp"
-            app:contentPaddingBottom="0dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
-
-                app:cardCornerRadius="5dp"
-                app:cardBackgroundColor="#393282">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#292929">
 
             </android.support.v7.widget.CardView>
 
@@ -39,8 +34,10 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-
-            app:cardBackgroundColor="#9e9e9e">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#292929">
             <LinearLayout
                 android:id="@+id/layout123"
                 android:layout_width="match_parent"
@@ -60,7 +57,7 @@
                     android:gravity="center"
                     android:textSize="10pt"
                     android:fontFamily="@font/vollkorn_medium"
-                    android:text="Current User In Range "/>
+                    android:text="Current Users In Range "/>
 
         </LinearLayout>
 
@@ -73,7 +70,10 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#794ac4">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#292929">
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
@@ -81,6 +81,7 @@
                 android:fontFamily="@font/vollkorn_medium"
                 android:gravity="center"
                 android:textSize="10pt"
+                android:textColor="#ffffff"
                 android:text="Most Recent Feed Posts" />
         </android.support.v7.widget.CardView>
 
@@ -90,14 +91,18 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#553368">
+            app:cardBackgroundColor="#292929">
             <TextView
                 android:id="@+id/friendsText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="10pt"
+                android:textColor="#ffffff"
                 android:fontFamily="@font/vollkorn_medium"
                 android:text="Current Number of Friends:" />
         </android.support.v7.widget.CardView>

@@ -12,16 +12,18 @@ public class Posts {
 
     private String title;
     private String desc;
+    private String email;
     protected @ServerTimestamp Date time;
 
 public Posts(){
     super();
 }
 
-public Posts(String title, String desc) {
+public Posts(String title, String desc, String email) {
         super();
         this.title = title;
         this.desc = desc;
+        this.email = email;
         this.time = null;
         //this.photoId = photoId;
     }
@@ -38,6 +40,8 @@ public Posts(String title, String desc) {
     public Date getTime(){
         return time;
     }
+
+    public String getEmail() {return email;}
 
 
 }

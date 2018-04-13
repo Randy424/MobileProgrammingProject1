@@ -80,6 +80,9 @@ public class BlogPostFragment extends Fragment{
         textDesc = (EditText) rootView.findViewById(R.id.desc);
         rootView.setBackgroundColor(Color.WHITE);
         rootView.setClickable(true);
+
+
+
         myButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -99,11 +102,12 @@ public class BlogPostFragment extends Fragment{
                // Toast.makeText(getActivity(), "POSTING...", Toast.LENGTH_LONG).show();
                  String PostTitle = textTitle.getText().toString().trim();
                  String PostDesc = textDesc.getText().toString().trim();
+                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                //String usersEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
                 Toast.makeText(getActivity(), "POSTING..."+PostTitle, Toast.LENGTH_LONG).show();
                 Map<String, Object> messageIdMap = new HashMap<>();
-                Posts myPost = new Posts(PostTitle, PostDesc);
+                Posts myPost = new Posts(PostTitle, PostDesc, email);
 
                 db.collection("Blog_Post")
                         .document()
