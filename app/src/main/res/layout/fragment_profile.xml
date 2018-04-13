@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 app:cardCornerRadius="5dp"
-                app:cardBackgroundColor="#00FF00">
+                app:cardBackgroundColor="#393282">
 
             </android.support.v7.widget.CardView>
 
@@ -50,8 +50,8 @@
                     android:id="@+id/userCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CURRENT USERS IN RANGE "/>
-
+                    android:fontFamily="@font/vollkorn_medium"
+                    android:text="Current User In Range "/>
 
         </LinearLayout>
 
@@ -64,12 +64,13 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#ff7f50">
+            app:cardBackgroundColor="#794ac4">
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="MOST RECENT FEED POSTS" />
+                android:fontFamily="@font/vollkorn_medium"
+                android:text="Most Recent Feed Posts" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -79,12 +80,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#98f5ff">
+            app:cardBackgroundColor="#553368">
             <TextView
                 android:id="@+id/friendsText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="CURRENT TOTAL NUMBER OF FRIENDS:" />
+                android:fontFamily="@font/vollkorn_medium"
+                android:text="Current Number of Friends:" />
         </android.support.v7.widget.CardView>
 
 

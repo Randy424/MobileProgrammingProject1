@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  */
 public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private MyProfileListener mListener;
-
+    private TextView mFriendsText;
     public interface MyProfileListener {
         void onProfPreviewClick(String derp); // need this, need diff type for url?
     }
@@ -125,6 +126,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        db = FirebaseFirestore.getInstance();
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
@@ -136,15 +138,42 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
             }
         });
 
-        db = FirebaseFirestore.getInstance();
+        mFriendsText = myView.findViewById(R.id.friendsText);
+        getFriendCount();
         mapView =  myView.findViewById(R.id.mapLite);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
+
 
         //Starts profile fragment with email as an argument that gets set to @thisUsersEmail
         getFragmentManager().beginTransaction().add(R.id.profile_preview_card, ProfilePreviewFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getEmail())).commit();
         return myView;
     }
+
+    public void getFriendCount()
+    {
+        db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .collection("friends")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 0;
+                            for (DocumentSnapshot document : task.getResult()) {
+                                count++;
+                            }
+                            updateFriends(count);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                }); }
+
+    public void updateFriends(int total)
+    {
+        mFriendsText.append(" " + Integer.toString(total));}
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {
