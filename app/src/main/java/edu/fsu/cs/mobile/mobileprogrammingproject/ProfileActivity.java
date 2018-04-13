@@ -55,11 +55,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         BlogFeedFragment.OnFragmentInteractionListener,
         BlogPostFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
+        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
+    // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
     private FusedLocationProviderClient mFusedLocationClient;
     boolean mTrackingLocation;
-    //private DatabaseReference mDatabase;
     private String usersEmail;
 
     @Override
@@ -110,18 +111,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         }
     };
 
-
     public static Intent newInstance(Context context, FirebaseUser user) {
 
         Intent i = new Intent(context, ProfileActivity.class);
         i.putExtra("userEmail", user.getEmail()); // Could pass in entire user instead here
         String myNum = user.getPhoneNumber();
-
-        //if myNum != null
-                //i.putExtr
         return i;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         switch (item.getItemId()) {
             case R.id.action_messaging: {
                 FragmentManager fm = getSupportFragmentManager();
-                // INSERT LOGIC TO START MESSAGING DETAIL FRAGMENT
+
                 fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
@@ -195,12 +191,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .addToBackStack(null).commit();
                 return true;
             }
-
             case R.id.action_logout: {
-                // INSERT LOGIC TO LOGUT
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-
                 db.collection("users").document(usersEmail).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -221,7 +212,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 finish();
                 return true;
             }
+            case R.id.action_Feed: {
+                BlogFeedFragment Feed = new BlogFeedFragment();
 
+                FragmentManager fm = getSupportFragmentManager();
+
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(fm.findFragmentByTag("outermostFrag"))
+                        .commit();
+
+                fm.beginTransaction()
+                        .add(R.id.outerFrag, Feed, "feedFrag")
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+            }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -229,68 +235,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
         }
     }
-    /*@Override
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.av_menu, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.action_menu);
-        ActionMenuView amView =
-                (ActionMenuView) MenuItemCompat.getActionView(menuItem);
-
-        Menu menuObject = amView.getMenu();
-        inflater.inflate(R.menu.sub_menu, menuObject);
-
-        amView.setOnMenuItemClickListener( new OnMenuItemClickListener(){
-            public boolean onMenuItemClick(MenuItem item){
-                TextView textView = (TextView) findViewById(R.id.action_nme);
-
-                switch (item.getItemId()) {
-
-                    case R.id.action_email:
-                        textView.setText("Email clicked");
-                        return true;
-                    case R.id.action_forum:
-                        textView.setText("Forum clicked");
-                        return true;
-                    case R.id.action_comment:
-                        textView.setText("Comment clicked");
-                        return true;
-                    case R.id.action_setting:
-                        textView.setText("Settings clicked");
-                        return true;
-
-                    default:
-                        return true;
-                }
-
-            }
-        });
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        TextView textView = (TextView) findViewById(R.id.action_nme);
-
-        switch (item.getItemId()) {
-
-            case R.id.action_settings:
-                textView.setText("Settings clicked");
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
-    }*/
-
-
 
     public void startTracking(){
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+            // TODO: Permission stuff here is incomplete
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
@@ -325,11 +274,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 .commit();
     }
 
-    @Override// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT
+    @Override// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT (hooked to other stuff too?)
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
     @Override
     public void onProfPreviewClick(String daEmail) {

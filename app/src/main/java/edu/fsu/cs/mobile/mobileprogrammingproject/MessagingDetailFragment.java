@@ -15,23 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -172,7 +167,7 @@ public class MessagingDetailFragment extends Fragment {
 
 
 
-
+    // NEED TO HANDLE CASE OF IF YOU TYPE IN SOMEONES EMAIL YOU ALREADY HAVE A CONVERSATION WITH BELOW
         sendButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -149,7 +149,7 @@ public class ConversationFragment extends Fragment {
                 else {
                     DocumentReference newMessageRef =  db.collection("messages") // Should only run if we dont have a conversation id yet
                             .document();
-                    newMessageRef.set(new Message(myUserEmail, otherUserEmail, usrInput.getText().toString()));
+                    newMessageRef.set(new Message(myUserEmail, otherUserEmail, usrInput.getText().toString().trim()));
                     usrInput.setError(null);
                     msgArrList.clear();
                     getConvoMessages();
@@ -233,6 +233,7 @@ public class ConversationFragment extends Fragment {
 
                                 Message tempMsg = document.toObject(Message.class);
                                 tempMsg.time = document.getDate("time");
+                                Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
                                 //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
                                 msgArrList.add(tempMsg);
                                 //recMsgs.add(document.getId());
@@ -248,10 +249,10 @@ public class ConversationFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR SECOND CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                                                 for (DocumentSnapshot document_2 : task.getResult()) {
-                                                    Message tempMsg = document_2.toObject(Message.class);
-                                                    tempMsg.time = document_2.getDate("time");
-                                                    Toast.makeText(getActivity(), "2: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
-                                                    msgArrList.add(tempMsg);
+                                                    Message tempMsg2 = document_2.toObject(Message.class);
+                                                    tempMsg2.time = document_2.getDate("time");
+                                                    Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
+                                                    msgArrList.add(tempMsg2);
                                                     //recMsgs.add(document_2.getId());
                                                     Log.d(TAG, document_2.getId() + " => " + document_2.getData());
 
@@ -278,12 +279,17 @@ public class ConversationFragment extends Fragment {
         Collections.sort(allMsgs, new Comparator<Message>() {
             @Override
             public int compare(Message o1, Message o2) {
-                return o1.getTime().compareTo(o2.getTime());
+                if(o1.getTime() != null || o2.getTime() != null)
+                    return o1.getTime().compareTo(o2.getTime());
+                return 0;
             }
         });
 
         ListView lv2 = getView().getRootView().findViewById(R.id.currentConvo);
         //List<Message> msgAsList = allMsgs;
+
+        // could make an add method here where i pass in one message and it appends
+        // adapter.notifyDataSetChanged();
         ArrayAdapter<Message> adapter = new ArrayAdapter<Message>(getActivity(), android.R.layout.simple_list_item_1, allMsgs){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
