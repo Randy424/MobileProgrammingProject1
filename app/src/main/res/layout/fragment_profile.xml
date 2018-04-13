@@ -50,6 +50,8 @@
                     android:id="@+id/userCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="10pt"
                     android:fontFamily="@font/vollkorn_medium"
                     android:text="Current User In Range "/>
 
@@ -70,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/vollkorn_medium"
+                android:gravity="center"
+                android:textSize="10pt"
                 android:text="Most Recent Feed Posts" />
         </android.support.v7.widget.CardView>
 
@@ -85,6 +89,8 @@
                 android:id="@+id/friendsText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="10pt"
                 android:fontFamily="@font/vollkorn_medium"
                 android:text="Current Number of Friends:" />
         </android.support.v7.widget.CardView>
