@@ -164,13 +164,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             case R.id.action_Post: {
 
                 FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
+                        .commit();*/
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.outerFrag, BlogPostFragment.newInstance())
+                        .add(R.id.outerFrag, BlogPostFragment.newInstance())
                         .addToBackStack(null).commit();
                 return true;
             }
@@ -207,8 +207,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .commit();*/
 
                 fm.beginTransaction()
-                        .add(R.id.outerFrag, Feed, "feedFrag")
-                        .addToBackStack(null)
+                        .add(R.id.outerFrag, Feed)
                         .commit();
                 return true;
             }
@@ -253,7 +252,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         FragmentManager fm = getSupportFragmentManager();
 
         fm.beginTransaction()
-                .replace(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail ))
+                .add(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail ))
                 .addToBackStack(null)
                 .commit();
     }

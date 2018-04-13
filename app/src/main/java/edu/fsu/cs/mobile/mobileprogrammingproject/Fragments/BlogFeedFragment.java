@@ -21,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
