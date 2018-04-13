@@ -200,6 +200,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, Feed)
+
                         .commit();
                 return true;
             }
