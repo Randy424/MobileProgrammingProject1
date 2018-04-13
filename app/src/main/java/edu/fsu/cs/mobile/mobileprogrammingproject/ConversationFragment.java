@@ -278,7 +278,9 @@ public class ConversationFragment extends Fragment {
         Collections.sort(allMsgs, new Comparator<Message>() {
             @Override
             public int compare(Message o1, Message o2) {
-                return o1.getTime().compareTo(o2.getTime());
+                if(o1.getTime() != null || o2.getTime() != null)
+                    return o1.getTime().compareTo(o2.getTime());
+                return 0;
             }
         });
 
