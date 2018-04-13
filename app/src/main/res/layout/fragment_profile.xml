@@ -21,6 +21,13 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+            app:cardMaxElevation="1dp"
+            app:cardElevation="0.7dp"
+            app:contentPadding="10dp"
+            app:contentPaddingBottom="0dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
                 app:cardCornerRadius="5dp"
                 app:cardBackgroundColor="#393282">
 
@@ -32,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            app:cardCornerRadius="5dp"
+
             app:cardBackgroundColor="#9e9e9e">
             <LinearLayout
                 android:id="@+id/layout123"
