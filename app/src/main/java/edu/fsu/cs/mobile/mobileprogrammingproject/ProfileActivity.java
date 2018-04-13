@@ -151,6 +151,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
                         .addToBackStack(null)
                         .commit();
+
                 return true;
             }
             case R.id.action_Post: {
