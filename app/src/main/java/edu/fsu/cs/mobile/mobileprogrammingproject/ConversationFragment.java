@@ -234,7 +234,6 @@ public class ConversationFragment extends Fragment {
 
                             //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR FIRST CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                             for (DocumentSnapshot document : task.getResult()) {
-<<<<<<< HEAD
                                 if( document.exists()){
 
                                     Message tempMsg = document.toObject(Message.class);
@@ -245,16 +244,6 @@ public class ConversationFragment extends Fragment {
                                     //recMsgs.add(document.getId());
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
-=======
-
-                                Message tempMsg = document.toObject(Message.class);
-                                tempMsg.time = document.getDate("time");
-                               // Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
-                                msgArrList.add(tempMsg);
-                                //recMsgs.add(document.getId());
-                                Log.d(TAG, document.getId() + " => " + document.getData());
->>>>>>> master
                             }
                             db.collection("messages")
                                     .whereEqualTo("receiver", myUserEmail)
@@ -266,7 +255,6 @@ public class ConversationFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR SECOND CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                                                 for (DocumentSnapshot document_2 : task.getResult()) {
-<<<<<<< HEAD
                                                     if (document_2.exists()) {
                                                         Message tempMsg2 = document_2.toObject(Message.class);
                                                         tempMsg2.time = document_2.getDate("time");
@@ -276,16 +264,6 @@ public class ConversationFragment extends Fragment {
                                                         Log.d(TAG, document_2.getId() + " => " + document_2.getData());
 
                                                     }
-=======
-                                                    Message tempMsg2 = document_2.toObject(Message.class);
-                                                    tempMsg2.time = document_2.getDate("time");
-                                                    //Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
-                                                    msgArrList.add(tempMsg2);
-                                                    //recMsgs.add(document_2.getId());
-                                                    Log.d(TAG, document_2.getId() + " => " + document_2.getData());
-
-
->>>>>>> master
 
                                                 }
                                                 //Toast.makeText(getActivity(), "IN DEEPEST LISTENER SIZE OF WHAT I BUILT IS:" + Integer.toString(msgArrList.size()), Toast.LENGTH_SHORT).show();

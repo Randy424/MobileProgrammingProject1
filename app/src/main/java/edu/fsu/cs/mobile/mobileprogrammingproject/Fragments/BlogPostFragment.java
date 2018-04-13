@@ -78,9 +78,10 @@ public class BlogPostFragment extends Fragment{
 //        View imageButton = rootView.findViewById(R.id.imageButton);
         textTitle = (EditText) rootView.findViewById(R.id.title);
         textDesc = (EditText) rootView.findViewById(R.id.desc);
-        myButton.setOnClickListener(new View.OnClickListener() {
         rootView.setBackgroundColor(Color.WHITE);
         rootView.setClickable(true);
+        myButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 switch(v.getId()) {
