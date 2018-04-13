@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private MyProfileListener mListener;
     private TextView mFriendsText;
+    protected static int totFriendCount;
     public interface MyProfileListener {
         void onProfPreviewClick(String derp); // need this, need diff type for url?
     }
@@ -172,7 +173,9 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
     public void updateFriends(int total)
     {
-        mFriendsText.append(" " + Integer.toString(total));}
+        totFriendCount = total;
+        mFriendsText.append(" " + Integer.toString(totFriendCount));
+    }
 
 
     @Override

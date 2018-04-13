@@ -141,6 +141,9 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 db2.collection("users").document(currentUser)
                         .collection("friends").document(clickedUser)
                         .set(update, SetOptions.merge());
+                TextView tv = (TextView) getView().getRootView().findViewById(R.id.friendsText);
+                ProfileActivityFragment.totFriendCount = ProfileActivityFragment.totFriendCount + 1;
+                tv.setText("Number of friends: " + Integer.toString(ProfileActivityFragment.totFriendCount));
 
         }
     }
