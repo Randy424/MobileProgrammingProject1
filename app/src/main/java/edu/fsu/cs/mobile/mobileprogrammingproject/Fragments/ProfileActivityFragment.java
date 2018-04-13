@@ -131,7 +131,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                              Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
-        myView.setBackgroundColor(Color.WHITE);
+        myView.setBackgroundColor(Color.DKGRAY);
         myView.setClickable(true);
         CardView profPreview = (CardView) myView.findViewById(R.id.profile_preview_card);
         profPreview.setOnClickListener(new View.OnClickListener() {

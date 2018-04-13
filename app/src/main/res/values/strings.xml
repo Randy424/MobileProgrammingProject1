@@ -43,8 +43,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">blank frag stuff</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile">StudyBuddy</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">StudyBuddy</string>
     <string name="friendAdded">Friend Added</string>
 </resources>
