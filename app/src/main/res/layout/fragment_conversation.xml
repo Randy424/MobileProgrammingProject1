@@ -8,28 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!-- <TextView
-            android:id="@+id/cUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Below should be my email" />
-        <TextView
-            android:id="@+id/convoUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ERROR" />
+        android:orientation="vertical"
+        android:clickable="true">
 
-        <TextView
-            android:id="@+id/otherConvoUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Should show other persons email below me" />
-        <TextView
-            android:id="@+id/cOtherUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ERROR" /> -->
+
 
         <View
             android:layout_width="fill_parent"

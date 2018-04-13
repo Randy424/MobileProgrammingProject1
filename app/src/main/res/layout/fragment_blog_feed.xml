@@ -3,7 +3,8 @@
     android:id="@+id/feedFrag"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment">
+    tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment"
+        android:clickable="true">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cardView"

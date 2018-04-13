@@ -2,6 +2,7 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,7 +78,10 @@ public class BlogPostFragment extends Fragment{
 //        View imageButton = rootView.findViewById(R.id.imageButton);
         textTitle = (EditText) rootView.findViewById(R.id.title);
         textDesc = (EditText) rootView.findViewById(R.id.desc);
+        rootView.setBackgroundColor(Color.WHITE);
+        rootView.setClickable(true);
         myButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 switch(v.getId()) {

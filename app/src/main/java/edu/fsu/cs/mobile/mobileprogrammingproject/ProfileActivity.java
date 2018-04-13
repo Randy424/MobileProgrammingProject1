@@ -61,9 +61,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     boolean mTrackingLocation;
     private String usersEmail;
 
-    @Override
+    /*@Override
     public void onBackPressed() { // can consolidate alot of these func calls to fm here
-
+        super.onBackPressed();
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
         if (count != 2) {
@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             fm.popBackStack();
         }
 
-    }
+    }*/
 
 
     private final String FIREBASE_TABLE = "users";
@@ -150,10 +150,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             case R.id.action_messaging: {
                 FragmentManager fm = getSupportFragmentManager();
 
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
+                        .commit();*/
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
@@ -201,10 +201,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
                 FragmentManager fm = getSupportFragmentManager();
 
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
+                        .commit();*/
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, Feed, "feedFrag")
@@ -266,10 +266,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     @Override
     public void onProfPreviewClick(String daEmail) {
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
+        /*fm.beginTransaction()
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .hide(fm.findFragmentByTag("outermostFrag"))
-                .commit();
+                .commit();**/
 
         fm.beginTransaction()
                 .add(R.id.outerFrag, ProfileDetailFragment.newInstance(daEmail))

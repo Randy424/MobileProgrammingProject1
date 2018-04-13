@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -95,6 +96,7 @@ public class MessagingDetailFragment extends Fragment {
         b.putString("email", daEmail);
 
         fragment.setArguments(b);
+
         return fragment;
     }
 
@@ -118,6 +120,8 @@ public class MessagingDetailFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         myUsersEmail = getArguments().getString("email");
         View myView = inflater.inflate(R.layout.fragment_messaging_detail, container, false);
+        myView.setBackgroundColor(Color.WHITE);
+        myView.setClickable(true);
         TextView yourEmailText = (TextView) myView.findViewById(R.id.yourOwnEmail);
         final String testReceiver = "adstew96@gmail.com";
         final String testMessage = "< " + myUsersEmail + " started a conversation >";

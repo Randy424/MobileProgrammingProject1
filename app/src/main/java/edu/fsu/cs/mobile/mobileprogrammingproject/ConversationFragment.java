@@ -87,6 +87,8 @@ public class ConversationFragment extends Fragment {
         b.putString("recEmail", receiverEmail);
 
         fragment.setArguments(b);
+
+
         return fragment;
     }
 
@@ -103,6 +105,8 @@ public class ConversationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_conversation, container, false);
+        myView.setBackgroundColor(Color.WHITE);
+        myView.setClickable(true);
         db = FirebaseFirestore.getInstance();
 
         Bundle b = getArguments();
@@ -230,14 +234,16 @@ public class ConversationFragment extends Fragment {
 
                             //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR FIRST CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                             for (DocumentSnapshot document : task.getResult()) {
+                                if( document.exists()){
 
-                                Message tempMsg = document.toObject(Message.class);
-                                tempMsg.time = document.getDate("time");
-                               // Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
-                                msgArrList.add(tempMsg);
-                                //recMsgs.add(document.getId());
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                    Message tempMsg = document.toObject(Message.class);
+                                    tempMsg.time = document.getDate("time");
+                                    //Toast.makeText(getActivity(), "1: " + tempMsg.getContent() + " and timestamp now is: " + tempMsg.time.toString(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(), "1: " + tempMsg.getContent(), Toast.LENGTH_SHORT).show();
+                                    msgArrList.add(tempMsg);
+                                    //recMsgs.add(document.getId());
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
                             }
                             db.collection("messages")
                                     .whereEqualTo("receiver", myUserEmail)
@@ -249,14 +255,15 @@ public class ConversationFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR SECOND CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                                                 for (DocumentSnapshot document_2 : task.getResult()) {
-                                                    Message tempMsg2 = document_2.toObject(Message.class);
-                                                    tempMsg2.time = document_2.getDate("time");
-                                                    //Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
-                                                    msgArrList.add(tempMsg2);
-                                                    //recMsgs.add(document_2.getId());
-                                                    Log.d(TAG, document_2.getId() + " => " + document_2.getData());
+                                                    if (document_2.exists()) {
+                                                        Message tempMsg2 = document_2.toObject(Message.class);
+                                                        tempMsg2.time = document_2.getDate("time");
+                                                        //Toast.makeText(getActivity(), "2: " + tempMsg2.getContent() + " and timestamp now is: " + tempMsg2.time.toString(), Toast.LENGTH_SHORT).show();
+                                                        msgArrList.add(tempMsg2);
+                                                        //recMsgs.add(document_2.getId());
+                                                        Log.d(TAG, document_2.getId() + " => " + document_2.getData());
 
-
+                                                    }
 
                                                 }
                                                 //Toast.makeText(getActivity(), "IN DEEPEST LISTENER SIZE OF WHAT I BUILT IS:" + Integer.toString(msgArrList.size()), Toast.LENGTH_SHORT).show();
