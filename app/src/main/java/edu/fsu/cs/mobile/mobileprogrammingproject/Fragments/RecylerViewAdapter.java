@@ -17,14 +17,17 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder>{
 
    Context context;
-   String[] values;
+   String[] title;
+   String[] desc;
+   String[] time;
    View view;
    ViewHolder viewHolder;
 
-   public RecylerViewAdapter(Context context, String[] values){
+   public RecylerViewAdapter(Context context, String[] title, String[] desc, String[] time){
       this.context = context;
-      this.values = values;
-
+      this.title = title;
+      this.desc = desc;
+      this.time = time;
    }
 
     @Override
@@ -37,22 +40,28 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
     @Override
     public void onBindViewHolder(RecylerViewAdapter.ViewHolder holder, int position) {
 
-        holder.tv.setText(values[position]);
+        holder.tv1.setText(title[position]);
+        holder.tv2.setText(desc[position]);
+        holder.tv3.setText(time[position]);
     }
 
     @Override
     public int getItemCount() {
-        return values.length;
+        return time.length;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tv;
+        TextView tv1;
+        TextView tv2;
+        TextView tv3;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tv = (TextView) itemView.findViewById(R.id.textView);
+            tv1 = (TextView) itemView.findViewById(R.id.textView1);
+            tv2 = (TextView) itemView.findViewById(R.id.textView2);
+            tv3 = (TextView) itemView.findViewById(R.id.textView3);
         }
     }
 }

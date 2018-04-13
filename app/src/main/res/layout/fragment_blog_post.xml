@@ -14,7 +14,8 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginBottom="100dp"
         android:onClick="myClickMethod"
-        android:src="@drawable/k" />
+        android:src="@drawable/k"
+        tools:ignore="OnClick" />
 
     <EditText
         android:id="@+id/title"
@@ -43,7 +44,8 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginBottom="-200dp"
         android:onClick="myClickMethod"
-        android:text="Post" />
+        android:text="Post"
+        tools:ignore="OnClick" />
 
 
 </FrameLayout>

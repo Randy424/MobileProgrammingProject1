@@ -45,12 +45,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
 
 public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
         MessagingDetailFragment.OnFragmentInteractionListener,
-        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
+        ConversationFragment.OnFragmentInteractionListener,
+        BlogFeedFragment.OnFragmentInteractionListener,
+        BlogPostFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -156,9 +159,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                         .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
                         .addToBackStack(null)
                         .commit();
-
                 return true;
             }
+            case R.id.action_Post: {
+
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(fm.findFragmentByTag("outermostFrag"))
+                        .commit();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.outerFrag, BlogPostFragment.newInstance())
+                        .addToBackStack(null).commit();
+                return true;
+            }
+
             case R.id.action_logout: {
                 db.collection("users").document(usersEmail).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

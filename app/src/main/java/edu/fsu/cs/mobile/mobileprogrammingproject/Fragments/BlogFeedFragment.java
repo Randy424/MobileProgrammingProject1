@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,22 +14,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
+import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
+
+import static android.content.ContentValues.TAG;
 
 public class BlogFeedFragment extends Fragment {
 
+
     String[] values = {"Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9","Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9"};
+    ArrayList<String> title;
+    ArrayList<String> desc;
+    ArrayList<String> time;
+    String[] titleFinal;
+    String[] descFinal;
+    String[] timeFinal;
+    Queue<Posts> entries = null;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecylerViewAdapter recylerViewAdapter;
 
     private FirebaseFirestore db;
-    private List<Post> post;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,15 +62,8 @@ public class BlogFeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        try {
-//            db.collection("Blog_Post").get();
-//        } catch(Exception e)
-//        {
-//            messageBox("doStuff", e.getMessage());
-//        }
-//
-//        if (getArguments() != null) {
-//        }
+        Log.d(TAG, "On create working: ");
+
     }
 
     @Override
@@ -65,11 +75,61 @@ public class BlogFeedFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.cardView);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recylerViewAdapter = new RecylerViewAdapter(getActivity(), values);
-        recyclerView.setAdapter(recylerViewAdapter);
+            title = new ArrayList<>();
+            desc = new ArrayList<>();
+            time = new ArrayList<>();
+
+        db = FirebaseFirestore.getInstance();
+
+        try {
+            Log.d(TAG, "Reached Try");
+
+            db.collection("Blog_Post")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document : task.getResult()) {
+
+                                    Log.d("Database Content", document.getId() + " => " + document.getData());
+
+                                    Posts l = document.toObject(Posts.class);
+
+                                    Log.d("L Content", document.getId() + " => " + l.getTitle());
+
+                                  //  entries.add(l);
+                                    title.add(l.getTitle());
+                                    desc.add(l.getDesc());
+                                    time.add(l.getTime().toString());
+                                }
+
+
+                                titleFinal = title.toArray(new String[title.size()]);
+                                descFinal = desc.toArray(new String[desc.size()]);
+                                timeFinal = time.toArray(new String[time.size()]);
+
+                                recyclerView = (RecyclerView) getView().getRootView().findViewById(R.id.cardView);
+                                layoutManager = new LinearLayoutManager(getActivity());
+                                recyclerView.setLayoutManager(layoutManager);
+                                recylerViewAdapter = new RecylerViewAdapter(getActivity(), titleFinal, descFinal, timeFinal);
+                                recyclerView.setAdapter(recylerViewAdapter);
+
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        } catch(Exception e)
+        {
+            messageBox("doStuff", e.getMessage());
+            Log.d(TAG, "Error getting documents: ");
+        }
+
+        if (getArguments() != null) {
+        }
+
 
 
 
@@ -107,26 +167,9 @@ public class BlogFeedFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-   public class Post {
-        String title;
-        String desc;
-        int photoId;
-
-        Post(String title, String desc) {
-            this.title = title;
-            this.desc = desc;
-           //this.photoId = photoId;
-        }
-    }
     // This method creates an ArrayList that has three Person objects
 // Checkout the project associated with this tutorial on Github if
 // you want to use the same images.
-    private void initializeData() {
-        post = new ArrayList<>();
-        post.add(new Post("Emma Wilson", "23 years old"));
-        post.add(new Post("Lavery Maiss", "25 years old"));
-        post.add(new Post("Lillie Watts", "35 years old"));
-    }
 
     private void messageBox(String method, String message)
     {
