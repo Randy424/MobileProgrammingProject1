@@ -113,9 +113,12 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         mSubmit = myView.findViewById(R.id.submitButton);
 
         if(clickedUser != currentUser) {
-            mEnterMajor.setVisibility(myView.GONE);
-            mMajorEdit.setVisibility(myView.GONE);
-            mSubmit.setVisibility(myView.GONE);
+            mEnterMajor.setVisibility(myView.INVISIBLE);
+            mEnterMajor.setClickable(false);
+            mMajorEdit.setVisibility(myView.INVISIBLE);
+            mMajorEdit.setClickable(false);
+            mSubmit.setVisibility(myView.INVISIBLE);
+            mSubmit.setClickable(false);
         }
         else
         {

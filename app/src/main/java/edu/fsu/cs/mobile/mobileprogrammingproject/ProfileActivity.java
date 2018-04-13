@@ -125,6 +125,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         startTracking();
 
         getSupportFragmentManager().beginTransaction().add(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
