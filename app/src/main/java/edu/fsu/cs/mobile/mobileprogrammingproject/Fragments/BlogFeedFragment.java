@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,17 +36,25 @@ import static android.content.ContentValues.TAG;
 public class BlogFeedFragment extends Fragment {
 
 
-    String[] values = {"Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9","Test 1", "Test 2", "Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9"};
+
     ArrayList<String> title;
     ArrayList<String> desc;
     ArrayList<String> time;
+    ArrayList<String> email;
     String[] titleFinal;
     String[] descFinal;
     String[] timeFinal;
-    Queue<Posts> entries = null;
+    String[] emailFinal;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecylerViewAdapter recylerViewAdapter;
+
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseRef;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseUsers;
+    private FirebaseUser mCurrentUser;
 
     private FirebaseFirestore db;
 
@@ -78,7 +90,7 @@ public class BlogFeedFragment extends Fragment {
             title = new ArrayList<>();
             desc = new ArrayList<>();
             time = new ArrayList<>();
-
+            email = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
         try {
@@ -102,17 +114,19 @@ public class BlogFeedFragment extends Fragment {
                                     title.add(l.getTitle());
                                     desc.add(l.getDesc());
                                     time.add(l.getTime().toString());
+                                    email.add(l.getEmail());
                                 }
 
 
                                 titleFinal = title.toArray(new String[title.size()]);
                                 descFinal = desc.toArray(new String[desc.size()]);
                                 timeFinal = time.toArray(new String[time.size()]);
+                                emailFinal = email.toArray(new String[email.size()]);
 
                                 recyclerView = (RecyclerView) getView().getRootView().findViewById(R.id.cardView);
                                 layoutManager = new LinearLayoutManager(getActivity());
                                 recyclerView.setLayoutManager(layoutManager);
-                                recylerViewAdapter = new RecylerViewAdapter(getActivity(), titleFinal, descFinal, timeFinal);
+                                recylerViewAdapter = new RecylerViewAdapter(getActivity(), titleFinal, descFinal, timeFinal, emailFinal);
                                 recyclerView.setAdapter(recylerViewAdapter);
 
 
