@@ -54,8 +54,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener,
         BlogPostFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
-    // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
-        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -63,9 +61,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     boolean mTrackingLocation;
     private String usersEmail;
 
-    @Override
+    /*@Override
     public void onBackPressed() { // can consolidate alot of these func calls to fm here
-
+        super.onBackPressed();
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
         if (count != 2) {
@@ -80,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             fm.popBackStack();
         }
 
-    }
+    }*/
 
 
     private final String FIREBASE_TABLE = "users";
@@ -152,10 +150,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             case R.id.action_messaging: {
                 FragmentManager fm = getSupportFragmentManager();
 
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
+                        .commit();*/
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
@@ -177,20 +175,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 return true;
             }
 
-            case R.id.action_Feed: {
-
-
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.outerFrag, BlogFeedFragment.newInstance())
-                        .addToBackStack(null).commit();
-                return true;
-            }
             case R.id.action_logout: {
                 db.collection("users").document(usersEmail).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -217,10 +201,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
                 FragmentManager fm = getSupportFragmentManager();
 
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                         .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
+                        .commit();*/
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, Feed, "feedFrag")
@@ -282,10 +266,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     @Override
     public void onProfPreviewClick(String daEmail) {
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
+        /*fm.beginTransaction()
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .hide(fm.findFragmentByTag("outermostFrag"))
-                .commit();
+                .commit();**/
 
         fm.beginTransaction()
                 .add(R.id.outerFrag, ProfileDetailFragment.newInstance(daEmail))

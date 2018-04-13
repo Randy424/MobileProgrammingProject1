@@ -2,6 +2,7 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -69,6 +70,8 @@ public class BlogFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_blog_feed, container, false);
+        rootView.setBackgroundColor(Color.WHITE);
+        rootView.setClickable(true);
         // Inflate the layout for this fragment
 
 

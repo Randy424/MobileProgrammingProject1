@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -115,6 +116,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     public static ProfileActivityFragment newInstance() {
         ProfileActivityFragment fragment = new ProfileActivityFragment();
         //fragment.setRetainInstance(true);
+
         return fragment;
     }
 
@@ -126,6 +128,8 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                              Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
+        myView.setBackgroundColor(Color.WHITE);
+        myView.setClickable(true);
         CardView profPreview = (CardView) myView.findViewById(R.id.profile_preview_card);
         profPreview.setOnClickListener(new View.OnClickListener() {
             @Override
