@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#008000"
     tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.MainActivity">
 
     <FrameLayout
@@ -15,5 +16,11 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:tag="profileTag"></FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:background="#008000"
+        android:layout_height="?attr/actionBarSize"
+        />
 
 </RelativeLayout>
