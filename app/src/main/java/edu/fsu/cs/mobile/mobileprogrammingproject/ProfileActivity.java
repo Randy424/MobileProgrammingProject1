@@ -54,8 +54,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener,
         BlogPostFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
-    // IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
-        ConversationFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -177,20 +175,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 return true;
             }
 
-            case R.id.action_Feed: {
-
-
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.outerFrag, BlogFeedFragment.newInstance())
-                        .addToBackStack(null).commit();
-                return true;
-            }
             case R.id.action_logout: {
                 db.collection("users").document(usersEmail).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
