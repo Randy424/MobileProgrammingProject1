@@ -97,6 +97,7 @@ public class BlogFeedFragment extends Fragment {
             Log.d(TAG, "Reached Try");
 
             db.collection("Blog_Post")
+                    .orderBy("time")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
