@@ -1,4 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
+
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Calendar;
@@ -13,13 +14,14 @@ public class Posts {
     private String title;
     private String desc;
     private String email;
-    protected @ServerTimestamp Date time;
+    protected @ServerTimestamp
+    Date time;
 
-public Posts(){
-    super();
-}
+    public Posts() {
+        super();
+    }
 
-public Posts(String title, String desc, String email) {
+    public Posts(String title, String desc, String email) {
         super();
         this.title = title;
         this.desc = desc;
@@ -29,19 +31,21 @@ public Posts(String title, String desc, String email) {
     }
 
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getDesc(){
+    public String getDesc() {
         return desc;
     }
 
-    public Date getTime(){
+    public Date getTime() {
         return time;
     }
 
-    public String getEmail() {return email;}
+    public String getEmail() {
+        return email;
+    }
 
 
 }

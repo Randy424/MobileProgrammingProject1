@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         MessagingDetailFragment.OnFragmentInteractionListener,
         ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener,
-        BlogPostFragment.OnFragmentInteractionListener{ // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
+        BlogPostFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
     // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
 
     private final int REQUEST_LOCATION_PERMISSION = 7;
@@ -80,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
-            if(mTrackingLocation) {
+            if (mTrackingLocation) {
                 Location myLocation = locationResult.getLastLocation();
                 if (myLocation != null) {
                     Toast.makeText(getApplicationContext(), "Updating Location Info In FireSTORE", Toast.LENGTH_SHORT).show();
@@ -115,10 +115,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         setContentView(R.layout.activity_profile);
 
         Intent i = getIntent();
-        assert(i != null);
+        assert (i != null);
 
         usersEmail = i.getStringExtra("userEmail");
-        assert(usersEmail != null);
+        assert (usersEmail != null);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         db = FirebaseFirestore.getInstance();
@@ -215,7 +215,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         }
     }
 
-    public void startTracking(){
+    public void startTracking() {
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Permission stuff here is incomplete
@@ -225,8 +225,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
             Toast.makeText(getApplicationContext(), "IN THE PERMISSION IF CHECK", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else {
+        } else {
             mTrackingLocation = true;
             mFusedLocationClient.requestLocationUpdates
                     (getLocationRequest(), mLocationCallback,
@@ -248,12 +247,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
         FragmentManager fm = getSupportFragmentManager();
 
         fm.beginTransaction()
-                .add(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail ))
+                .add(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
                 .addToBackStack(null)
                 .commit();
     }
 
-    @Override// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT (hooked to other stuff too?)
+    @Override
+// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT (hooked to other stuff too?)
     public void onFragmentInteraction(Uri uri) {
 
     }

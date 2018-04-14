@@ -34,8 +34,6 @@ public class ProfilePreviewFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,9 +44,10 @@ public class ProfilePreviewFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
+     * <p>
      * //param param1 Parameter 1.
      * //param param2 Parameter 2.
+     *
      * @return A new instance of fragment ProfilePreviewFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -64,10 +63,6 @@ public class ProfilePreviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -75,8 +70,9 @@ public class ProfilePreviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_profile_preview, container, false);
         Bundle b = getArguments();
-        String id = b.getString("id");
-        TextView usersEmailTextView = (TextView) myView.findViewById(R.id.usersEmail);
+        String id;
+        id = b.getString("id");
+        TextView usersEmailTextView = myView.findViewById(R.id.usersEmail);
         thisUsersEmail = id;
         usersEmailTextView.setText(id);
 

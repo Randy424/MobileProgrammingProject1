@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,7 +35,6 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.RecylerViewAdapter;
 import static android.content.ContentValues.TAG;
 
 public class BlogFeedFragment extends Fragment {
-
 
 
     ArrayList<String> title;
@@ -89,10 +87,10 @@ public class BlogFeedFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-            title = new ArrayList<>();
-            desc = new ArrayList<>();
-            time = new ArrayList<>();
-            email = new ArrayList<>();
+        title = new ArrayList<>();
+        desc = new ArrayList<>();
+        time = new ArrayList<>();
+        email = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
         try {
@@ -113,7 +111,7 @@ public class BlogFeedFragment extends Fragment {
 
                                     Log.d("L Content", document.getId() + " => " + l.getTitle());
 
-                                  //  entries.add(l);
+                                    //  entries.add(l);
                                     title.add(l.getTitle());
                                     desc.add(l.getDesc());
                                     time.add(l.getTime().toString());
@@ -138,8 +136,7 @@ public class BlogFeedFragment extends Fragment {
                             }
                         }
                     });
-        } catch(Exception e)
-        {
+        } catch (Exception e) {
             messageBox("doStuff", e.getMessage());
             Log.d(TAG, "Error getting documents: ");
         }
@@ -148,10 +145,8 @@ public class BlogFeedFragment extends Fragment {
         }
 
 
-
-
-       // LinearLayoutManager llm = new LinearLayoutManager(getContext());
-      //  rv.setLayoutManager(llm);
+        // LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        //  rv.setLayoutManager(llm);
 
         return rootView;
     }
@@ -188,9 +183,8 @@ public class BlogFeedFragment extends Fragment {
 // Checkout the project associated with this tutorial on Github if
 // you want to use the same images.
 
-    private void messageBox(String method, String message)
-    {
-        Log.d("EXCEPTION: " + method,  message);
+    private void messageBox(String method, String message) {
+        Log.d("EXCEPTION: " + method, message);
 
         AlertDialog.Builder messageBox = new AlertDialog.Builder(getActivity());
         messageBox.setTitle(method);

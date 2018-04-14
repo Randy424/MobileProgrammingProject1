@@ -50,7 +50,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     private String mParam1;
     private String mParam2;
     private FirebaseFirestore db2;
-    private  String currentUser;
+    private String currentUser;
     private String clickedUser;
     private TextView mEnterMajor;
     private EditText mMajorEdit;
@@ -69,9 +69,10 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
+     * <p>
      * param param1 Parameter 1.
      * param param2 Parameter 2.
+     *
      * @return A new instance of fragment ProfileDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -83,6 +84,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         fragment.setArguments(b);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,9 +97,9 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       db2 = FirebaseFirestore.getInstance();
+        db2 = FirebaseFirestore.getInstance();
         clickedUser = getArguments().getString("email");
-       currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_profile_detail, container, false);
         myView.setBackgroundColor(Color.WHITE);
@@ -107,21 +109,19 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         mCurrentMajor = myView.findViewById(R.id.currentMajorTextview);
         mCurrentName = myView.findViewById(R.id.nameTextview);
         mCurrentName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        mFriendButton =  myView.findViewById(R.id.friendButton);
+        mFriendButton = myView.findViewById(R.id.friendButton);
         mMajorEdit = myView.findViewById(R.id.major_Edittext);
         mEnterMajor = myView.findViewById(R.id.enterMajorTextview);
         mSubmit = myView.findViewById(R.id.submitButton);
 
-        if(clickedUser != currentUser) {
+        if (clickedUser != currentUser) {
             mEnterMajor.setVisibility(myView.INVISIBLE);
             mEnterMajor.setClickable(false);
             mMajorEdit.setVisibility(myView.INVISIBLE);
             mMajorEdit.setClickable(false);
             mSubmit.setVisibility(myView.INVISIBLE);
             mSubmit.setClickable(false);
-        }
-        else
-        {
+        } else {
             mSubmit.setOnClickListener(this);
         }
 
@@ -162,29 +162,24 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         });
 
 
-
         mFriendButton.setOnClickListener(this);
         emailTextView.setText(clickedUser);
 
         return myView;
     }
 
-    public void changeButton(Button FriendButton)
-    {
+    public void changeButton(Button FriendButton) {
         FriendButton.setText(R.string.friendAdded);
 
     }
 
-    public void changeMajor(Map<String, Object> majormap)
-    {
+    public void changeMajor(Map<String, Object> majormap) {
         mCurrentMajor.setText(majormap.get("major").toString());
     }
 
     @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.friendButton:
                 Map<String, Object> update = new HashMap<>();
                 update.put(clickedUser, true);

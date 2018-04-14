@@ -43,7 +43,7 @@ public class ConversationFragment extends Fragment {
     public final String TAG = "convoTag";
     private ListView lv;
     private FirebaseFirestore db;
-    ArrayList <Message> msgArrList;//= new ArrayList<>();
+    ArrayList<Message> msgArrList;//= new ArrayList<>();
 
     String myUserEmail;
     String otherUserEmail;
@@ -66,9 +66,10 @@ public class ConversationFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
+     * <p>
      * param param1 Parameter 1.
      * param param2 Parameter 2.
+     *
      * @return A new instance of fragment ConversationFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -106,30 +107,14 @@ public class ConversationFragment extends Fragment {
         myUserEmail = b.getString("myEmail");
         otherUserEmail = b.getString("recEmail");
 
-        //TextView displayUserTextView =  myView.findViewById(R.id.convoUser);
-        //displayUserTextView.setText(myUserEmail);
-        //TextView displayOtherUserTextView = myView.findViewById(R.id.cOtherUser);
-        //displayOtherUserTextView.setText(otherUserEmail);
 
         msgArrList = new ArrayList<>();
-
-        //final ArrayList<String> sentMsgs = new ArrayList<>();
-        //final ArrayList<String> recMsgs = new ArrayList<>();
-
-
 
         // first lets get all messages i sent this person
         // this will call a chain of functions
         getSentMsgs(); // refactor to have a better name
 
         getConvoMessages();
-
-        /*ArrayList<>
-        db.collection("conversations")
-                .document(myUsersEmail)
-                .collection("contacts")
-                .get().addOnCompleteListener(queryListener);*/
-
 
 
         Button sendButt = (Button) myView.findViewById(R.id.convoSendMessageButton);
@@ -141,10 +126,10 @@ public class ConversationFragment extends Fragment {
 
                 EditText usrInput = (EditText) getView().getRootView().findViewById(R.id.convoTargetMessage);
 
-                if(isEmpty(usrInput))
+                if (isEmpty(usrInput))
                     usrInput.setError("Please enter a message before sending!");
                 else {
-                    DocumentReference newMessageRef =  db.collection("messages") // Should only run if we dont have a conversation id yet
+                    DocumentReference newMessageRef = db.collection("messages") // Should only run if we dont have a conversation id yet
                             .document();
                     newMessageRef.set(new Message(myUserEmail, otherUserEmail, usrInput.getText().toString().trim()));
                     usrInput.setError(null);
@@ -157,12 +142,14 @@ public class ConversationFragment extends Fragment {
         });
         return myView;
     }
+
     private boolean isEmpty(EditText etText) {
         if (etText.getText().toString().trim().length() > 0)
             return false;
 
         return true;
     }
+
     public void getSentMsgs() {
         db.collection("conversations")
                 .document(myUserEmail)
@@ -185,6 +172,7 @@ public class ConversationFragment extends Fragment {
                     }
                 });
     }
+
     public void getRecdMsgs() {
         db.collection("conversations")
                 .document(myUserEmail)
@@ -207,6 +195,7 @@ public class ConversationFragment extends Fragment {
                     }
                 });
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -227,7 +216,7 @@ public class ConversationFragment extends Fragment {
 
                             //Toast.makeText(getActivity(), "IN THE COMPLETE LISTENER FOR FIRST CONVO MESSAGE PART", Toast.LENGTH_SHORT).show();
                             for (DocumentSnapshot document : task.getResult()) {
-                                if( document.exists()){
+                                if (document.exists()) {
 
                                     Message tempMsg = document.toObject(Message.class);
                                     tempMsg.time = document.getDate("time");
@@ -275,11 +264,11 @@ public class ConversationFragment extends Fragment {
 
     }
 
-    public void printConversation(final ArrayList<Message> allMsgs){
+    public void printConversation(final ArrayList<Message> allMsgs) {
         Collections.sort(allMsgs, new Comparator<Message>() {
             @Override
             public int compare(Message o1, Message o2) {
-                if(o1.getTime() != null && o2.getTime() != null) {
+                if (o1.getTime() != null && o2.getTime() != null) {
                     return o1.getTime().compareTo(o2.getTime());
                 }
                 return 0;
@@ -291,21 +280,19 @@ public class ConversationFragment extends Fragment {
 
         // could make an add method here where i pass in one message and it appends
         // adapter.notifyDataSetChanged();
-        ArrayAdapter<Message> adapter = new ArrayAdapter<Message>(getActivity(), android.R.layout.simple_list_item_1, allMsgs){
+        ArrayAdapter<Message> adapter = new ArrayAdapter<Message>(getActivity(), android.R.layout.simple_list_item_1, allMsgs) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
+            public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-                if(allMsgs.get(position).getSender().equals(myUserEmail))
+                View view = super.getView(position, convertView, parent);
+                if (allMsgs.get(position).getSender().equals(myUserEmail))
                 //if(position %2 == 1)
                 {
                     // Set a background color for ListView regular row/item
                     view.setBackgroundColor(Color.LTGRAY);
                     view.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
 
-                }
-                else
-                {
+                } else {
                     // Set the background color for alternate row/item
                     view.setBackgroundColor(Color.parseColor("#FFB6B546"));
 
@@ -315,30 +302,11 @@ public class ConversationFragment extends Fragment {
             }
         };
 
-
-        //ArrayAdapter<Message> adapter = new ArrayAdapter<Message>(this,
-                //android.R.layout.simple_list_item_1, allMsgs.toArray());
-        //for(int i = 0; i < allMsgs.size(); i++) {
-        //    Toast.makeText(getActivity(), allMsgs.get(i).getContent(), Toast.LENGTH_SHORT).show();
-        //}
-
-
         lv2.setAdapter(adapter);
 
 
-        //Toast.makeText(getActivity(), "JUST SET ADAPTER", Toast.LENGTH_SHORT).show();
-        //for(int i = 0; i < allMsgs.size(); i++) {
-        //    Toast.makeText(getActivity(), allMsgs.get(i).getContent(), Toast.LENGTH_SHORT).show();
-        //}
-        //if (allMsgs.size() == 0)
-
-            //Toast.makeText(getActivity(), "AT THE END ALLMSGS SIZE IS 0", Toast.LENGTH_SHORT).show();
-
-        //FragmentTransaction ftr = getFragmentManager().beginTransaction();
-
-        //ftr.detach(ConversationFragment.this).attach(ConversationFragment.this).commit();
-
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

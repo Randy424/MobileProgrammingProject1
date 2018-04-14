@@ -1,11 +1,8 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.content.Intent;
-import android.view.Menu;
 
 public class Splash_Activity extends Activity {
 

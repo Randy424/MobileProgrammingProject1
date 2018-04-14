@@ -35,17 +35,18 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private MyProfileListener mListener;
     private TextView mFriendsText;
     protected static int totFriendCount;
+
     public interface MyProfileListener {
         void onProfPreviewClick(String derp); // need this, need diff type for url?
     }
 
 
-
-    @Override // needed this? was getting crash on clicking download without it? (FROM OLD HW 4 NOTE)
+    @Override
+    // needed this? was getting crash on clicking download without it? (FROM OLD HW 4 NOTE)
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof MyProfileListener) {
@@ -71,7 +72,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
     @Override
     public void onMapReady(final GoogleMap googleMap) { //  TODO IS MAKING THIS FINAL HERE A PROBLEM?
-                                                        // IF SO WHAT IS THE WORKAROUND?
+        // IF SO WHAT IS THE WORKAROUND?
 
         db.collection("users")
                 //.whereEqualTo("capital", true)
@@ -99,13 +100,12 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                 });
 
 
-
         LatLng schoolLocate = new LatLng(30.445349, -84.299542);
         float zoomLevel = (float) 14.0;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
 
 
-      googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMarkerClickListener(this);
 
 
         googleMap.addCircle(new CircleOptions()
@@ -143,7 +143,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
         mFriendsText = myView.findViewById(R.id.friendsText);
         getFriendCount();
-        mapView =  myView.findViewById(R.id.mapLite);
+        mapView = myView.findViewById(R.id.mapLite);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
 
@@ -153,8 +153,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         return myView;
     }
 
-    public void getFriendCount()
-    {
+    public void getFriendCount() {
         db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                 .collection("friends")
                 .get()
@@ -171,10 +170,10 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
-                }); }
+                });
+    }
 
-    public void updateFriends(int total)
-    {
+    public void updateFriends(int total) {
         totFriendCount = total;
         mFriendsText.append(" " + Integer.toString(totFriendCount));
     }

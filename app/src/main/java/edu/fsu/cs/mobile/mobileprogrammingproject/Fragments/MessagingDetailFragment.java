@@ -86,9 +86,10 @@ public class MessagingDetailFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
+     * <p>
      * param param1 Parameter 1.
      * param param2 Parameter 2.
+     *
      * @return A new instance of fragment ProfileDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -114,7 +115,7 @@ public class MessagingDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final Map<String, Object> dummyMap= new HashMap<>();
+        final Map<String, Object> dummyMap = new HashMap<>();
         dummyMap.put("dummy", "dummy");
 
         myConversations = new ArrayList<>();
@@ -129,28 +130,7 @@ public class MessagingDetailFragment extends Fragment {
         final String testMessage = "< " + myUsersEmail + " started a conversation >";
         yourEmailText.setText("I see you are: " + getArguments().getString("email"));
         Button sendButt = (Button) myView.findViewById(R.id.sendMessageButton);
-        final EditText recipientEditText = (EditText) myView.findViewById(R.id.targetRecipient);
-
-        /*OnCompleteListener<DocumentSnapshot> convoListener = new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null && document.exists()) {
-                        //Message mMessage = document.toObject(Message.class);
-                        //document.get()
-
-                        // do stuff in here to show message stuffTextView
-
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }
-
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-        }};*/
-
-        // use this for something or take it out
+        final EditText recipientEditText = myView.findViewById(R.id.targetRecipient);
 
 
         db.collection("conversations")
@@ -158,30 +138,17 @@ public class MessagingDetailFragment extends Fragment {
                 .collection("contacts")
                 .get().addOnCompleteListener(queryListener);
 
-        /*db.collection("conversations")
-                .document(myUsersEmail)
-                .collection("contacts")
-                .get().addOnCompleteListener(queryListener);*
-        //for myConversationIds.length
-        //Toast.makeText(getApplicationContext(), "")*/
+
         lv = myView.findViewById(R.id.convoListView);
-        /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                myConversations);
-        lv.setAdapter(arrayAdapter);*/
 
-
-
-    // NEED TO HANDLE CASE OF IF YOU TYPE IN SOMEONES EMAIL YOU ALREADY HAVE A CONVERSATION WITH BELOW
+        // NEED TO HANDLE CASE OF IF YOU TYPE IN SOMEONES EMAIL YOU ALREADY HAVE A CONVERSATION WITH BELOW
         sendButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String recipientEmail = recipientEditText.getText().toString().trim();
                 if (recipientEmail.equals(myUsersEmail)) {
                     recipientEditText.setError("You might want to talk to someone about that!");
-                }
-                else if(recipientEmail.equals("")) // if someone hits send with no sender typed in is ok to check as null here??
+                } else if (recipientEmail.equals("")) // if someone hits send with no sender typed in is ok to check as null here??
                 {
                     recipientEditText.setError("Please enter an email to start a conversation");
 
@@ -193,12 +160,6 @@ public class MessagingDetailFragment extends Fragment {
                     Map<String, Object> messageIdMap = new HashMap<>();
                     String messageId = newMessageRef.getId();
                     messageIdMap.put("id", messageId);
-
-
-
-                /*Map<String, Object> messageContentMap = new HashMap<>();
-                messageContentMap.put("content", testMessage);
-                messageContentMap.put("timestamp", FieldValue.serverTimestamp());*/
 
 
                     db.collection("conversations") // convert document to non-virtual
@@ -233,19 +194,6 @@ public class MessagingDetailFragment extends Fragment {
                             .document(messageId)
                             .set(messageIdMap, SetOptions.merge());
 
-                    //.document();newMessageRef.getId()
-
-                    //.set();
-                    //.set(new Message(myUsersEmail, recipientEditText.getText().toString(), testMessage), SetOptions.merge());
-
-
-                /*//, testMessage), SetOptions.merge());
-                /*db.collection("conversations")
-                        .document(myUsersEmail + "_" + recipientEditText.getText().toString())
-                        .set(new Message(myUsersEmail, recipientEditText.getText().toString(), testMessage), SetOptions.merge());
-                db.collection("messages")
-                        .document(myUsersEmail + "_" + recipientEditText.getText().toString())
-                        .set(new Message(myUsersEmail, recipientEditText.getText().toString(), testMessage), SetOptions.merge());*/
                     myConversations.clear();
                     db.collection("conversations")
                             .document(myUsersEmail)
@@ -255,38 +203,6 @@ public class MessagingDetailFragment extends Fragment {
             }
         });
 
-
-
-        /*db.collection("messages")
-                .whereEqualTo("sender", myUsersEmail)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Set<String> conversations = new Set<>();
-                            ArrayList<LatLng> positionInfo = new ArrayList<>();
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Message mMessage = document.toObject(Message.class);
-                                if(mMessage.getReceiver().equals(myUsersEmail)) {
-                                    conversations.add(mMessage.getSender());
-                                }
-                                else if (mMessage.getSender().equals(myUsersEmail)){
-                                    conversations.add(mMessage.getReceiver());
-                                }
-
-                                // do stuff in here to show message stuffTextView
-                                //options.position(new LatLng(document.getDouble("latitude"),document.getDouble("longitude")));
-                                //options.title(document.getId());
-                                //googleMap.addMarker(options);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });*/
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -306,6 +222,7 @@ public class MessagingDetailFragment extends Fragment {
                 myConversations);
         lv.setAdapter(arrayAdapter);
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -343,6 +260,7 @@ public class MessagingDetailFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void loadConversationFragment(String firstEmail, String secondEmail);
+
         void onFragmentInteraction(Uri uri);
     }
 }

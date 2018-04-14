@@ -29,16 +29,15 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 
-public class BlogPostFragment extends Fragment{
+public class BlogPostFragment extends Fragment {
 
     private ImageButton imageBtn;
     private FirebaseFirestore db;
-//    private static final int GALLERY_REQUEST_CODE = 2;
+    //    private static final int GALLERY_REQUEST_CODE = 2;
     private Uri uri = null;
     private EditText textTitle;
     private EditText textDesc;
     private Button postBtn;
-
 
 
     private OnFragmentInteractionListener mListener;
@@ -77,29 +76,28 @@ public class BlogPostFragment extends Fragment{
         rootView.setClickable(true);
 
 
-
         myButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                switch(v.getId()) {
+                switch (v.getId()) {
 
-                    case R.id.submit:{
+                    case R.id.submit: {
                         //Do error checking too
 
-               // Toast.makeText(getActivity(), "POSTING...", Toast.LENGTH_LONG).show();
-                 String PostTitle = textTitle.getText().toString().trim();
-                 String PostDesc = textDesc.getText().toString().trim();
-                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-               //String usersEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                        // Toast.makeText(getActivity(), "POSTING...", Toast.LENGTH_LONG).show();
+                        String PostTitle = textTitle.getText().toString().trim();
+                        String PostDesc = textDesc.getText().toString().trim();
+                        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                        //String usersEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-                Toast.makeText(getActivity(), "POSTING..."+PostTitle, Toast.LENGTH_LONG).show();
-                Map<String, Object> messageIdMap = new HashMap<>();
-                Posts myPost = new Posts(PostTitle, PostDesc, email);
+                        Toast.makeText(getActivity(), "POSTING..." + PostTitle, Toast.LENGTH_LONG).show();
+                        Map<String, Object> messageIdMap = new HashMap<>();
+                        Posts myPost = new Posts(PostTitle, PostDesc, email);
 
-                db.collection("Blog_Post")
-                        .document()
-                        .set(myPost, SetOptions.merge());
+                        db.collection("Blog_Post")
+                                .document()
+                                .set(myPost, SetOptions.merge());
                     }
                     break;
 

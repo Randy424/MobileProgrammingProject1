@@ -14,23 +14,23 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by Randy Bruno-Piverger on 4/10/2018.
  */
 
-public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder>{
+public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder> {
 
-   Context context;
-   String[] title;
-   String[] desc;
-   String[] time;
-   String[] email;
-   View view;
-   ViewHolder viewHolder;
+    Context context;
+    String[] title;
+    String[] desc;
+    String[] time;
+    String[] email;
+    View view;
+    ViewHolder viewHolder;
 
-   public RecylerViewAdapter(Context context, String[] title, String[] desc, String[] time, String[] email){
-      this.context = context;
-      this.title = title;
-      this.desc = desc;
-      this.time = time;
-      this.email = email;
-   }
+    public RecylerViewAdapter(Context context, String[] title, String[] desc, String[] time, String[] email) {
+        this.context = context;
+        this.title = title;
+        this.desc = desc;
+        this.time = time;
+        this.email = email;
+    }
 
     @Override
     public RecylerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,7 +56,7 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
         return time.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv1;
         TextView tv2;

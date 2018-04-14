@@ -1,4 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,13 +9,14 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Arrays;
 import java.util.List;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
+                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
 // Create and launch sign-in intent
         startActivityForResult(
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 }
