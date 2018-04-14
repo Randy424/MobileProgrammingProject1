@@ -7,22 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-
 /**
  * Created by Randy Bruno-Piverger on 4/10/2018.
  */
 
 public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
     String[] title;
     String[] desc;
     String[] time;
     String[] email;
     View view;
-    ViewHolder viewHolder;
 
     public RecylerViewAdapter(Context context, String[] title, String[] desc, String[] time, String[] email) {
         this.context = context;
@@ -36,9 +32,7 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
     public RecylerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.recycle_items, parent, false);
 
-
-        viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -56,20 +50,20 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
         return time.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv1;
         TextView tv2;
         TextView tv3;
         TextView tv4;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
-            tv1 = (TextView) itemView.findViewById(R.id.textView1);
-            tv2 = (TextView) itemView.findViewById(R.id.textView2);
-            tv3 = (TextView) itemView.findViewById(R.id.textView3);
-            tv4 = (TextView) itemView.findViewById(R.id.textViewEmail);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tv4 = itemView.findViewById(R.id.textViewEmail);
         }
     }
 }

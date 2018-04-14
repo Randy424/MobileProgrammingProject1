@@ -3,7 +3,6 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 import android.content.Context;
 
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
@@ -33,7 +30,6 @@ public class BlogPostFragment extends Fragment {
     private EditText textTitle;
     private EditText textDesc;
 
-    private OnFragmentInteractionListener mListener;
 
     public BlogPostFragment() {
         // Required empty public constructor
@@ -100,18 +96,13 @@ public class BlogPostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
     public interface OnFragmentInteractionListener {

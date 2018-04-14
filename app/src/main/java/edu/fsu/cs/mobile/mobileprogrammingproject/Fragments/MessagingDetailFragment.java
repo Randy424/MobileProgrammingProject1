@@ -2,7 +2,6 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -28,6 +27,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
@@ -43,7 +43,6 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 public class MessagingDetailFragment extends Fragment {
     private ListView lv;
 
-    private final String TAG = "messagedetailtag";
     private FirebaseFirestore db;
     private String myUsersEmail;
     private ArrayList<String> myConversations;
@@ -51,6 +50,7 @@ public class MessagingDetailFragment extends Fragment {
     OnCompleteListener<QuerySnapshot> queryListener = new OnCompleteListener<QuerySnapshot>() {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            String TAG = "messagedetailtag";
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
                     //Message mMessage = document.toObject(Message.class);
@@ -68,14 +68,7 @@ public class MessagingDetailFragment extends Fragment {
         }
     };
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,49 +80,46 @@ public class MessagingDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * <p>
-     * param param1 Parameter 1.
-     * param param2 Parameter 2.
      *
      * @return A new instance of fragment ProfileDetailFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static MessagingDetailFragment newInstance(String daEmail) {
         MessagingDetailFragment fragment = new MessagingDetailFragment();
         Bundle b = new Bundle();
         b.putString("email", daEmail);
-
         fragment.setArguments(b);
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final Map<String, Object> dummyMap = new HashMap<>();
         dummyMap.put("dummy", "dummy");
 
         myConversations = new ArrayList<>();
-
         db = FirebaseFirestore.getInstance();
+
+        assert getArguments() != null;
         myUsersEmail = getArguments().getString("email");
-        View myView = inflater.inflate(R.layout.fragment_messaging_detail, container, false);
+
+        View myView = inflater.inflate(R.layout.fragment_messaging_detail, container,
+                false);
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
-        TextView yourEmailText = (TextView) myView.findViewById(R.id.yourOwnEmail);
-        final String testReceiver = "adstew96@gmail.com";
+
+        TextView yourEmailText = myView.findViewById(R.id.yourOwnEmail);
         final String testMessage = "< " + myUsersEmail + " started a conversation >";
-        yourEmailText.setText("I see you are: " + getArguments().getString("email"));
-        Button sendButt = (Button) myView.findViewById(R.id.sendMessageButton);
+        yourEmailText.setText(String.format("I see you are: %s", getArguments()
+                .getString("email")));
+        Button sendButt = myView.findViewById(R.id.sendMessageButton);
         final EditText recipientEditText = myView.findViewById(R.id.targetRecipient);
 
 
@@ -141,20 +131,20 @@ public class MessagingDetailFragment extends Fragment {
 
         lv = myView.findViewById(R.id.convoListView);
 
-        // NEED TO HANDLE CASE OF IF YOU TYPE IN SOMEONES EMAIL YOU ALREADY HAVE A CONVERSATION WITH BELOW
+
         sendButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String recipientEmail = recipientEditText.getText().toString().trim();
                 if (recipientEmail.equals(myUsersEmail)) {
                     recipientEditText.setError("You might want to talk to someone about that!");
-                } else if (recipientEmail.equals("")) // if someone hits send with no sender typed in is ok to check as null here??
+                } else if (recipientEmail.equals(""))
                 {
                     recipientEditText.setError("Please enter an email to start a conversation");
 
-                } else {
+                } else { // Should only run if we dont have a conversation id yet
                     recipientEditText.setError(null);
-                    DocumentReference newMessageRef = db.collection("messages") // Should only run if we dont have a conversation id yet
+                    DocumentReference newMessageRef = db.collection("messages")
                             .document();
 
                     Map<String, Object> messageIdMap = new HashMap<>();
@@ -168,12 +158,12 @@ public class MessagingDetailFragment extends Fragment {
                             .document(recipientEmail)
                             .set(dummyMap);
 
-                    newMessageRef.set(new Message(myUsersEmail, recipientEmail, testMessage));//send, rec, content));
+                    newMessageRef.set(new Message(myUsersEmail, recipientEmail, testMessage));
 
 
-                    db.collection("conversations") // put into my sent area
-                            .document(myUsersEmail) // Should only run if we dont have a conversation id yet
-                            .collection("contacts")
+                    db.collection("conversations")      // put into my sent area
+                            .document(myUsersEmail)        // Should only run if we dont have a
+                            .collection("contacts")     // conversation id yet
                             .document(recipientEmail)
                             .collection("sent")
                             .document(messageId)
@@ -187,8 +177,8 @@ public class MessagingDetailFragment extends Fragment {
                             .set(dummyMap);
 
                     db.collection("conversations") // put in appropriate recieve area
-                            .document(recipientEmail) // Should only run if we dont have a conversation id yet
-                            .collection("contacts")
+                            .document(recipientEmail) // Should only run if we dont have
+                            .collection("contacts")// a conversation id yet
                             .document(myUsersEmail)
                             .collection("received")
                             .document(messageId)
@@ -206,8 +196,9 @@ public class MessagingDetailFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(getActivity(), "I AM IN THE ONITEMCLICK OF ONITEMCLICKLISTENER with: "+ lv.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
-                mListener.loadConversationFragment(myUsersEmail, lv.getItemAtPosition(i).toString());
+
+                mListener.loadConversationFragment(myUsersEmail, lv.getItemAtPosition(i)
+                        .toString());
             }
         });
         return myView;
@@ -215,19 +206,12 @@ public class MessagingDetailFragment extends Fragment {
 
 
     public void populateConvoList() {
-        lv = getView().getRootView().findViewById(R.id.convoListView);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                getActivity(),
+        lv = Objects.requireNonNull(getView()).getRootView().findViewById(R.id.convoListView);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_list_item_1,
                 myConversations);
         lv.setAdapter(arrayAdapter);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -258,9 +242,7 @@ public class MessagingDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void loadConversationFragment(String firstEmail, String secondEmail);
 
-        void onFragmentInteraction(Uri uri);
     }
 }

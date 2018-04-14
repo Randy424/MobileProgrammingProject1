@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -39,41 +38,19 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileActivityFragm
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfilePreviewFragment;
 
-public class ProfileActivity extends AppCompatActivity implements ProfilePreviewFragment.OnFragmentInteractionListener,
+public class ProfileActivity extends AppCompatActivity implements
+        ProfilePreviewFragment.OnFragmentInteractionListener,
         ProfileActivityFragment.MyProfileListener,
         ProfileDetailFragment.OnFragmentInteractionListener,
         MessagingDetailFragment.OnFragmentInteractionListener,
         ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener,
-        BlogPostFragment.OnFragmentInteractionListener { // ADDED THIS BECAUSE OF TEMPLATE IN AUTOMADE FRAGMENT
-    // TODO IS IT AN ISSUE ALL THESE SHARING ONE METHOD IN THIS ACTIVITY?
+        BlogPostFragment.OnFragmentInteractionListener {
 
-    private final int REQUEST_LOCATION_PERMISSION = 7;
     private FusedLocationProviderClient mFusedLocationClient;
     boolean mTrackingLocation;
     private String usersEmail;
 
-    /*@Override
-    public void onBackPressed() { // can consolidate alot of these func calls to fm here
-        super.onBackPressed();
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-
-        if (count != 2) {
-            super.onBackPressed();
-        }
-        else {
-            FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .show(fm.findFragmentByTag("outermostFrag"))
-                    .commit();
-            fm.popBackStack();
-        }
-
-    }*/
-
-
-    private final String FIREBASE_TABLE = "users";
 
     private FirebaseFirestore db;
 
@@ -83,15 +60,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             if (mTrackingLocation) {
                 Location myLocation = locationResult.getLastLocation();
                 if (myLocation != null) {
-                    Toast.makeText(getApplicationContext(), "Updating Location Info In FireSTORE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Updating Location Info In FireSTORE", Toast.LENGTH_SHORT).show();
 
 
-                    // TODO MIGHT WANT TO ADD ON SUCCESS AND ON FAIL LISTENERS HERE< CODE IS IN THE DOCUMENTATION
+                    // MIGHT BE GOOD TO HAVE SUCCESS/FAIL LISTENERS HERE!
                     Map<String, Object> locMap = new HashMap<>();
                     locMap.put("latitude", myLocation.getLatitude());
                     locMap.put("longitude", myLocation.getLongitude());
 
-
+                    String FIREBASE_TABLE = "users";
                     db.collection(FIREBASE_TABLE)
                             .document(usersEmail)
                             .set(locMap, SetOptions.merge());
@@ -105,7 +83,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
         Intent i = new Intent(context, ProfileActivity.class);
         i.putExtra("userEmail", user.getEmail()); // Could pass in entire user instead here
-        String myNum = user.getPhoneNumber();
         return i;
     }
 
@@ -126,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
         getSupportFragmentManager().beginTransaction().add(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
     }
@@ -143,10 +120,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             case R.id.action_messaging: {
                 FragmentManager fm = getSupportFragmentManager();
 
-                /*fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();*/
 
                 fm.beginTransaction()
                         .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
@@ -157,11 +130,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
             }
             case R.id.action_Post: {
 
-                FragmentManager fm = getSupportFragmentManager();
-                /*fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(fm.findFragmentByTag("outermostFrag"))
-                        .commit();*/
 
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.outerFrag, BlogPostFragment.newInstance())
@@ -217,14 +185,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
 
     public void startTracking() {
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Permission stuff here is incomplete
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat
+                .checkSelfPermission(this, android.Manifest.permission
+                        .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            int REQUEST_LOCATION_PERMISSION = 7;
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
-
-            Toast.makeText(getApplicationContext(), "IN THE PERMISSION IF CHECK", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(getApplicationContext(), "IN THE PERMISSION CHECK",
+                    Toast.LENGTH_SHORT).show();
         } else {
             mTrackingLocation = true;
             mFusedLocationClient.requestLocationUpdates
@@ -250,12 +222,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePreview
                 .add(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-// TODO CLUTTER FOR NOW, HOOKED UP WITH PROFILEPREVIEWFRAGMENT (hooked to other stuff too?)
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override

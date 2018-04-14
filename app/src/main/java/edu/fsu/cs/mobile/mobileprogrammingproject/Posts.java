@@ -1,14 +1,13 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject;
 
 import com.google.firebase.firestore.ServerTimestamp;
-
-import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by Randy Bruno-Piverger on 4/12/2018.
  */
 
+@SuppressWarnings("unused")
 public class Posts {
 
     private String title;
@@ -27,7 +26,6 @@ public class Posts {
         this.desc = desc;
         this.email = email;
         this.time = null;
-        //this.photoId = photoId;
     }
 
 

@@ -28,25 +28,26 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener {
+
     private MyProfileListener mListener;
     private TextView mFriendsText;
     protected static int totFriendCount;
 
     public interface MyProfileListener {
-        void onProfPreviewClick(String derp); // need this, need diff type for url?
+        void onProfPreviewClick(String derp);
     }
 
-
     @Override
-    // needed this? was getting crash on clicking download without it? (FROM OLD HW 4 NOTE)
+
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof MyProfileListener) {
@@ -59,7 +60,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
 
     MapView mapView;
-    //GoogleMap gmap;
+
     private FirebaseFirestore db;
     private final String TAG = "DERP TAG";
     static private MarkerOptions options = new MarkerOptions();
@@ -71,25 +72,19 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     }
 
     @Override
-    public void onMapReady(final GoogleMap googleMap) { //  TODO IS MAKING THIS FINAL HERE A PROBLEM?
-        // IF SO WHAT IS THE WORKAROUND?
+    public void onMapReady(final GoogleMap googleMap) {
 
         db.collection("users")
-                //.whereEqualTo("capital", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<LatLng> positionInfo = new ArrayList<>();
                             for (DocumentSnapshot document : task.getResult()) {
                                 addIfValid(new LatLng(document.getDouble("latitude"),
                                                 document.getDouble("longitude")),
                                         document.getId(),
                                         googleMap);
-                                //options.position(new LatLng(document.getDouble("latitude"),document.getDouble("longitude")));
-                                //options.title(document.getId());
-                                //googleMap.addMarker(options);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
                             }
@@ -117,23 +112,20 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     }
 
     public static ProfileActivityFragment newInstance() {
-        ProfileActivityFragment fragment = new ProfileActivityFragment();
-        //fragment.setRetainInstance(true);
-
-        return fragment;
+        return new ProfileActivityFragment();
     }
 
     public ProfileActivityFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
         myView.setBackgroundColor(Color.DKGRAY);
         myView.setClickable(true);
-        CardView profPreview = (CardView) myView.findViewById(R.id.profile_preview_card);
+        CardView profPreview = myView.findViewById(R.id.profile_preview_card);
         profPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,12 +141,16 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
 
         //Starts profile fragment with email as an argument that gets set to @thisUsersEmail
-        getFragmentManager().beginTransaction().add(R.id.profile_preview_card, ProfilePreviewFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getEmail())).commit();
+        assert getFragmentManager() != null;
+        getFragmentManager().beginTransaction().add(R.id.profile_preview_card,
+                ProfilePreviewFragment.newInstance(Objects.requireNonNull(FirebaseAuth
+                        .getInstance().getCurrentUser()).getEmail())).commit();
         return myView;
     }
 
     public void getFriendCount() {
-        db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+        db.collection("users").document(Objects.requireNonNull(Objects
+                .requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()))
                 .collection("friends")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -162,7 +158,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             int count = 0;
-                            for (DocumentSnapshot document : task.getResult()) {
+                            for (DocumentSnapshot ignored : task.getResult()) {
                                 count++;
                             }
                             updateFriends(count);
@@ -185,9 +181,10 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
         Toast.makeText(getContext(), "Info window clicked",
                 Toast.LENGTH_SHORT).show();
-        LatLng target = marker.getPosition();
 
-        getFragmentManager().beginTransaction().replace(R.id.profile_preview_card, ProfilePreviewFragment.newInstance(marker.getTitle())).commit();
+        assert getFragmentManager() != null;
+        getFragmentManager().beginTransaction().replace(R.id.profile_preview_card,
+                ProfilePreviewFragment.newInstance(marker.getTitle())).commit();
         return true;
     }
 }
