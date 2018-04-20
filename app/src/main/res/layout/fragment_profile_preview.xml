@@ -14,6 +14,6 @@
         android:textSize="10pt"
         android:textColor="#ffffff"
         android:fontFamily="@font/vollkorn_medium"
-        android:text="my_account" />
+        android:text="@string/my_account" />
 
 </FrameLayout>

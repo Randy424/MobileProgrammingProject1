@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
 
 
@@ -29,11 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:inputType="text"
                 android:id="@+id/convoTargetMessage"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter message"
+                android:hint="@string/enter_message"
                 />
 
 
@@ -42,7 +44,7 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SEND"/>"
+                android:text="@string/send"/>
 
         </LinearLayout>
     </LinearLayout>

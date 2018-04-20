@@ -47,4 +47,26 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main2">StudyBuddy</string>
     <string name="friendAdded">Friend Added</string>
+    <string name="post">Post</string>
+    <string name="start_conversation">START CONVERSATION</string>
+    <string name="enter_email_address_here">Enter Email Address Here</string>
+    <string name="welcome_to_messaging">WELCOME TO MESSAGING</string>
+    <string name="enter_message">Enter message</string>
+    <string name="send">SEND</string>
+    <string name="action_messaging">Action Messaging</string>
+    <string name="action_post">Action Post</string>
+    <string name="logout">Logout</string>
+    <string name="current_users_in_range">Current Users In Range</string>
+    <string name="most_recent_feed_posts">Most Recent Feed Posts</string>
+    <string name="current_number_of_friends">Current Number of Friends:</string>
+    <string name="my_account">my_account</string>
+    <string name="gradient_stuff">Gradient Stuff</string>
+    <string name="name">Name</string>
+    <string name="major">Major</string>
+    <string name="enter_your_major">Enter your major</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="submit">Submit</string>
+    <string name="post_description">Post Description</string>
+    <string name="post_title">Post Title</string>
+    <string name="doge_in_bucket_hat">Doge in Bucket Hat</string>
 </resources>

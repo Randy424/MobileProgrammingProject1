@@ -10,7 +10,7 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
 
         android:orientation="vertical">
 
@@ -58,7 +58,7 @@
                     android:textSize="10pt"
                     android:textColor="#ffffff"
                     android:fontFamily="@font/vollkorn_medium"
-                    android:text="Current Users In Range "/>
+                    android:text="@string/current_users_in_range"/>
 
         </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:gravity="center"
                 android:textSize="10pt"
                 android:textColor="#ffffff"
-                android:text="Most Recent Feed Posts" />
+                android:text="@string/most_recent_feed_posts" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -117,7 +117,7 @@
                 android:textSize="10pt"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/vollkorn_medium"
-                android:text="Current Number of Friends:" />
+                android:text="@string/current_number_of_friends" />
         </android.support.v7.widget.CardView>
 
 

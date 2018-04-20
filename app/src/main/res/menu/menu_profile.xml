@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_messaging"
         android:icon="@drawable/fui_ic_mail_white_24dp"
-        android:title="Action Messaging"
+        android:title="@string/action_messaging"
         app:showAsAction="ifRoom"/>
 
 
@@ -13,11 +13,11 @@
     <item
         android:id="@+id/action_Post"
         android:icon="@drawable/ic_share_black_24dp"
-        android:title="Action Post"
+        android:title="@string/action_post"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_logout"
-        android:title="Logout"
+        android:title="@string/logout"
         app:showAsAction="never"/>
 </menu>

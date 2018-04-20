@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="italic"
-            android:text="WELCOME TO MESSAGING" />
+            android:text="@string/welcome_to_messaging" />
         <TextView
             android:id="@+id/yourOwnEmail"
             android:textStyle="bold"
@@ -29,10 +29,11 @@
             android:layout_height="wrap_content">
         <EditText
             android:id="@+id/targetRecipient"
+            android:inputType="textEmailAddress"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter Email Address Here"
+            android:hint="@string/enter_email_address_here"
             />
 
 
@@ -41,8 +42,7 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="START CONVERSATION"/>"
-
+                android:text="@string/start_conversation"/>
         </LinearLayout>
 
         <View
