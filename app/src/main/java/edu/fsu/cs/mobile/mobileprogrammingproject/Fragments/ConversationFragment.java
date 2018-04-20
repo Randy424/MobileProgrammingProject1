@@ -1,6 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,13 +38,13 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  */
 public class ConversationFragment extends Fragment {
 
-    public final String TAG = "convoTag";
+    private final String TAG = "convoTag";
 
     private FirebaseFirestore db;
-    ArrayList<Message> msgArrList; // STORES MSGS FROM A CONVERSATION AND IS SORTED BY TIMESTAMP
+    private ArrayList<Message> msgArrList; // STORES MSGS FROM A CONVERSATION AND IS SORTED BY TIMESTAMP
 
-    String myUserEmail;
-    String otherUserEmail;
+    private String myUserEmail;
+    private String otherUserEmail;
 
 
 
@@ -71,12 +70,6 @@ public class ConversationFragment extends Fragment {
         b.putString("recEmail", receiverEmail);
         fragment.setArguments(b);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -133,7 +126,7 @@ public class ConversationFragment extends Fragment {
 
 
 
-    public void getConvoMessages() {
+    private void getConvoMessages() {
         db.collection("messages") // GETTING MESSAGES CURRENT USER SENT TO THE OTHER
                 .whereEqualTo("sender", myUserEmail)
                 .whereEqualTo("receiver", otherUserEmail)
@@ -191,7 +184,7 @@ public class ConversationFragment extends Fragment {
     }
     // CUSTOM COMPARATOR TO SORT BY TIMESTAMP HERE
     // SOMETIMES WEIRD BEHAVIOR, STUFF COULD BE NULL IN HERE FOR NO REASON
-    public void printConversation(final ArrayList<Message> allMsgs) {
+    private void printConversation(final ArrayList<Message> allMsgs) {
         Collections.sort(allMsgs, new Comparator<Message>() {
             @Override
             public int compare(Message o1, Message o2) {
@@ -230,16 +223,6 @@ public class ConversationFragment extends Fragment {
         lv2.setAdapter(adapter);
 
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     /**

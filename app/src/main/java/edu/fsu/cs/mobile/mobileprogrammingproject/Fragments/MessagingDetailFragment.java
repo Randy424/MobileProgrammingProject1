@@ -41,16 +41,18 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  * create an instance of this fragment.
  */
 public class MessagingDetailFragment extends Fragment {
+    private static final String TAG = MessagingDetailFragment.class.getCanonicalName();
+
     private ListView lv;
 
     private FirebaseFirestore db;
     private String myUsersEmail;
     private ArrayList<String> myConversations;
 
-    OnCompleteListener<QuerySnapshot> queryListener = new OnCompleteListener<QuerySnapshot>() {
+    private final OnCompleteListener<QuerySnapshot> queryListener = new OnCompleteListener<QuerySnapshot>() {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-            String TAG = "messagedetailtag";
+
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
                     //Message mMessage = document.toObject(Message.class);
@@ -90,12 +92,6 @@ public class MessagingDetailFragment extends Fragment {
         b.putString("email", daEmail);
         fragment.setArguments(b);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -205,7 +201,7 @@ public class MessagingDetailFragment extends Fragment {
     }
 
 
-    public void populateConvoList() {
+    private void populateConvoList() {
         lv = Objects.requireNonNull(getView()).getRootView().findViewById(R.id.convoListView);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 Objects.requireNonNull(getActivity()),

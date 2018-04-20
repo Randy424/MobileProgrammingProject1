@@ -1,51 +1,10 @@
 <resources>
     <string name="app_name">StudyBuddy</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-
-    <string name="reset">RESET</string>
-    <string name="register">REGISTER</string>
-    <string name="employee_id">Employee ID</string>
-    <string name="email">Email</string>
-    <string name="gender">Gender</string>
-    <string name="access_code">Access Code</string>
-    <string name="department">Department</string>
-    <string name="confirm_code">Confirm Code</string>
-    <string name="female">Female</string>
-    <string name="male">Male</string>
-    <string name="agree_to_terms">Agree to Terms</string>
-    <string-array name="empids">
-        <item>ABC123</item>
-        <item>XYZ456</item>
-        <item>123ABC</item>
-        <item>456XYZ</item>
-    </string-array>
-    <string-array name="departments">
-        <item></item>
-        <item>Human Resources</item>
-        <item>Management</item>
-        <item>Software Development</item>
-        <item>Quality Assurance</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">blank frag stuff</string>
     <string name="title_activity_profile">StudyBuddy</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main2">StudyBuddy</string>
     <string name="friendAdded">Friend Added</string>
     <string name="post">Post</string>
     <string name="start_conversation">START CONVERSATION</string>

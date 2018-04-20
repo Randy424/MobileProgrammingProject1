@@ -1,7 +1,6 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,8 +46,8 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     private TextView mCurrentMajor;
 
 
-    @SuppressLint("StaticFieldLeak")
-    static private Button mFriendButton;
+
+    private Button mFriendButton;
 
     public ProfileDetailFragment() {
         // Required empty public constructor
@@ -71,12 +70,6 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
 
         fragment.setArguments(b);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -155,12 +148,12 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         return myView;
     }
 
-    public void changeButton(Button FriendButton) {
+    private void changeButton(Button FriendButton) {
         FriendButton.setText(R.string.friendAdded);
 
     }
 
-    public void changeMajor(Map<String, Object> majormap) {
+    private void changeMajor(Map<String, Object> majormap) {
         mCurrentMajor.setText(majormap.get("major").toString());
     }
 
@@ -191,16 +184,6 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
 
 
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     /**

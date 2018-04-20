@@ -13,12 +13,11 @@ import android.widget.TextView;
 
 public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder> {
 
-    private Context context;
-    String[] title;
-    String[] desc;
-    String[] time;
-    String[] email;
-    View view;
+    private final Context context;
+    private final String[] title;
+    private final String[] desc;
+    private final String[] time;
+    private final String[] email;
 
     public RecylerViewAdapter(Context context, String[] title, String[] desc, String[] time, String[] email) {
         this.context = context;
@@ -30,7 +29,7 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
 
     @Override
     public RecylerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.recycle_items, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recycle_items, parent, false);
 
         return new ViewHolder(view);
     }
@@ -52,10 +51,10 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv1;
-        TextView tv2;
-        TextView tv3;
-        TextView tv4;
+        final TextView tv1;
+        final TextView tv2;
+        final TextView tv3;
+        final TextView tv4;
 
         ViewHolder(View itemView) {
             super(itemView);

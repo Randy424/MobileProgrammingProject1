@@ -40,7 +40,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
     private MyProfileListener mListener;
     private TextView mFriendsText;
-    protected static int totFriendCount;
+    static int totFriendCount;
 
     public interface MyProfileListener {
         void onProfPreviewClick(String derp);
@@ -59,11 +59,9 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     }
 
 
-    MapView mapView;
-
     private FirebaseFirestore db;
     private final String TAG = "DERP TAG";
-    static private MarkerOptions options = new MarkerOptions();
+    static private final MarkerOptions options = new MarkerOptions();
 
     private void addIfValid(LatLng coord, String userEmail, GoogleMap ourMap) {
         options.position(coord);
@@ -135,7 +133,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
 
         mFriendsText = myView.findViewById(R.id.friendsText);
         getFriendCount();
-        mapView = myView.findViewById(R.id.mapLite);
+        MapView mapView = myView.findViewById(R.id.mapLite);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
 
@@ -148,7 +146,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         return myView;
     }
 
-    public void getFriendCount() {
+    private void getFriendCount() {
         db.collection("users").document(Objects.requireNonNull(Objects
                 .requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()))
                 .collection("friends")
@@ -169,7 +167,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                 });
     }
 
-    public void updateFriends(int total) {
+    private void updateFriends(int total) {
         totFriendCount = total;
         mFriendsText.append(" " + Integer.toString(totFriendCount));
     }

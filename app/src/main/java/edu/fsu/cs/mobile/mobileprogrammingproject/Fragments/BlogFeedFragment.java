@@ -32,17 +32,17 @@ import static android.content.ContentValues.TAG;
 public class BlogFeedFragment extends Fragment {
 
 
-    ArrayList<String> title;
-    ArrayList<String> desc;
-    ArrayList<String> time;
-    ArrayList<String> email;
-    String[] titleFinal;
-    String[] descFinal;
-    String[] timeFinal;
-    String[] emailFinal;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    RecylerViewAdapter recylerViewAdapter;
+    private ArrayList<String> title;
+    private ArrayList<String> desc;
+    private ArrayList<String> time;
+    private ArrayList<String> email;
+    private String[] titleFinal;
+    private String[] descFinal;
+    private String[] timeFinal;
+    private String[] emailFinal;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecylerViewAdapter recylerViewAdapter;
 
 
     public BlogFeedFragment() {
@@ -136,11 +136,6 @@ public class BlogFeedFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     public interface OnFragmentInteractionListener {

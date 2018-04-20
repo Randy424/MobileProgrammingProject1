@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -48,13 +49,13 @@ public class ProfileActivity extends AppCompatActivity implements
         BlogPostFragment.OnFragmentInteractionListener {
 
     private FusedLocationProviderClient mFusedLocationClient;
-    boolean mTrackingLocation;
+    private boolean mTrackingLocation;
     private String usersEmail;
 
 
     private FirebaseFirestore db;
 
-    private LocationCallback mLocationCallback = new LocationCallback() {
+    private final LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             if (mTrackingLocation) {
@@ -62,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity implements
                 if (myLocation != null) {
                     Toast.makeText(getApplicationContext(),
                             "Updating Location Info In FireSTORE", Toast.LENGTH_SHORT).show();
-
 
                     // MIGHT BE GOOD TO HAVE SUCCESS/FAIL LISTENERS HERE!
                     Map<String, Object> locMap = new HashMap<>();
@@ -101,8 +101,8 @@ public class ProfileActivity extends AppCompatActivity implements
         db = FirebaseFirestore.getInstance();
         startTracking();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").addToBackStack(null).commit();
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -117,12 +117,22 @@ public class ProfileActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_messaging: {
+            case R.id.action_messaging: { // add check to see if im currently viwing this fragment
                 FragmentManager fm = getSupportFragmentManager();
 
+                //Fragment previousMessageFragment = fm.findFragmentByTag(MessagingDetailFragment.class.getCanonicalName());
+                // if null, create new instance
+                /*if (previousMessageFragment == null) {
+                    previousMessageFragment = MessagingDetailFragment.newInstance(usersEmail);
 
+                }*/
+
+                /*fm.beginTransaction()
+                        .replace(R.id.outerFrag, previousMessageFragment, MessagingDetailFragment.class.getCanonicalName())
+                        .addToBackStack(null)
+                        .commit();*/
                 fm.beginTransaction()
-                        .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail))
+                        .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
                         .addToBackStack(null)
                         .commit();
 
@@ -183,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements
         }
     }
 
-    public void startTracking() {
+    private void startTracking() {
 
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) !=

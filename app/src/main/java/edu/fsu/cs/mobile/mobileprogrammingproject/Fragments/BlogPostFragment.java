@@ -1,7 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
-import android.content.Context;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,11 +39,6 @@ public class BlogPostFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -91,18 +84,6 @@ public class BlogPostFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
     }
 
     public interface OnFragmentInteractionListener {

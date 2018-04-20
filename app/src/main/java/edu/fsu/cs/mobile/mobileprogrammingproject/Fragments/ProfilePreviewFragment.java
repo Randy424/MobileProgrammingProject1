@@ -1,6 +1,5 @@
 package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  * create an instance of this fragment.
  */
 public class ProfilePreviewFragment extends Fragment {
-    protected static String thisUsersEmail;
+    static String thisUsersEmail;
 
     public ProfilePreviewFragment() {
         // Required empty public constructor
@@ -46,11 +45,6 @@ public class ProfilePreviewFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_profile_preview, container, false);
@@ -63,17 +57,6 @@ public class ProfilePreviewFragment extends Fragment {
         usersEmailTextView.setText(id);
 
         return myView;
-    }
-
-    @Override // TODO DO WE NEED THIS?
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
     }
 
     /**
