@@ -38,7 +38,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  */
 public class ConversationFragment extends Fragment {
 
-    private final String TAG = "convoTag";
+    private static final String TAG = MessagingDetailFragment.class.getCanonicalName();
 
     private FirebaseFirestore db;
     private ArrayList<Message> msgArrList; // STORES MSGS FROM A CONVERSATION AND IS SORTED BY TIMESTAMP

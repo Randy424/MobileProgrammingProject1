@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+                        .setLogo(R.drawable.icon_study_icon)
                         .setAvailableProviders(providers)
                         .build(),
                 RC_SIGN_IN);

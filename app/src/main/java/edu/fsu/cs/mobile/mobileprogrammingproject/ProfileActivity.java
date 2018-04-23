@@ -21,11 +21,24 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
@@ -46,14 +59,27 @@ public class ProfileActivity extends AppCompatActivity implements
         MessagingDetailFragment.OnFragmentInteractionListener,
         ConversationFragment.OnFragmentInteractionListener,
         BlogFeedFragment.OnFragmentInteractionListener,
-        BlogPostFragment.OnFragmentInteractionListener {
+        BlogPostFragment.OnFragmentInteractionListener,
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
     private String usersEmail;
+    private final String TAG = "ProfileActivity";
+    static private final MarkerOptions options = new MarkerOptions();
 
 
     private FirebaseFirestore db;
+
+    /*@Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }*/
 
     private final LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -87,6 +113,47 @@ public class ProfileActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onMapReady(final GoogleMap googleMap) {
+
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                addIfValid(new LatLng(document.getDouble("latitude"),
+                                                document.getDouble("longitude")),
+                                        document.getId(),
+                                        googleMap);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+        LatLng schoolLocate = new LatLng(30.445349, -84.299542);
+        float zoomLevel = (float) 14.0;
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
+
+
+        googleMap.setOnMarkerClickListener(this);
+
+
+        googleMap.addCircle(new CircleOptions()
+                .center(schoolLocate)
+                .radius(1000)
+                .strokeWidth(0f)
+                .fillColor(0x550000FF));
+
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -101,10 +168,13 @@ public class ProfileActivity extends AppCompatActivity implements
         db = FirebaseFirestore.getInstance();
         startTracking();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        mapFragment.getMapAsync(this);
 
     }
 
@@ -121,7 +191,17 @@ public class ProfileActivity extends AppCompatActivity implements
                 FragmentManager fm = getSupportFragmentManager();
 
                 //Fragment previousMessageFragment = fm.findFragmentByTag(MessagingDetailFragment.class.getCanonicalName());
-                // if null, create new instance
+                //if(previousMessageFragment == null) {
+                    fm.beginTransaction()
+                            .replace(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
+                            .addToBackStack(null)
+                            .commit();
+                /*}
+                else {
+                    fm.beginTransaction()
+                            .replace(R.id.outsideFrag, previousMessageFragment, MessagingDetailFragment.class.getCanonicalName())
+                            .commit();
+                }*/
                 /*if (previousMessageFragment == null) {
                     previousMessageFragment = MessagingDetailFragment.newInstance(usersEmail);
 
@@ -131,10 +211,7 @@ public class ProfileActivity extends AppCompatActivity implements
                         .replace(R.id.outerFrag, previousMessageFragment, MessagingDetailFragment.class.getCanonicalName())
                         .addToBackStack(null)
                         .commit();*/
-                fm.beginTransaction()
-                        .add(R.id.outerFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
-                        .addToBackStack(null)
-                        .commit();
+
 
                 return true;
             }
@@ -228,10 +305,21 @@ public class ProfileActivity extends AppCompatActivity implements
     public void loadConversationFragment(String firstUserEmail, String secondUserEmail) {
         FragmentManager fm = getSupportFragmentManager();
 
-        fm.beginTransaction()
-                .add(R.id.outerFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
-                .addToBackStack(null)
-                .commit();
+        //Fragment previousConvoFragment = fm.findFragmentByTag(ConversationFragment.class.getCanonicalName());
+        //if(previousConvoFragment == null) {
+            fm.beginTransaction()
+                    .replace(R.id.outsideFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
+                    .addToBackStack(null)
+                    .commit();
+        //}
+        //else {
+        //    fm.beginTransaction()
+        //            .replace(R.id.outsideFrag, previousConvoFragment, ConversationFragment.class.getCanonicalName())
+        //            .commit();
+        //}
+
+
+
     }
 
     @Override
@@ -246,5 +334,24 @@ public class ProfileActivity extends AppCompatActivity implements
                 .add(R.id.outerFrag, ProfileDetailFragment.newInstance(daEmail))
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        // TODO DO SOMETHING WHEN YOU FIRE THIS
+
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
+
+        /*assert getFragmentManager() != null;
+        getFragmentManager().beginTransaction().replace(R.id.profile_preview_card,
+                ProfilePreviewFragment.newInstance(marker.getTitle())).commit();*/
+        return true;
+    }
+
+    private void addIfValid(LatLng coord, String userEmail, GoogleMap ourMap) {
+        options.position(coord);
+        options.title(userEmail);
+        ourMap.addMarker(options);
     }
 }
