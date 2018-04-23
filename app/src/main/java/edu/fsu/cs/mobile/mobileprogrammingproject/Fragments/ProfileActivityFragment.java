@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -123,7 +125,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
         myView.setBackgroundColor(Color.DKGRAY);
         myView.setClickable(true);
-        CardView profPreview = myView.findViewById(R.id.profile_preview_card);
+        /*CardView profPreview = myView.findViewById(R.id.profile_preview_card);
         profPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,21 +134,19 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         });
 
         mFriendsText = myView.findViewById(R.id.friendsText);
-        getFriendCount();
-        MapView mapView = myView.findViewById(R.id.mapLite);
-        mapView.onCreate(null);
-        mapView.getMapAsync(this);
+        getFriendCount();*/
 
 
+/*
         //Starts profile fragment with email as an argument that gets set to @thisUsersEmail
         assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().add(R.id.profile_preview_card,
                 ProfilePreviewFragment.newInstance(Objects.requireNonNull(FirebaseAuth
-                        .getInstance().getCurrentUser()).getEmail())).commit();
+                        .getInstance().getCurrentUser()).getEmail())).commit();*/
         return myView;
     }
 
-    private void getFriendCount() {
+    /*private void getFriendCount() {
         db.collection("users").document(Objects.requireNonNull(Objects
                 .requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()))
                 .collection("friends")
@@ -165,14 +165,14 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                         }
                     }
                 });
-    }
+    }*/
 
-    private void updateFriends(int total) {
+    /*private void updateFriends(int total) {
         totFriendCount = total;
         mFriendsText.append(" " + Integer.toString(totFriendCount));
     }
 
-
+*/
     @Override
     public boolean onMarkerClick(Marker marker) {
         // TODO DO SOMETHING WHEN YOU FIRE THIS
@@ -180,9 +180,9 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         Toast.makeText(getContext(), "Info window clicked",
                 Toast.LENGTH_SHORT).show();
 
-        assert getFragmentManager() != null;
+        /*assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().replace(R.id.profile_preview_card,
-                ProfilePreviewFragment.newInstance(marker.getTitle())).commit();
+                ProfilePreviewFragment.newInstance(marker.getTitle())).commit();*/
         return true;
     }
 }

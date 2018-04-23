@@ -168,11 +168,11 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 db2.collection("users").document(currentUser)
                         .collection("friends").document(clickedUser)
                         .set(update, SetOptions.merge());
-                TextView tv = Objects.requireNonNull(getView())
-                        .getRootView().findViewById(R.id.friendsText);
+                //TextView tv = Objects.requireNonNull(getView())
+                //        .getRootView().findViewById(R.id.friendsText);
                 ProfileActivityFragment.totFriendCount = ProfileActivityFragment.totFriendCount + 1;
-                tv.setText("Number of friends: " + Integer
-                        .toString(ProfileActivityFragment.totFriendCount));
+                //tv.setText("Number of friends: " + Integer
+                //        .toString(ProfileActivityFragment.totFriendCount));
                 break;
             case R.id.submitButton:
                 Map<String, Object> update2 = new HashMap<>();
