@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -51,6 +54,7 @@ import java.util.Map;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ConversationFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.CreateMeetingFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MessagingDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.OptionsFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileActivityFragment;
@@ -67,6 +71,9 @@ public class ProfileActivity extends AppCompatActivity implements
         BlogPostFragment.OnFragmentInteractionListener,
         OptionsFragment.OnFragmentInteractionListener,
         OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        CreateMeetingFragment.OnFragmentInteractionListener,
+        TimePickerFragment.OnFragmentInteractionListener {
         GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -253,9 +260,17 @@ public class ProfileActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_messaging: { // add check to see if im currently viwing this fragment
-                FragmentManager fm = getSupportFragmentManager();
+            case R.id.action_meeting: {
 
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail), CreateMeetingFragment.class.getCanonicalName())
+                        .commit();
+                return true;
+            }
+            case R.id.action_messaging: { // add check to see if im currently viwing this fragment
+
+                FragmentManager fm = getSupportFragmentManager();
                 //Fragment previousMessageFragment = fm.findFragmentByTag(MessagingDetailFragment.class.getCanonicalName());
                 //if(previousMessageFragment == null) {
                     fm.beginTransaction()
@@ -343,6 +358,11 @@ public class ProfileActivity extends AppCompatActivity implements
         }
     }
 
+    public void showStartTimePickerDialog() {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
     private void startTracking() {
 
         if (ActivityCompat.checkSelfPermission(this,
@@ -426,6 +446,11 @@ public class ProfileActivity extends AppCompatActivity implements
         options.position(coord);
         options.title(userEmail);
         ourMap.addMarker(options);
+    }
+    @Override
+    public void updateDisplayedStartTime (TimePicker view, int hourOfDay, int minute) {
+        TextView timeDisplayer = this.findViewById(R.id.selectedTimeTV);
+        timeDisplayer.setText(Integer.toString(hourOfDay) + ":H, " + Integer.toString(minute) + ":M");
     }
 
     @Override

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.CreateMeetingFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/autocompleteView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/startTimeButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/editText"
+            android:layout_marginBottom="181dp"
+            android:text="Start Time" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="63dp"
+            android:layout_marginTop="49dp"
+            android:ems="10"
+            android:hint="Topic"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editText"
+            android:layout_marginTop="125dp"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textPersonName" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editText"
+            android:layout_marginTop="203dp" />
+
+        <Button
+            android:id="@+id/endTimeButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/startTimeButt"
+            android:layout_marginBottom="118dp"
+            android:text="End TIme" />
+
+        <Button
+            android:id="@+id/meetDateButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/startTimeButt"
+            android:layout_centerVertical="true"
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText"
+            android:layout_alignTop="@+id/meetDateButt"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/selectedTimeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/startTimeButt"
+            android:layout_marginEnd="22dp"
+            android:text="NOTHING SELECTED" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText"
+            android:layout_alignTop="@+id/endTimeButt"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/createMeetingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="31dp"
+            android:text="CREATE MEETING" />
+    </RelativeLayout>
+</FrameLayout>
