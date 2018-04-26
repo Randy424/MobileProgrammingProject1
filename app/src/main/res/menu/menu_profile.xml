@@ -8,8 +8,6 @@
         android:title="@string/action_messaging"
         app:showAsAction="ifRoom"/>
 
-
-
     <item
         android:id="@+id/action_Post"
         android:icon="@drawable/ic_share_black_24dp"
@@ -17,6 +15,13 @@
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
+
+    <item
+        android:id="@+id/action_Options"
+        android:title="@string/action_options"
+        app:showAsAction="ifRoom"
+        />
+
     <item android:id="@+id/action_logout"
         android:title="@string/logout"
         app:showAsAction="never"/>

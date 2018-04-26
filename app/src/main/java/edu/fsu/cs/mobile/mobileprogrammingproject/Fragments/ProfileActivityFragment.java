@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,11 +39,23 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  * A placeholder fragment containing a simple view.
  */
 public class ProfileActivityFragment extends Fragment implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener {
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
+    private String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private MyProfileListener mListener;
     private TextView mFriendsText;
+    private String major;
+
     static int totFriendCount;
+
+
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+
+
+
+    }
 
     public interface MyProfileListener {
         void onProfPreviewClick(String derp);
@@ -74,6 +87,27 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
     @Override
     public void onMapReady(final GoogleMap googleMap) {
 
+        final LatLng schoolLocate = new LatLng(30.445349, -84.299542);
+
+        DocumentReference docRef2 = db.collection("users").document(email).collection("major")
+                .document("major");
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                       major = document.getData().get("major").toString();
+                    } else {
+                        Log.d("logger", "No such document");
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -81,12 +115,21 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                addIfValid(new LatLng(document.getDouble("latitude"),
-                                                document.getDouble("longitude")),
-                                        document.getId(),
-                                        googleMap);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                //restricting entries by proximity
 
+                                if (findDistance(new LatLng(document.getDouble("latitude"),
+                                        document.getDouble("longitude")), schoolLocate) <= 1000) {
+                                    if(major.equals("ALL")) {
+
+                                    }
+                                    else
+                                    {
+                                        if (major == document.getString("major")) {
+
+                                        }
+                                    }
+
+                                }
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -95,7 +138,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                 });
 
 
-        LatLng schoolLocate = new LatLng(30.445349, -84.299542);
+
         float zoomLevel = (float) 14.0;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(schoolLocate, zoomLevel));
 
@@ -125,6 +168,7 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
         View myView = inflater.inflate(R.layout.fragment_profile, container, false);
         myView.setBackgroundColor(Color.DKGRAY);
         myView.setClickable(true);
+
         /*CardView profPreview = myView.findViewById(R.id.profile_preview_card);
         profPreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,4 +229,35 @@ public class ProfileActivityFragment extends Fragment implements OnMapReadyCallb
                 ProfilePreviewFragment.newInstance(marker.getTitle())).commit();*/
         return true;
     }
+
+    public double findDistance(LatLng i, LatLng ii){
+
+        double lat1, lat2, lon1, lon2, el1, el2;
+
+
+        lat1 = i.latitude;
+        lat2 = ii.latitude;
+        lon1 = i.longitude;
+        lon2 = ii.longitude;
+
+        el1 = 1;
+        el2 = 1;
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance);
+    }
+
 }

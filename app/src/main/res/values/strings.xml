@@ -28,4 +28,17 @@
     <string name="post_description">Post Description</string>
     <string name="post_title">Post Title</string>
     <string name="doge_in_bucket_hat">Doge in Bucket Hat</string>
+    <string name="action_options">Options</string>
+    <string name="scroller_one">ALL</string>
+    <string name="scroller_two">Major</string>
+
+
+    <string-array name="spinner_array">
+        <item>ALL</item>
+        <item>Major</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="confirm">Confirm</string>
 </resources>
