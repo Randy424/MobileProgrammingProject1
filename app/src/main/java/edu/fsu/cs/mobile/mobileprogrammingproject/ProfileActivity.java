@@ -73,8 +73,8 @@ public class ProfileActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
-        TimePickerFragment.OnFragmentInteractionListener {
-        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener{
+        TimePickerFragment.OnFragmentInteractionListener,
+         GoogleMap.OnMapLongClickListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
