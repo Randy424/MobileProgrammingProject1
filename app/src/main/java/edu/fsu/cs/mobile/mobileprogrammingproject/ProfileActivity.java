@@ -61,6 +61,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ConversationFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.CreateMeetingFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.Meeting;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MeetingFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MessagingDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.OptionsFragment;
@@ -82,8 +83,12 @@ public class ProfileActivity extends AppCompatActivity implements
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
         DatePickerFragment.OnFragmentInteractionListener,
-        TimePickerFragment.OnFragmentInteractionListener, RegisterProfileFragment.OnFragmentInteractionListener,
-        GoogleMap.OnMapLongClickListener {
+        TimePickerFragment.OnFragmentInteractionListener,
+        RegisterProfileFragment.OnFragmentInteractionListener,
+         GoogleMap.OnMapLongClickListener,
+        MeetingFragment.OnFragmentInteractionListener,
+        MeetingDetailFragment.OnFragmentInteractionListener
+        {
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
@@ -208,6 +213,22 @@ public class ProfileActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void loadMeetingDetailFragment(Object o) {
+        FragmentManager fm = getSupportFragmentManager();
+        MeetingDetailFragment newFrag = MeetingDetailFragment.newInstance();
+        /*fm.beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .hide(fm.findFragmentByTag("outermostFrag"))
+                .commit();*/
+
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, newFrag)
+                .addToBackStack(null)
+                .commit();
+
+        newFrag.setMeeting((Meeting) o);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -567,6 +588,16 @@ public class ProfileActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void loadCreateMeet() {
+        FragmentManager fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail), CreateMeetingFragment.class.getCanonicalName())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
