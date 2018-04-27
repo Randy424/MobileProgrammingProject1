@@ -38,7 +38,177 @@
         <item>Major</item>
     </string-array>
 
+    <string-array name="majors">
+        <item>Accounting</item>
+        <item>Actuarial Science</item>
+        <item>Advertising (Communication)</item>
+        <item>African American Studies</item>
+        <item>Anthropology</item>
+        <item>Applied Mathematics</item>
+        <item>Art, Studio BA</item>
+        <item>Art, Studio BFA</item>
+        <item>Art History</item>
+        <item>Asian Studies</item>
+        <item>Asian Studies with Emphasis in Business</item>
+        <item>Athletic Training</item>
+        <item>Biochemistry</item>
+        <item>Biology (FSU-Teach)</item>
+        <item>Biological Science</item>
+        <item>Biomathematics</item>
+        <item>Business Administration - Panama City Campus only</item>
+        <item>Chemical Science</item>
+        <item>Chemical Science (FSU-Teach)</item>
+        <item>Chemistry</item>
+        <item>Child Development (Family and Child Science)</item>
+        <item>Chinese</item>
+        <item>Chinese and Japanese</item>
+        <item>Classical Archeology</item>
+        <item>Classical Civilization</item>
+        <item>Classics and Religion</item>
+        <item>Communication (Digital Media Production)</item>
+        <item>Communication (Media and Communication Studies)</item>
+        <item>Communication (Professional Communication) - Panama City campus only</item>
+        <item>Communication Science and Disorders (Audiology and Speech Pathology)</item>
+        <item>Computational Biology (Biology)</item>
+        <item>Computational Biology (Computer Science)</item>
+        <item>Computational Science</item>
+        <item>Computer Programming and Applications BA</item>
+        <item>Computer Science, BA </item>
+        <item>Computer Science, BS </item>
+        <item>Criminology/Criminal Justice</item>
+        <item>Cyber Criminology (Computer Science)</item>
+        <item>Cyber Criminology (Criminology)</item>
+        <item>Dance</item>
+        <item>Dietetics</item>
+        <item>Economics</item>
+        <item>Elementary Education </item>
+        <item>Engineering (Biomedical)</item>
+        <item>Engineering (Chemical)</item>
+        <item>Engineering (Civil) </item>
+        <item>Engineering (Computer) </item>
+        <item>Engineering (Electrical) </item>
+        <item>Engineering (Industrial)</item>
+        <item>Engineering (Mechanical) </item>
+        <item>English (Creative Writing)</item>
+        <item>English (Editing, Writing, and Media)</item>
+        <item>English (English Studies)</item>
+        <item>English (Literature, Media, and Culture)</item>
+        <item>English Education</item>
+        <item>Entrepreneurship (Commercial)</item>
+        <item>Entrepreneurship (Social)</item>
+        <item>Environmental Chemistry</item>
+        <item>Environmental Science, BS</item>
+        <item>Environmental Science/Policy, BA</item>
+        <item>Environment and Society</item>
+        <item>Exercise Physiology</item>
+        <item>Exploratory</item>
+        <item>Family and Child Science</item>
+        <item>Finance</item>
+        <item>Food and Nutrition Science</item>
+        <item>French</item>
+        <item>FSU-Teach (Applied Geosciences)</item>
+        <item>FSU-Teach (Biology)</item>
+        <item>FSU-Teach (Chemical Science)</item>
+        <item>FSU-Teach (Environmental Sciences)</item>
+        <item>FSU-Teach (Mathematics)</item>
+        <item>FSU-Teach (Physical Sciences)</item>
+        <item>Geography</item>
+        <item>Geology</item>
+        <item>Geosciences, Applied (FSU-Teach)</item>
+        <item>German</item>
+        <item>Global Club Management and Leadership</item>
+        <item>Greek</item>
+        <item>History</item>
+        <item>Hospitality and Tourism Management</item>
+        <item>Human Resources Management</item>
+        <item>Humanities</item>
+        <item>Information, Communication and Technology</item>
+        <item>Information Technology</item>
+        <item>Interdisciplinary Medical Sciences: Clinical Professions</item>
+        <item>Interdisciplinary Medical Sciences: Health Management, Policy and Information</item>
+        <item>Interdisciplinary Medical Sciences: Community Patient Care</item>
+        <item>Interior Architecture and Design</item>
+        <item>International Affairs</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Latin</item>
+        <item>Latin American and Caribbean Studies</item>
+        <item>Latin American and Caribbean Studies with Emphasis in Business</item>
+        <item>Latin and Greek</item>
+        <item>Management (General)</item>
+        <item>Management (Human Resources)</item>
+        <item>Management Information Systems</item>
+        <item>Marketing</item>
+        <item>Mathematics</item>
+        <item>Mathematics (FSU-Teach)</item>
+        <item>Meteorology</item>
+        <item>Middle Eastern Studies</item>
+        <item>Motion Picture Arts (Animation/Digital Arts)</item>
+        <item>Motion Picture Arts (Production)</item>
+        <item>Music (General)</item>
+        <item>Music (Commercial)</item>
+        <item>Music (Jazz)</item>
+        <item>Music (Sacred)</item>
+        <item>Music Composition</item>
+        <item>Music Education (Choral)</item>
+        <item>Program Description Academic Map  Department Page Learning Compact Career Information </item>
+        <item>Music Education (General)</item>
+        <item>Music Education (Instrumental)</item>
+        <item>Music Performance (Guitar)</item>
+        <item>Music Performance (Harp)</item>
+        <item>Music Performance (Jazz)</item>
+        <item>Music Performance (Organ)</item>
+        <item>Music Performance (Piano)</item>
+        <item>Music Performance (String)</item>
+        <item>Music Performance (Voice)</item>
+        <item>Music Performance (Woodwind, Brass, Percussion)</item>
+        <item>Music Theatre (College of Music)</item>
+        <item>Music Theatre (School of Theatre)</item>
+        <item>Music Theory</item>
+        <item>Music Therapy</item>
+        <item>Nursing</item>
+        <item>Nursing (Accelerated)</item>
+        <item>Nutrition Science, Food and</item>
+        <item>Philosophy</item>
+        <item>Physical Science</item>
+        <item>Physics</item>
+        <item>Physics and Astrophysics</item>
+        <item>Physics and Materials</item>
+        <item>Political Science</item>
+        <item>Professional Communication - Panama City campus only</item>
+        <item>Professional Sales</item>
+        <item>Psychology </item>
+        <item>Public Relations (Communication)</item>
+        <item>Public Safety and Security: Crime Scene Investigation - Panama City campus only</item>
+        <item>Public Safety and Security: Law Enforcement Operations - Panama City campus only</item>
+        <item>Public Safety and Security: Law Enforcement Intelligence - Panama City campus only</item>
+        <item>Real Estate</item>
+        <item>Recreation, Tourism and Events - Panama City campus only</item>
+        <item>Religion</item>
+        <item>Retail Entrepreneurship</item>
+        <item>Retail Management</item>
+        <item>Risk Management and Insurance</item>
+        <item>Russian</item>
+        <item>Russian and East European Studies</item>
+        <item>Social Science, Interdisciplinary </item>
+        <item>Social Science Education</item>
+        <item>Social Work </item>
+        <item>Sociology</item>
+        <item>Spanish</item>
+        <item>Special Education Teaching</item>
+        <item>Sport Management</item>
+        <item>Statistics</item>
+        <item>Theatre, BA</item>
+        <item>Theatre, BFA (Acting)</item>
+        <item>Theatre BFA, (Music Theatre)</item>
+        <item>Visual Disabilities (Special Education)</item>
+        <item>Women's Studies</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm">Confirm</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">StudyBuddy</string>
+    <string name="registerSuccessfulText">Your account has been successfully registered! </string>
 </resources>
