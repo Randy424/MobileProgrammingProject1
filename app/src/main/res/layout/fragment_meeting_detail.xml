@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MeetingDetailFragment">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/fui_ic_twitter_bird_white_24dp"
+        android:layout_margin="16dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- TODO: Update blank fragment layout -->
+
+        <TextView
+            android:id="@+id/mtopicTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="33dp"
+            android:text="Topic Goes Here Baby"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mCreatorTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/mtopicTV"
+            android:layout_marginTop="76dp"
+            android:text="Creator's Email Goes Here" />
+
+        <TextView
+            android:id="@+id/mDescriptionTV"
+            android:layout_width="311dp"
+            android:layout_height="92dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/mtopicTV"
+            android:layout_marginTop="117dp"
+            android:text="BIG LONG DESCRIPTION GOES HERE" />
+
+        <TextView
+            android:id="@+id/mTimesTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="190dp"
+            android:layout_marginEnd="29dp"
+            android:text="MEETING TIME HERE, FROM ONE TO ANOTHER" />
+
+        <TextView
+            android:id="@+id/mDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/mTimesTV"
+            android:layout_marginBottom="225dp"
+            android:text="MEETING DATE GOES HERE"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="137dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="11dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/filesLV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mMeetingLocationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/mTimesTV"
+            android:layout_marginBottom="262dp"
+            android:text="Meeting Location Name Goes Here" />
+
+    </RelativeLayout>
+
+</FrameLayout>

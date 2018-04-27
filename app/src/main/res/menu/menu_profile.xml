@@ -4,7 +4,7 @@
     tools:context="edu.fsu.cs.mobile.mobileprogrammingproject.ProfileActivity">
     <item
         android:id="@+id/action_meeting"
-        android:icon="@drawable/fui_done_check_mark"
+        android:icon="@drawable/ic_group_black_24dp"
         android:title="@string/action_messaging"
         app:showAsAction="always"/>
     <item
@@ -20,7 +20,6 @@
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
-
     <item
         android:id="@+id/action_Options"
         android:title="@string/action_options"

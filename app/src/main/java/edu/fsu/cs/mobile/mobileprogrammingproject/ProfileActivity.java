@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -60,6 +61,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ConversationFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.CreateMeetingFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.Meeting;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MeetingFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MessagingDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.OptionsFragment;
@@ -81,8 +83,12 @@ public class ProfileActivity extends AppCompatActivity implements
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
         DatePickerFragment.OnFragmentInteractionListener,
-        TimePickerFragment.OnFragmentInteractionListener, RegisterProfileFragment.OnFragmentInteractionListener,
-        GoogleMap.OnMapLongClickListener {
+        TimePickerFragment.OnFragmentInteractionListener,
+        RegisterProfileFragment.OnFragmentInteractionListener,
+         GoogleMap.OnMapLongClickListener,
+        MeetingFragment.OnFragmentInteractionListener,
+        MeetingDetailFragment.OnFragmentInteractionListener
+        {
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
@@ -173,9 +179,7 @@ public class ProfileActivity extends AppCompatActivity implements
                                                                             document.getDouble("longitude")),
 
                                                                     document.getId(),
-
                                                                     googleMap);
-
                                                         }
                                                     } else {
                                                         Log.d("logger", "No such document");
@@ -184,13 +188,8 @@ public class ProfileActivity extends AppCompatActivity implements
                                                     Log.d("fail", "get failed with ", task.getException());
                                                 }
                                             }
-
-
                                         });
-
-
                                     }
-
                                 }
                             }
                         } else {
@@ -214,17 +213,32 @@ public class ProfileActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void loadMeetingDetailFragment(Object o) {
+        FragmentManager fm = getSupportFragmentManager();
+        MeetingDetailFragment newFrag = MeetingDetailFragment.newInstance();
+        /*fm.beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .hide(fm.findFragmentByTag("outermostFrag"))
+                .commit();*/
+
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, newFrag)
+                .addToBackStack(null)
+                .commit();
+
+        newFrag.setMeeting((Meeting) o);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        List fragment_list = new ArrayList<>();
-        fragment_list.add("DICK");
-        mDrawerList.setAdapter(new ArrayAdapter<String>( this,
-                android.R.layout. simple_list_item_1, fragment_list));
 
+        String items[] = new String [] {"Post","Direct Messaging","Meetings","Options","Logout"};
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
+        mDrawerList.setAdapter(arrayAdapter);
 
         Intent i = getIntent();
         assert (i != null);
@@ -272,6 +286,75 @@ public class ProfileActivity extends AppCompatActivity implements
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String main=(String)parent.getItemAtPosition(position);
+
+                switch (main) {
+                    case "Meetings": {
+
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.outsideFrag, MeetingFragment.newInstance(usersEmail), MeetingFragment.class.getCanonicalName())
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    }
+                    case "Direct Messaging": { // add check to see if im currently viewing this fragment
+
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    }
+                    case "Post": {
+
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.outsideFrag, BlogPostFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    }
+                    case "Options": {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.outsideFrag, OptionsFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    }
+
+                    case "Logout": {
+                        db.collection("users").document(usersEmail).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Logout", "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("Logout", "Error deleting document", e);
+                                    }
+                                });
+                        FirebaseAuth.getInstance().signOut();
+
+                        Intent i = new Intent(view.getContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;                    }
+                }
+            }
+        });
+
+
+
 
     }
 
@@ -505,6 +588,16 @@ public class ProfileActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void loadCreateMeet() {
+        FragmentManager fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail), CreateMeetingFragment.class.getCanonicalName())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

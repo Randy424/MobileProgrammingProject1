@@ -61,19 +61,41 @@ tools:context=".ProfileActivity"
     </FrameLayout>
     </LinearLayout>
     </android.support.constraint.ConstraintLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
-    <ListView
-        android:id="@+id/left_drawer"
 
-    android:layout_width="240dp"
-    android:layout_height="match_parent">
 
-    </ListView>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="18dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            app:srcCompat="@drawable/icon_study_icon_3" />
+
+        <ListView
+            android:id="@+id/left_drawer"
+
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="210dp">
+
+
+        </ListView>
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

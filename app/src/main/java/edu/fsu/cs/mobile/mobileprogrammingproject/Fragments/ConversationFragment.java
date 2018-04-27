@@ -38,7 +38,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  */
 public class ConversationFragment extends Fragment {
 
-    private static final String TAG = MessagingDetailFragment.class.getCanonicalName();
+    private static final String TAG = ConversationFragment.class.getCanonicalName();
 
     private FirebaseFirestore db;
     private ArrayList<Message> msgArrList; // STORES MSGS FROM A CONVERSATION AND IS SORTED BY TIMESTAMP
@@ -124,8 +124,6 @@ public class ConversationFragment extends Fragment {
         return etText.getText().toString().trim().length() <= 0;
     }
 
-
-
     private void getConvoMessages() {
         db.collection("messages") // GETTING MESSAGES CURRENT USER SENT TO THE OTHER
                 .whereEqualTo("sender", myUserEmail)
@@ -182,6 +180,8 @@ public class ConversationFragment extends Fragment {
                 });
 
     }
+
+
     // CUSTOM COMPARATOR TO SORT BY TIMESTAMP HERE
     // SOMETIMES WEIRD BEHAVIOR, STUFF COULD BE NULL IN HERE FOR NO REASON
     private void printConversation(final ArrayList<Message> allMsgs) {
