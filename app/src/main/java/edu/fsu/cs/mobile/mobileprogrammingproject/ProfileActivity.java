@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -173,9 +174,7 @@ public class ProfileActivity extends AppCompatActivity implements
                                                                             document.getDouble("longitude")),
 
                                                                     document.getId(),
-
                                                                     googleMap);
-
                                                         }
                                                     } else {
                                                         Log.d("logger", "No such document");
@@ -184,13 +183,8 @@ public class ProfileActivity extends AppCompatActivity implements
                                                     Log.d("fail", "get failed with ", task.getException());
                                                 }
                                             }
-
-
                                         });
-
-
                                     }
-
                                 }
                             }
                         } else {
@@ -219,11 +213,12 @@ public class ProfileActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        String items[] = new String [] {"Post","Direct Messaging","Meetings","Options","Logout"};
         ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        List fragment_list = new ArrayList<>();
-        fragment_list.add("DICK");
-        mDrawerList.setAdapter(new ArrayAdapter<String>( this,
-                android.R.layout. simple_list_item_1, fragment_list));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
+        mDrawerList.setAdapter(arrayAdapter);
+
 
 
         Intent i = getIntent();
@@ -272,6 +267,72 @@ public class ProfileActivity extends AppCompatActivity implements
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String main=(String)parent.getItemAtPosition(position);
+
+                switch (main) {
+                    case "Meetings": {
+
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.outsideFrag, MeetingFragment.newInstance(usersEmail), MeetingFragment.class.getCanonicalName())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                    case "Direct Messaging": { // add check to see if im currently viewing this fragment
+
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
+                                .addToBackStack(null)
+                                .commit();
+
+                    }
+                    case "Post": {
+
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.outsideFrag, BlogPostFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                    case "Options": {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.outsideFrag, OptionsFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+
+                    case "Logout": {
+                        db.collection("users").document(usersEmail).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Logout", "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("Logout", "Error deleting document", e);
+                                    }
+                                });
+                        FirebaseAuth.getInstance().signOut();
+
+                        Intent i = new Intent(view.getContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }
+            }
+        });
+
+
+
 
     }
 
