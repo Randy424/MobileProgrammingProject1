@@ -281,6 +281,7 @@ public class ProfileActivity extends AppCompatActivity implements
                                 .replace(R.id.outsideFrag, MeetingFragment.newInstance(usersEmail), MeetingFragment.class.getCanonicalName())
                                 .addToBackStack(null)
                                 .commit();
+                        break;
                     }
                     case "Direct Messaging": { // add check to see if im currently viewing this fragment
 
@@ -289,7 +290,7 @@ public class ProfileActivity extends AppCompatActivity implements
                                 .replace(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
                                 .addToBackStack(null)
                                 .commit();
-
+                        break;
                     }
                     case "Post": {
 
@@ -297,12 +298,14 @@ public class ProfileActivity extends AppCompatActivity implements
                                 .replace(R.id.outsideFrag, BlogPostFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
+                        break;
                     }
                     case "Options": {
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.outsideFrag, OptionsFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
+                        break;
                     }
 
                     case "Logout": {
@@ -324,7 +327,7 @@ public class ProfileActivity extends AppCompatActivity implements
                         Intent i = new Intent(view.getContext(), MainActivity.class);
                         startActivity(i);
                         finish();
-                    }
+                        break;                    }
                 }
             }
         });
