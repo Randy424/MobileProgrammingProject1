@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements
         CreateMeetingFragment.OnFragmentInteractionListener,
         DatePickerFragment.OnFragmentInteractionListener,
         TimePickerFragment.OnFragmentInteractionListener, RegisterProfileFragment.OnFragmentInteractionListener,
-         GoogleMap.OnMapLongClickListener{
+        GoogleMap.OnMapLongClickListener {
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
@@ -131,7 +131,6 @@ public class ProfileActivity extends AppCompatActivity implements
         final LatLng schoolLocate = new LatLng(30.445349, -84.299542);
 
 
-
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -143,19 +142,13 @@ public class ProfileActivity extends AppCompatActivity implements
 
                                 if (findDistance(new LatLng(document.getDouble("latitude"),
                                         document.getDouble("longitude")), schoolLocate) <= 1000) {
-                                    if(filterOption.equals("ALL")) {
-
+                                    if (filterOption.equals("ALL")) {
                                         addIfValid(new LatLng(document.getDouble("latitude"),
-
                                                         document.getDouble("longitude")),
-
                                                 document.getId(),
-
                                                 googleMap);
 
-                                    }
-                                    else
-                                    {
+                                    } else {
 
                                         DocumentReference docRef2 = db.collection("users").document(email);
                                         docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -188,7 +181,6 @@ public class ProfileActivity extends AppCompatActivity implements
                                             }
 
 
-
                                         });
 
 
@@ -201,7 +193,6 @@ public class ProfileActivity extends AppCompatActivity implements
                         }
                     }
                 });
-
 
 
         float zoomLevel = (float) 14.0;
@@ -223,7 +214,6 @@ public class ProfileActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
 
 
         Intent i = getIntent();
@@ -251,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
                     } else {
                         Log.d("logger", "No such document");
-                        getSupportFragmentManager().beginTransaction().add(R.id.outsideFrag, RegisterProfileFragment.newInstance("string","string2"), "register")
+                        getSupportFragmentManager().beginTransaction().add(R.id.outsideFrag, RegisterProfileFragment.newInstance("string", "string2"), "register")
                                 .addToBackStack(null).commit();
 
                     }
@@ -262,9 +252,9 @@ public class ProfileActivity extends AppCompatActivity implements
         });
 
         /**getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);*/
+         getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
+         Toolbar myToolbar = findViewById(R.id.my_toolbar);
+         setSupportActionBar(myToolbar);*/
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -298,10 +288,10 @@ public class ProfileActivity extends AppCompatActivity implements
                 FragmentManager fm = getSupportFragmentManager();
                 //Fragment previousMessageFragment = fm.findFragmentByTag(MessagingDetailFragment.class.getCanonicalName());
                 //if(previousMessageFragment == null) {
-                    fm.beginTransaction()
-                            .add(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
-                            .addToBackStack(null)
-                            .commit();
+                fm.beginTransaction()
+                        .add(R.id.outsideFrag, MessagingDetailFragment.newInstance(usersEmail), MessagingDetailFragment.class.getCanonicalName())
+                        .addToBackStack(null)
+                        .commit();
                 /*}
                 else {
                     fm.beginTransaction()
@@ -430,17 +420,16 @@ public class ProfileActivity extends AppCompatActivity implements
 
         //Fragment previousConvoFragment = fm.findFragmentByTag(ConversationFragment.class.getCanonicalName());
         //if(previousConvoFragment == null) {
-            fm.beginTransaction()
-                    .replace(R.id.outsideFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
-                    .addToBackStack(null)
-                    .commit();
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, ConversationFragment.newInstance(firstUserEmail, secondUserEmail))
+                .addToBackStack(null)
+                .commit();
         //}
         //else {
         //    fm.beginTransaction()
         //            .replace(R.id.outsideFrag, previousConvoFragment, ConversationFragment.class.getCanonicalName())
         //            .commit();
         //}
-
 
 
     }
@@ -465,6 +454,8 @@ public class ProfileActivity extends AppCompatActivity implements
 
         Toast.makeText(this, "Info window clicked",
                 Toast.LENGTH_SHORT).show();
+        getSupportFragmentManager().beginTransaction().replace(R.id.outsideFrag, ProfileDetailFragment.newInstance(marker.getTitle()))
+                .addToBackStack(null).commit();
 
         /*assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().replace(R.id.profile_preview_card,
@@ -477,22 +468,21 @@ public class ProfileActivity extends AppCompatActivity implements
         options.title(userEmail);
         ourMap.addMarker(options);
     }
+
     @Override
-    public void updateDisplayedTime (TimePicker view, int hourOfDay, int minute) {
+    public void updateDisplayedTime(TimePicker view, int hourOfDay, int minute) {
         TextView timeDisplayer;
-        if(CreateMeetingFragment.timeFlag == 1) {
+        if (CreateMeetingFragment.timeFlag == 1) {
             timeDisplayer = this.findViewById(R.id.selectedStartTimeTV);
-        }
-        else
-        {
-             timeDisplayer = this.findViewById(R.id.selectedEndTimeTV);
+        } else {
+            timeDisplayer = this.findViewById(R.id.selectedEndTimeTV);
         }
 
         timeDisplayer.setText(Integer.toString(hourOfDay) + ":H, " + Integer.toString(minute) + ":M");
     }
 
     @Override
-    public void updateDisplayedDate (DatePicker view, int year, int month, int day) {
+    public void updateDisplayedDate(DatePicker view, int year, int month, int day) {
         TextView timeDisplayer = this.findViewById(R.id.dateTV);
         timeDisplayer.setText(Integer.toString(year) + ":Y, " + Integer.toString(month) + ":M" + Integer.toString(day) + ":D");
     }
@@ -501,6 +491,7 @@ public class ProfileActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -510,7 +501,8 @@ public class ProfileActivity extends AppCompatActivity implements
     public void onMapLongClick(LatLng latLng) {
 
     }
-    public double findDistance(LatLng i, LatLng ii){
+
+    public double findDistance(LatLng i, LatLng ii) {
 
         double lat1, lat2, lon1, lon2, el1, el2;
 
