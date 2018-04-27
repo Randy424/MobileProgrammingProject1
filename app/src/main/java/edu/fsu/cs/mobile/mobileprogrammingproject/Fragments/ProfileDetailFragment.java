@@ -42,8 +42,9 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     private FirebaseFirestore db2;
     private String currentUser;
     private String clickedUser;
-    private EditText mMajorEdit;
     private TextView mCurrentMajor;
+    private TextView mClasses;
+    private TextView mYear;
 
 
 
