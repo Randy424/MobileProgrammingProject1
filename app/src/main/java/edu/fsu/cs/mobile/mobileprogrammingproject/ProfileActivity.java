@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -74,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
         TimePickerFragment.OnFragmentInteractionListener,
+        DatePickerFragment.OnFragmentInteractionListener,
          GoogleMap.OnMapLongClickListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -89,14 +91,6 @@ public class ProfileActivity extends AppCompatActivity implements
 
     private FirebaseFirestore db;
 
-    /*@Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 
     private final LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -265,6 +259,7 @@ public class ProfileActivity extends AppCompatActivity implements
                 FragmentManager fm = getSupportFragmentManager();
                 fm.beginTransaction()
                         .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail), CreateMeetingFragment.class.getCanonicalName())
+                        .addToBackStack(null)
                         .commit();
                 return true;
             }
@@ -358,9 +353,14 @@ public class ProfileActivity extends AppCompatActivity implements
         }
     }
 
-    public void showStartTimePickerDialog() {
+    public void showTimePickerDialog() {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    public void showDatePickerDialog() {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private void startTracking() {
@@ -448,9 +448,23 @@ public class ProfileActivity extends AppCompatActivity implements
         ourMap.addMarker(options);
     }
     @Override
-    public void updateDisplayedStartTime (TimePicker view, int hourOfDay, int minute) {
-        TextView timeDisplayer = this.findViewById(R.id.selectedTimeTV);
+    public void updateDisplayedTime (TimePicker view, int hourOfDay, int minute) {
+        TextView timeDisplayer;
+        if(CreateMeetingFragment.timeFlag == 1) {
+            timeDisplayer = this.findViewById(R.id.selectedStartTimeTV);
+        }
+        else
+        {
+             timeDisplayer = this.findViewById(R.id.selectedEndTimeTV);
+        }
+
         timeDisplayer.setText(Integer.toString(hourOfDay) + ":H, " + Integer.toString(minute) + ":M");
+    }
+
+    @Override
+    public void updateDisplayedDate (DatePicker view, int year, int month, int day) {
+        TextView timeDisplayer = this.findViewById(R.id.dateTV);
+        timeDisplayer.setText(Integer.toString(year) + ":Y, " + Integer.toString(month) + ":M" + Integer.toString(day) + ":D");
     }
 
     @Override
