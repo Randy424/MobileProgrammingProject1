@@ -73,8 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
-        TimePickerFragment.OnFragmentInteractionListener,
-         GoogleMap.OnMapLongClickListener{
+        TimePickerFragment.OnFragmentInteractionListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mTrackingLocation;
@@ -220,6 +219,23 @@ public class ProfileActivity extends AppCompatActivity implements
                 .radius(1000)
                 .strokeWidth(0f)
                 .fillColor(0x550000FF));
+
+
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+            @Override
+
+            public void onMapLongClick(LatLng latLng) {
+
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail, latLng), CreateMeetingFragment.class.getCanonicalName())
+                        .commit();
+
+
+            }
+
+        });
 
     }
 
@@ -462,10 +478,6 @@ public class ProfileActivity extends AppCompatActivity implements
         super.onResume();
     }
 
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-
-    }
     public double findDistance(LatLng i, LatLng ii){
 
         double lat1, lat2, lon1, lon2, el1, el2;

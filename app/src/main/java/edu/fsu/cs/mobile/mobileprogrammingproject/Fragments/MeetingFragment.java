@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 /**
@@ -33,7 +35,7 @@ public class MeetingFragment extends Fragment {
      * @return A new instance of fragment MeetingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeetingFragment newInstance(String myEmail) {
+    public MeetingFragment newInstance(String myEmail) {
 
 
         MeetingFragment fragment = new MeetingFragment();
@@ -42,6 +44,8 @@ public class MeetingFragment extends Fragment {
         fragment.setArguments(b);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
