@@ -35,7 +35,7 @@ public class MeetingFragment extends Fragment {
      * @return A new instance of fragment MeetingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public MeetingFragment newInstance(String myEmail) {
+    public static MeetingFragment newInstance(String myEmail) {
 
 
         MeetingFragment fragment = new MeetingFragment();
@@ -56,8 +56,9 @@ public class MeetingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meeting, container, false);
+        View myView = inflater.inflate(R.layout.fragment_meeting, container, false);
+
+        return myView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

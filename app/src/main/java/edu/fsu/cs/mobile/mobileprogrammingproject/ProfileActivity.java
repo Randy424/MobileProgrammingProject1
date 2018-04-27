@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -49,13 +51,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogFeedFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.BlogPostFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ConversationFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.CreateMeetingFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MeetingFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.MessagingDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.OptionsFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileActivityFragment;
@@ -214,6 +219,11 @@ public class ProfileActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        List fragment_list = new ArrayList<>();
+        fragment_list.add("DICK");
+        mDrawerList.setAdapter(new ArrayAdapter<String>( this,
+                android.R.layout. simple_list_item_1, fragment_list));
 
 
         Intent i = getIntent();
@@ -277,8 +287,13 @@ public class ProfileActivity extends AppCompatActivity implements
             case R.id.action_meeting: {
 
                 FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .replace(R.id.outsideFrag, CreateMeetingFragment.newInstance(usersEmail), CreateMeetingFragment.class.getCanonicalName())
+                        .addToBackStack(null)
+                        .commit();*/
+
+                fm.beginTransaction()
+                        .replace(R.id.outsideFrag, MeetingFragment.newInstance(usersEmail), MeetingFragment.class.getCanonicalName())
                         .addToBackStack(null)
                         .commit();
                 return true;
