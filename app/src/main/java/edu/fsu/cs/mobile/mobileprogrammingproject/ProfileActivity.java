@@ -61,6 +61,7 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.OptionsFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileActivityFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfileDetailFragment;
 import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.ProfilePreviewFragment;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Fragments.RegisterProfileFragment;
 
 public class ProfileActivity extends AppCompatActivity implements
         ProfilePreviewFragment.OnFragmentInteractionListener,
@@ -74,8 +75,8 @@ public class ProfileActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         CreateMeetingFragment.OnFragmentInteractionListener,
-        TimePickerFragment.OnFragmentInteractionListener,
         DatePickerFragment.OnFragmentInteractionListener,
+        TimePickerFragment.OnFragmentInteractionListener, RegisterProfileFragment.OnFragmentInteractionListener,
          GoogleMap.OnMapLongClickListener{
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -233,12 +234,41 @@ public class ProfileActivity extends AppCompatActivity implements
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         db = FirebaseFirestore.getInstance();
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
         startTracking();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").commit();
+
+        DocumentReference docRef = db.collection("users").document(currentUser);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists() && document.getData().get("major") != null) {
+                        getSupportFragmentManager().beginTransaction().add(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().add(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
+
+                    } else {
+                        Log.d("logger", "No such document");
+                        getSupportFragmentManager().beginTransaction().add(R.id.outsideFrag, RegisterProfileFragment.newInstance("string","string2"), "register")
+                                .addToBackStack(null).commit();
+
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        /**getSupportFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);*/
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);

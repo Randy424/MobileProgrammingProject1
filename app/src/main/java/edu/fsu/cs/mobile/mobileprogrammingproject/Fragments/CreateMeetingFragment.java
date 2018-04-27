@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -68,6 +69,14 @@ public class CreateMeetingFragment extends Fragment {
 
     }
 
+    public static CreateMeetingFragment newInstance(String myEmail, LatLng latLng) {
+        CreateMeetingFragment fragment = new CreateMeetingFragment();
+        Bundle args = new Bundle();
+        args.putString("myEmail", myEmail);
+        fragment.setArguments(args);
+        return fragment;
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
