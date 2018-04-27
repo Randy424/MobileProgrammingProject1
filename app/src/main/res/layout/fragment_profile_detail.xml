@@ -32,10 +32,10 @@
             android:id="@+id/majortextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="120dp"
             android:text="@string/major"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,22 +43,23 @@
             android:id="@+id/classesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="47dp"
             android:text="Classes"
-            android:textSize="14sp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/majortextView" />
 
         <TextView
             android:id="@+id/yearText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="128dp"
-            android:layout_marginTop="52dp"
-            android:text="Gradutaing Year"
-            android:textSize="14sp"
+            android:layout_marginTop="44dp"
+            android:text="year"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.443"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/classesText" />
 
         <TextView
@@ -66,8 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="120dp"
             android:text="Major:"
+            android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,11 +77,11 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginStart="16dp"
             android:text="Classes:"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/classesText" />
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/classesText"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView9"
@@ -87,8 +89,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="Graduating Year:"
+            android:textSize="16sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/yearText"
             app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Name:"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nameText"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="54dp"
+            android:text="Name"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </android.support.constraint.ConstraintLayout>

@@ -251,7 +251,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
                     } else {
                         Log.d("logger", "No such document");
-                        getSupportFragmentManager().beginTransaction().add(R.id.outsideFrag, RegisterProfileFragment.newInstance("string", "string2"), "register")
+                        getSupportFragmentManager().beginTransaction().replace(R.id.outsideFrag, RegisterProfileFragment.newInstance("string", "string2"), "register")
                                 .addToBackStack(null).commit();
 
                     }

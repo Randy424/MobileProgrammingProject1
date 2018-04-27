@@ -32,11 +32,12 @@
             android:id="@+id/YearTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="Graduating Year"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/yearEdit"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.702" />
 
@@ -98,19 +99,42 @@
 
         <EditText
             android:id="@+id/classesEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="179dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/yearEdit"
-            app:layout_constraintStart_toStartOf="@+id/yearEdit" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/ClassesTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
             android:id="@+id/yearEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="67dp"
+            app:layout_constraintBottom_toBottomOf="@+id/YearTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/YearTextView" />
+
+        <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/YearTextView"
-            app:layout_constraintHorizontal_bias="0.548"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="16dp"
+            android:text="Name:"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/nameEdit"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/autocompleteView"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
     </android.support.constraint.ConstraintLayout>

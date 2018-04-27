@@ -2,6 +2,7 @@ package edu.fsu.cs.mobile.mobileprogrammingproject.Fragments;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
     private EditText mEmailEdit;
     private EditText mClassesEdit;
     private EditText mYearEdit;
+    private EditText mNameEdit;
     private OnFragmentInteractionListener mListener;
     private Button mSubmit;
     private FirebaseFirestore db;
@@ -88,6 +90,8 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_register_profile, container, false);
+        view.setBackgroundColor(Color.WHITE);
+        view.setClickable(true);
 
         //Set instance of firestore database
         db = FirebaseFirestore.getInstance();
@@ -104,7 +108,7 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
         mSubmit = view.findViewById(R.id.submitButton);
         mClassesEdit = view.findViewById(R.id.classesEdit);
         mYearEdit = view.findViewById(R.id.yearEdit);
-
+        mNameEdit = view.findViewById(R.id.nameEdit);
         //Calls overrided onClick for this Button view
         mSubmit.setOnClickListener(this);
 
@@ -119,14 +123,12 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
             case R.id.submitButton:
                 addEditData(mClassesEdit, "classes");
                 addEditData(mYearEdit, "year");
+                addEditData(mNameEdit, "name");
                 addMajorData(mMajorEdit, "major");
                 ProfileActivityFragment frag = new ProfileActivityFragment();
                 getFragmentManager().beginTransaction().addToBackStack(null).hide(RegisterProfileFragment.this).
                 add(R.id.outerFrag,frag).commit();
                 getFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
-
-                //getFragmentManager().beginTransaction().replace(R.id.outerFrag, ProfileActivityFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
-                //getFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag").addToBackStack(null).commit();
 
         }
 

@@ -47,6 +47,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     public TextView mCurrentMajor;
     public TextView mClasses;
     public TextView mYear;
+    public TextView mName;
 
 
 
@@ -92,6 +93,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         mCurrentMajor = myView.findViewById(R.id.majortextView);
         mYear = myView.findViewById(R.id.yearText);
         mFriendButton = myView.findViewById(R.id.friendButton);
+        mName = myView.findViewById(R.id.nameText);
 
 
         /**
@@ -109,6 +111,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                         PopulateTextview(mCurrentMajor,document,"major");
                         PopulateTextview(mClasses,document,"classes");
                         PopulateTextview(mYear,document,"year");
+                        PopulateTextview(mName, document, "name");
 
                     } else {
                         Log.d("logger", "No such document");
