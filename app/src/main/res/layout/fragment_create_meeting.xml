@@ -19,12 +19,12 @@
             android:layout_height="wrap_content"
 
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/editText"
+            android:layout_alignStart="@+id/topicTV"
             android:layout_marginBottom="181dp"
             android:text="Start Time" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/topicTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -36,11 +36,11 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/descriptionTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/editText"
+            android:layout_alignStart="@+id/topicTV"
             android:layout_marginTop="125dp"
             android:ems="10"
             android:hint="Description"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/editText"
+            android:layout_alignStart="@+id/topicTV"
             android:layout_marginTop="203dp" />
 
         <Button
@@ -72,15 +72,15 @@
             android:text="Date" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/dateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/editText"
+            android:layout_alignStart="@+id/selectedStartTimeTV"
             android:layout_alignTop="@+id/meetDateButt"
-            android:text="TextView" />
+            android:text="NOTHING SELECTED" />
 
         <TextView
-            android:id="@+id/selectedTimeTV"
+            android:id="@+id/selectedStartTimeTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -89,12 +89,12 @@
             android:text="NOTHING SELECTED" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/selectedEndTimeTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/editText"
+            android:layout_alignStart="@+id/dateTV"
             android:layout_alignTop="@+id/endTimeButt"
-            android:text="TextView" />
+            android:text="NOTHING SELECTED" />
 
         <Button
             android:id="@+id/createMeetingButton"

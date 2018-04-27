@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -44,6 +45,7 @@ public class CreateMeetingFragment extends Fragment {
     private int startMinute;
     private int finishHour;
     private int finishMinute;*/
+    public static int timeFlag;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,13 +91,37 @@ public class CreateMeetingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_create_meeting, container, false);
+        timeFlag = 0;
         Button startTimeButton = myView.findViewById(R.id.startTimeButt);
         startTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.showStartTimePickerDialog();
+                mListener.showTimePickerDialog();
+                timeFlag = 1;
             }
         });
+
+        final TextView topicTV = myView.findViewById(R.id.topicTV);
+        final TextView descriptionTV = myView.findViewById(R.id.descriptionTV);
+
+        Button endTimeButton = myView.findViewById(R.id.endTimeButt);
+        endTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.showTimePickerDialog();
+                timeFlag = 2;
+            }
+        });
+
+        Button meetDayButton = myView.findViewById(R.id.meetDateButt);
+        meetDayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.showDatePickerDialog();
+
+            }
+        });
+
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
         db = FirebaseFirestore.getInstance();
@@ -144,7 +170,19 @@ public class CreateMeetingFragment extends Fragment {
                     thisLat = 99.999;
                     thisLong = 99.999;
                 }
-                newMessageRef.set(new Meeting(myUsersEmail, locName, "TEST TOPIC", "TEST DESCRIPTION", new Date(), new Date(), thisLat, thisLong));
+
+
+                /*Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, monthOfYear);
+                cal.set(Calendar.DATE, dayOfMonth);
+                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                Date date = cal.getTime();*/
+                newMessageRef.set(new Meeting(myUsersEmail, locName, topicTV.getText().toString().trim(),
+                        descriptionTV.getText().toString().trim(), new Date(), new Date(), thisLat, thisLong));
             }
         });
         return myView;
@@ -175,9 +213,9 @@ public class CreateMeetingFragment extends Fragment {
     }
 
 
-
     public interface OnFragmentInteractionListener {
-        public void showStartTimePickerDialog();
+        public void showTimePickerDialog();
+        public void showDatePickerDialog();
 
     }
 }

@@ -42,7 +42,7 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MessagingDetailFragment.OnFragmentInteractionListener) {
+        if (context instanceof TimePickerFragment.OnFragmentInteractionListener) {
             mListener = (TimePickerFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -57,12 +57,12 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        mListener.updateDisplayedStartTime(view, hourOfDay, minute);
+        mListener.updateDisplayedTime(view, hourOfDay, minute);
 
     }
 
     public interface OnFragmentInteractionListener {
-        void updateDisplayedStartTime (TimePicker view, int hourOfDay, int minute);
+        void updateDisplayedTime (TimePicker view, int hourOfDay, int minute);
 
     }
 }
