@@ -21,6 +21,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import org.w3c.dom.Document;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -86,26 +88,37 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
         //Assign views to variables
-        mCurrentMajor = myView.findViewById(R.id.currentMajorTextview);
-        TextView mCurrentName = myView.findViewById(R.id.nameTextview);
-        mCurrentName.setText(Objects.requireNonNull(FirebaseAuth.getInstance()
-                .getCurrentUser()).getDisplayName());
+        mClasses = myView.findViewById(R.id.classesText);
+        mCurrentMajor = myView.findViewById(R.id.majortextView);
+        mYear = myView.findViewById(R.id.yearEdit);
         mFriendButton = myView.findViewById(R.id.friendButton);
-        mMajorEdit = myView.findViewById(R.id.major_Edittext);
-        TextView mEnterMajor = myView.findViewById(R.id.enterMajorTextview);
-        Button mSubmit = myView.findViewById(R.id.submitButton);
 
-        if (!clickedUser.equals(currentUser)) {
-            mEnterMajor.setVisibility(View.INVISIBLE);
-            mEnterMajor.setClickable(false);
-            mMajorEdit.setVisibility(View.INVISIBLE);
-            mMajorEdit.setClickable(false);
-            mSubmit.setVisibility(View.INVISIBLE);
-            mSubmit.setClickable(false);
-        } else {
-            mSubmit.setOnClickListener(this);
-        }
 
+        /**
+         * The following DocumentReference and listener is used to populate the textviews with
+         * the associated fields in the database via the PopulateTextview function.
+         */
+        DocumentReference fieldDoc = db2.collection("users").document(currentUser);
+        fieldDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+
+                    } else {
+                        Log.d("logger", "No such document");
+                    }
+                } else {
+                    Log.d("fail", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        /**
+         * The following DocumentReference and listener is used to determine how to display the
+         * addFriend button based on if the friend is already added or not.
+         */
         DocumentReference docRef = db2.collection("users").document(currentUser).collection("friends")
                 .document(clickedUser);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -114,7 +127,9 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null && document.exists()) {
-                        changeButton(mFriendButton);
+                        PopulateTextview(mCurrentMajor,document,"major");
+                        PopulateTextview(mClasses,document,"classes");
+                        PopulateTextview(mYear,document,"year");
                     } else {
                         Log.d("logger", "No such document");
                     }
@@ -123,28 +138,8 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 }
             }
         });
-
-        DocumentReference docRef2 = db2.collection("users").document(clickedUser).collection("major")
-                .document("major");
-        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null && document.exists()) {
-                        changeMajor(document.getData());
-                    } else {
-                        Log.d("logger", "No such document");
-                    }
-                } else {
-                    Log.d("fail", "get failed with ", task.getException());
-                }
-            }
-        });
-
 
         mFriendButton.setOnClickListener(this);
-        mCurrentName.setText(clickedUser);
 
         return myView;
     }
@@ -154,9 +149,18 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
 
     }
 
-    private void changeMajor(Map<String, Object> majormap) {
-        mCurrentMajor.setText(majormap.get("major").toString());
+    /**
+     * Assigns field to textview
+     * @param textView textview to be populated with field
+     * @param doc documentsnapshot
+     * @param field key that grabs field from map (where field is stored)
+     */
+    private void PopulateTextview(TextView textView, DocumentSnapshot doc, String field)
+    {
+        textView.setText(doc.getData().get(field).toString());
     }
+
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -175,13 +179,6 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 //tv.setText("Number of friends: " + Integer
                 //        .toString(ProfileActivityFragment.totFriendCount));
                 break;
-            case R.id.submitButton:
-                Map<String, Object> update2 = new HashMap<>();
-                update2.put("major", mMajorEdit.getText().toString());
-                mCurrentMajor.setText(mMajorEdit.getText().toString());
-                db2.collection("users").document(currentUser)
-                        .collection("major").document("major")
-                        .set(update2, SetOptions.merge());
 
 
         }
