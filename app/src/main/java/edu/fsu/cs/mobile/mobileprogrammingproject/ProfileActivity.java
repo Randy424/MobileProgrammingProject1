@@ -219,8 +219,6 @@ public class ProfileActivity extends AppCompatActivity implements
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
         mDrawerList.setAdapter(arrayAdapter);
 
-
-
         Intent i = getIntent();
         assert (i != null);
 
