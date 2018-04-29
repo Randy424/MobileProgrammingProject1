@@ -1,5 +1,9 @@
-PLEASE FIND OUR UPDATED PRESENTATION AND PRESENTATION VIDEO AT THIS URL:
-https://drive.google.com/file/d/14idI1Ju7Bmu2UxQPwhznPB9qZPuvcRN1/view?usp=sharing
+Please find our final presentation slides in the root directory of this repository.
+Please find the final presentation's demonstration video at this link:
+https://drive.google.com/file/d/1K9C0qSgVQhspQZchdFxTCt3p5HAM3Z_r/view?usp=sharing
+
+// BELOW HERE IS FROM README 2.0
+
 
 Our list of high-level bugs is contained within that powerpoint document, and our issues list on this GitHub!
 
