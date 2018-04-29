@@ -478,6 +478,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
     public void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
+
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -572,17 +573,20 @@ public class ProfileActivity extends AppCompatActivity implements
         TextView timeDisplayer;
         if (CreateMeetingFragment.timeFlag == 1) {
             timeDisplayer = this.findViewById(R.id.selectedStartTimeTV);
+            CreateMeetingFragment.setStartTime(hourOfDay, minute);
         } else {
             timeDisplayer = this.findViewById(R.id.selectedEndTimeTV);
+            CreateMeetingFragment.setEndTime(hourOfDay, minute);
         }
-
-        timeDisplayer.setText(Integer.toString(hourOfDay) + ":H, " + Integer.toString(minute) + ":M");
+        timeDisplayer.setText(Integer.toString(hourOfDay) + ":" + Integer.toString(minute));
     }
 
     @Override
     public void updateDisplayedDate(DatePicker view, int year, int month, int day) {
         TextView timeDisplayer = this.findViewById(R.id.dateTV);
-        timeDisplayer.setText(Integer.toString(year) + ":Y, " + Integer.toString(month) + ":M" + Integer.toString(day) + ":D");
+        timeDisplayer.setText(Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year));
+
+        CreateMeetingFragment.setDate(year, month, day);
     }
 
     @Override

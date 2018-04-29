@@ -23,7 +23,7 @@
     </style>
 
     <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-        <item name="android:background">#184832</item>
+        <item name="android:background">#52f2b6</item>
         <item name="colorControlNormal">#fbfcfd</item>
         <item name="colorControlActivated">#00cdcd</item>
     </style>

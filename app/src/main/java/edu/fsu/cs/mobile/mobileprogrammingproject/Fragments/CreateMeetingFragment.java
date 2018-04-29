@@ -38,6 +38,8 @@ import edu.fsu.cs.mobile.mobileprogrammingproject.R;
  * create an instance of this fragment.
  */
 public class CreateMeetingFragment extends Fragment {
+    static Calendar startDate = Calendar.getInstance();
+    static Calendar endDate = Calendar.getInstance();
     private FirebaseFirestore db;
     private String myUsersEmail;
     /*private int lastTimePicker;
@@ -89,7 +91,7 @@ public class CreateMeetingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View myView = inflater.inflate(R.layout.fragment_create_meeting, container, false);
         timeFlag = 0;
         Button startTimeButton = myView.findViewById(R.id.startTimeButt);
@@ -121,6 +123,10 @@ public class CreateMeetingFragment extends Fragment {
 
             }
         });
+
+        //startDate.getInstance();
+        //endDate.getInstance();
+
 
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
@@ -171,18 +177,13 @@ public class CreateMeetingFragment extends Fragment {
                     thisLong = 99.999;
                 }
 
+                Date meetingStart = startDate.getTime();
+                Date meetingEnd = endDate.getTime();
 
-                /*Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, monthOfYear);
-                cal.set(Calendar.DATE, dayOfMonth);
-                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                cal.set(Calendar.MINUTE, minute);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                Date date = cal.getTime();*/
-                newMessageRef.set(new Meeting(myUsersEmail, locName, topicTV.getText().toString().trim(),
-                        descriptionTV.getText().toString().trim(), new Date(), new Date(), thisLat, thisLong));
+                newMessageRef.set(new Meeting(myUsersEmail, locName,
+                        topicTV.getText().toString().trim(),
+                        descriptionTV.getText().toString().trim(), meetingStart, meetingEnd,
+                        thisLat, thisLong));
             }
         });
         return myView;
@@ -194,6 +195,21 @@ public class CreateMeetingFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }*/
+    public static void setDate(int year, int month, int day) {
+        startDate.set(year, month, day);
+        endDate.set(year, month, day);
+
+    }
+
+    public static void setStartTime(int hourOfDay, int minute) {
+        startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        startDate.set(Calendar.MINUTE, minute);
+    }
+
+    public static void setEndTime(int hourOfDay, int minute) {
+        endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        endDate.set(Calendar.MINUTE, minute);
+    }
 
     @Override
     public void onAttach(Context context) {

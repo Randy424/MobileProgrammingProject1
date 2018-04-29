@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,8 +71,32 @@ public class MeetingDetailFragment extends Fragment {
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
 
-        TextView tester = myView.findViewById(R.id.mtopicTV);
-        tester.setText(myMeeting.getTopic());
+        TextView daTopic = myView.findViewById(R.id.mtopicTV);
+        daTopic.setText(myMeeting.getTopic());
+
+        TextView daCreator = myView.findViewById(R.id.mCreatorTV);
+        daCreator.setText(myMeeting.getCreator());
+
+        TextView daDescription = myView.findViewById(R.id.mDescriptionTV);
+        daDescription.setText(myMeeting.getDescription());
+
+
+        TextView daMeetingLocationName = myView.findViewById(R.id.mMeetingLocationTV);
+        daMeetingLocationName.setText(myMeeting.getMeeting());
+
+        Calendar startTime = Calendar.getInstance();
+        startTime.setTime(myMeeting.getStartTime());
+
+        TextView daDate = myView.findViewById(R.id.mDateTV);
+        daDate.setText(new SimpleDateFormat("EEEE, dd/MM/yyyy").format(myMeeting.getStartTime()));
+
+        Calendar endTime = Calendar.getInstance();
+        endTime.setTime(myMeeting.getEndTime());
+
+        TextView daTimes = myView.findViewById(R.id.mTimesTV);
+        daTimes.setText(startTime.get(Calendar.HOUR_OF_DAY) + ":" +startTime.get(Calendar.MINUTE) + " - " + endTime.get(Calendar.HOUR_OF_DAY) + ":" + endTime.get(Calendar.MINUTE));
+
+
         lv = myView.findViewById(R.id.filesLV);
 
 
