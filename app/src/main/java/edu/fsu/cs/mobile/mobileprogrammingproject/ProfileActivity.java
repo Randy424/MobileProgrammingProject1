@@ -482,7 +482,21 @@ public class ProfileActivity extends AppCompatActivity implements
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private void startTracking() {
+    @Override
+    public void loadMeetings() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.outsideFrag,
+                MeetingFragment.newInstance(usersEmail), MeetingFragment.class.getCanonicalName())
+                    .addToBackStack(null).commit();
+        }
+
+
+
+
+
+
+
+
+        private void startTracking() {
 
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) !=

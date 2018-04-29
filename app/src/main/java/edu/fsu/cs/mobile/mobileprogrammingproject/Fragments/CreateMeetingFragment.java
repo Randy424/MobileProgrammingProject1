@@ -184,6 +184,8 @@ public class CreateMeetingFragment extends Fragment {
                         topicTV.getText().toString().trim(),
                         descriptionTV.getText().toString().trim(), meetingStart, meetingEnd,
                         thisLat, thisLong));
+
+                mListener.loadMeetings();
             }
         });
         return myView;
@@ -232,6 +234,7 @@ public class CreateMeetingFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         public void showTimePickerDialog();
         public void showDatePickerDialog();
+        public void loadMeetings();
 
     }
 }
