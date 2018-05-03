@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.fsu.cs.mobile.mobileprogrammingproject.MapPost;
+import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.ProfileActivity;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
@@ -56,7 +58,7 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
     private Button mClassAdd;
     private FirebaseFirestore db;
     private AutoCompleteTextView mMajorEdit;
-    private Map<String, Object> classMap;
+    private Map<String, Boolean> classMap;
     public RegisterProfileFragment() {
         // Required empty public constructor
     }
@@ -167,7 +169,9 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
     }
 
     public void submitClasses(){
-        db.collection("users").document(currentUser).set(classMap, SetOptions.merge());
+        MapPost mMapPost = new MapPost("classes", classMap);
+
+        db.collection("users").document(currentUser).set(mMapPost, SetOptions.merge());
     }
 
     /**
