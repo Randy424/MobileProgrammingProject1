@@ -10,7 +10,9 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/ClassesTextView"
+        app:layout_constraintTop_toBottomOf="@+id/ClassesTextView">
 
         <AutoCompleteTextView
             android:id="@+id/autocompleteView"
@@ -80,7 +82,7 @@
             android:id="@+id/ClassesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="100dp"
             android:layout_marginLeft="16dp"
             android:text="Classes:"
             android:textSize="18sp"
@@ -99,10 +101,12 @@
 
         <EditText
             android:id="@+id/classesEdit"
-            android:layout_width="179dp"
+            android:layout_width="277dp"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:hint="Add one class at a time"
             app:layout_constraintBaseline_toBaselineOf="@+id/ClassesTextView"
+            app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -137,6 +141,16 @@
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/classButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Add Class"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/classesEdit" />
     </android.support.constraint.ConstraintLayout>
 
 
