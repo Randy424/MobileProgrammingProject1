@@ -2,6 +2,12 @@ Please find our final presentation slides in the root directory of this reposito
 Please find the final presentation's demonstration video at this link:
 https://drive.google.com/file/d/1K9C0qSgVQhspQZchdFxTCt3p5HAM3Z_r/view?usp=sharing
 
+// README 3.0
+
+Our app assumes that you will have files in your external storage to select from
+Our app also assumes you have all required permissions set to the correct level
+
+
 // BELOW HERE IS FROM README 2.0
 
 
