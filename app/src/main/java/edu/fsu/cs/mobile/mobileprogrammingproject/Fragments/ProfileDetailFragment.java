@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
     private FirebaseFirestore db2;
     private String currentUser;
     private String clickedUser;
+    private Button mSendMessage;
     public TextView mCurrentMajor;
     public TextView mClasses;
     public TextView mYear;
@@ -94,6 +96,8 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
         mYear = myView.findViewById(R.id.yearText);
         mFriendButton = myView.findViewById(R.id.friendButton);
         mName = myView.findViewById(R.id.nameText);
+        mSendMessage = myView.findViewById(R.id.messageButton);
+        mSendMessage.setOnClickListener(this);
 
 
         /**
@@ -189,8 +193,12 @@ public class ProfileDetailFragment extends Fragment implements View.OnClickListe
                 //tv.setText("Number of friends: " + Integer
                 //        .toString(ProfileActivityFragment.totFriendCount));
                 break;
-
-
+            case R.id.messageButton:
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.outsideFrag, ConversationFragment.newInstance(currentUser, clickedUser), MessagingDetailFragment.class.getCanonicalName())
+                        .addToBackStack(null)
+                        .commit();
         }
     }
 
