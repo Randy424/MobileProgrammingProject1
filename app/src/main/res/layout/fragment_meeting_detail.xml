@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="33dp"
             android:layout_marginTop="33dp"
-            android:text="Topic Goes Here Baby"
+            android:text="@string/topic_goes_here_baby"
             android:textStyle="bold" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/mtopicTV"
             android:layout_marginTop="76dp"
-            android:text="Creator's Email Goes Here" />
+            android:text="@string/creator_s_email_goes_here" />
 
         <TextView
             android:id="@+id/mDescriptionTV"
@@ -47,7 +47,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/mtopicTV"
             android:layout_marginTop="117dp"
-            android:text="BIG LONG DESCRIPTION GOES HERE" />
+            android:text="@string/big_long_description_goes_here" />
 
         <TextView
             android:id="@+id/mTimesTV"
@@ -57,7 +57,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="190dp"
             android:layout_alignStart="@+id/mDescriptionTV"
-            android:text="MEETING TIME HERE, FROM ONE TO ANOTHER" />
+            android:text="@string/meeting_time_here_from_one_to_another" />
 
         <TextView
             android:id="@+id/mDateTV"
@@ -66,7 +66,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/mTimesTV"
             android:layout_marginBottom="225dp"
-            android:text="MEETING DATE GOES HERE"
+            android:text="@string/meeting_date_goes_here"
             android:textStyle="bold" />
 
 
@@ -93,7 +93,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/mTimesTV"
             android:layout_marginBottom="262dp"
-            android:text="Meeting Location Name Goes Here" />
+            android:text="@string/meeting_location_name_goes_here" />
 
     </RelativeLayout>
 

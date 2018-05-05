@@ -8,7 +8,6 @@
     tools:context=".Fragments.RegisterProfileFragment">
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,7 +19,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="104dp"
-            android:hint="Search Major..."
+            android:hint="@string/search_major"
             android:theme="@style/Autocomplete"
             app:layout_constraintBottom_toBottomOf="@+id/ClassesTextView"
             app:layout_constraintRight_toRightOf="parent"
@@ -33,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Graduating Year"
+            android:text="@string/graduating_year"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/yearEdit"
@@ -42,7 +41,6 @@
             app:layout_constraintVertical_bias="0.702" />
 
         <TextView
-            android:id="@+id/registerText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
@@ -58,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="47dp"
-            android:text="Now complete your profile so you can find others on campus to study with."
+            android:text="@string/now_complete_your_profile_so_you_can_find_others_on_campus_to_study_with"
             android:textAlignment="center"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -71,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="16dp"
-            android:text="Major:"
+            android:text="@string/major2"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/autocompleteView"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -82,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="43dp"
             android:layout_marginLeft="16dp"
-            android:text="Classes:"
+            android:text="@string/classes"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/YearTextView"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -92,13 +90,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:text="Submit"
+            android:text="@string/submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
-            android:hint="my classes"
+            android:hint="@string/my_classes"
             android:id="@+id/classesEdit"
             android:layout_width="179dp"
             android:layout_height="wrap_content"
@@ -108,14 +106,15 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
-            android:hint="my graduating year"
+            android:hint="@string/my_graduating_year"
             android:id="@+id/yearEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="67dp"
             app:layout_constraintBottom_toBottomOf="@+id/YearTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/YearTextView" />
+            app:layout_constraintStart_toEndOf="@+id/YearTextView"
+            android:inputType="" />
 
         <TextView
             android:id="@+id/name"
@@ -123,13 +122,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="16dp"
-            android:text="Name:"
+            android:text="@string/name3"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/nameEdit"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
-            android:hint="name"
+            android:hint="@string/name2"
             android:id="@+id/nameEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Below we should see a list of all meetings" />
+            android:text="@string/below_we_should_see_a_list_of_all_meetings" />
 
         <ListView
             android:id="@+id/meetList"

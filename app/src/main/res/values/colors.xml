@@ -4,6 +4,5 @@
     <color name="colorPrimaryDark">#005800</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gradient">#53c6ff</color>
-    <color name="background_material_light_1">#757575</color>
     <color name="background_material_light" tools:ignore="PrivateResource">#757575</color>
 </resources>

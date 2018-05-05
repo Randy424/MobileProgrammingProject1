@@ -37,7 +37,6 @@ tools:context=".ProfileActivity"
 
 
             <TextView
-                android:id="@+id/mapPreviewMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/vollkorn_medium"
@@ -63,7 +62,6 @@ tools:context=".ProfileActivity"
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -71,7 +69,6 @@ tools:context=".ProfileActivity"
 
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="18dp"
@@ -81,7 +78,6 @@ tools:context=".ProfileActivity"
 
         <ImageView
             android:contentDescription="our study icon"
-            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

@@ -21,7 +21,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/topicTV"
             android:layout_marginBottom="181dp"
-            android:text="Start Time" />
+            android:text="@string/start_time" />
 
         <EditText
             android:id="@+id/topicTV"
@@ -32,7 +32,7 @@
             android:layout_marginEnd="63dp"
             android:layout_marginTop="49dp"
             android:ems="10"
-            android:hint="Topic"
+            android:hint="@string/topic"
             android:inputType="textPersonName" />
 
         <EditText
@@ -43,7 +43,7 @@
             android:layout_alignStart="@+id/topicTV"
             android:layout_marginTop="125dp"
             android:ems="10"
-            android:hint="Description"
+            android:hint="@string/description"
             android:inputType="textPersonName" />
 
         <Spinner
@@ -61,7 +61,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/startTimeButt"
             android:layout_marginBottom="118dp"
-            android:text="End TIme" />
+            android:text="@string/end_time" />
 
         <Button
             android:id="@+id/meetDateButt"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/startTimeButt"
             android:layout_centerVertical="true"
-            android:text="Date" />
+            android:text="@string/date" />
 
         <TextView
             android:id="@+id/dateTV"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/selectedStartTimeTV"
             android:layout_alignTop="@+id/meetDateButt"
-            android:text="NOTHING SELECTED" />
+            android:text="@string/nothing_selected" />
 
         <TextView
             android:id="@+id/selectedStartTimeTV"
@@ -86,7 +86,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/startTimeButt"
             android:layout_marginEnd="22dp"
-            android:text="NOTHING SELECTED" />
+            android:text="@string/nothing_selected" />
 
         <TextView
             android:id="@+id/selectedEndTimeTV"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/dateTV"
             android:layout_alignTop="@+id/endTimeButt"
-            android:text="NOTHING SELECTED" />
+            android:text="@string/nothing_selected" />
 
         <Button
             android:id="@+id/createMeetingButton"
@@ -103,6 +103,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="31dp"
-            android:text="CREATE MEETING" />
+            android:text="@string/create_meeting" />
     </RelativeLayout>
 </FrameLayout>

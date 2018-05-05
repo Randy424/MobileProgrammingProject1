@@ -18,10 +18,6 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
-    <style name="testNewTheme" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="android:colorBackground" tools:ignore="PrivateResource">@color/background_material_light</item>
-    </style>
-
     <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
         <item name="android:background">#52f2b6</item>
         <item name="colorControlNormal">#fbfcfd</item>
