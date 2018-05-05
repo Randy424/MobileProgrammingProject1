@@ -79,6 +79,7 @@ public class CreateMeetingFragment extends Fragment {
         return fragment;
 
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +128,6 @@ public class CreateMeetingFragment extends Fragment {
         //startDate.getInstance();
         //endDate.getInstance();
 
-
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
         db = FirebaseFirestore.getInstance();
@@ -145,6 +145,7 @@ public class CreateMeetingFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         final Spinner sItems = (Spinner) myView.findViewById(R.id.spinner);
         sItems.setAdapter(adapter);
+
 
 
 

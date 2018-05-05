@@ -214,9 +214,9 @@ public class ProfileActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void loadMeetingDetailFragment(Object o) {
+    public void loadMeetingDetailFragment(Object o, String meetId) {
         FragmentManager fm = getSupportFragmentManager();
-        MeetingDetailFragment newFrag = MeetingDetailFragment.newInstance();
+        MeetingDetailFragment newFrag = MeetingDetailFragment.newInstance(meetId);
         /*fm.beginTransaction()
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .hide(fm.findFragmentByTag("outermostFrag"))

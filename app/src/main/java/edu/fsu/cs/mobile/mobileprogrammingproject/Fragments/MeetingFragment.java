@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
 /**
@@ -42,6 +35,7 @@ public class MeetingFragment extends Fragment {
     private FirebaseFirestore db;
     private OnFragmentInteractionListener mListener;
     private ArrayList<Meeting> meetArrList;
+    private ArrayList<String> meetIdList;
 
     private ListView listOfMeetings;
 
@@ -81,18 +75,15 @@ public class MeetingFragment extends Fragment {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 // Get the current item from ListView
                 View view = super.getView(position, convertView, parent);
-                //if (allMsgs.get(position).getSender().equals(myUserEmail))
+
                 if(position % 2 == 0)
                 {
                     // Set a background color for ListView regular row/item
                     view.setBackgroundColor(Color.parseColor("#FFB6B546"));
-                    //view.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
 
                 } else {
                     // Set the background color for alternate row/item
                     view.setBackgroundColor(Color.LTGRAY);
-                    //view.setBackgroundColor(Color.parseColor("#FFB6B546"));
-                    //view.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
                 }
                 return view;
             }
@@ -110,6 +101,7 @@ public class MeetingFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
+                                    meetIdList.add(document.getId());
                                     Meeting tempMeeting = document.toObject(Meeting.class);
                                     meetArrList.add(tempMeeting);
                                     /*Message tempMsg = document.toObject(Message.class);
@@ -131,13 +123,14 @@ public class MeetingFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_meeting, container, false);
         myView.setBackgroundColor(Color.WHITE);
         myView.setClickable(true);
         db = FirebaseFirestore.getInstance();
         meetArrList = new ArrayList<>();
+        meetIdList = new ArrayList<>();
         listOfMeetings = myView.findViewById(R.id.meetList);
         getMeetings();
         FloatingActionButton fab = myView.findViewById(R.id.fab);
@@ -152,7 +145,7 @@ public class MeetingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                mListener.loadMeetingDetailFragment( listOfMeetings.getItemAtPosition(i));
+                mListener.loadMeetingDetailFragment( listOfMeetings.getItemAtPosition(i), meetIdList.get(i));
             }
         });
 
@@ -195,7 +188,7 @@ public class MeetingFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void loadMeetingDetailFragment(Object o);
+        void loadMeetingDetailFragment(Object meetingObject, String meetId);
         void loadCreateMeet();
         void onFragmentInteraction(Uri uri);
     }

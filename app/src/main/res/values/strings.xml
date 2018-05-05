@@ -32,7 +32,7 @@
     <string name="scroller_one">ALL</string>
     <string name="scroller_two">Major</string>
 
-
+    <string name="file_provider_authority" translatable="false">com.quiro.fileproviderexample.fileprovider</string>
     <string-array name="spinner_array">
         <item>ALL</item>
         <item>Major</item>

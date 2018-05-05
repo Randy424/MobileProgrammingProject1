@@ -80,6 +80,7 @@ tools:context=".ProfileActivity"
             android:theme="?attr/actionBarTheme" />
 
         <ImageView
+            android:contentDescription="our study icon"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

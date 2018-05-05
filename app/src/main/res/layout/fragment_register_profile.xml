@@ -98,6 +98,7 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
+            android:hint="my classes"
             android:id="@+id/classesEdit"
             android:layout_width="179dp"
             android:layout_height="wrap_content"
@@ -107,6 +108,7 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
+            android:hint="my graduating year"
             android:id="@+id/yearEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -127,6 +129,7 @@
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
+            android:hint="name"
             android:id="@+id/nameEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

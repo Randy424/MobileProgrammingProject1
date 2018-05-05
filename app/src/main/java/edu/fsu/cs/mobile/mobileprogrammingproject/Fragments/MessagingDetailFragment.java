@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,6 +107,7 @@ public class MessagingDetailFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         assert getArguments() != null;
+
         myUsersEmail = getArguments().getString("email");
 
         View myView = inflater.inflate(R.layout.fragment_messaging_detail, container,
@@ -197,6 +201,7 @@ public class MessagingDetailFragment extends Fragment {
                         .toString());
             }
         });
+
         return myView;
     }
 
