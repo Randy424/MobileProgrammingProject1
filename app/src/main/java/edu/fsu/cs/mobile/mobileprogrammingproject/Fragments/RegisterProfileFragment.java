@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.fsu.cs.mobile.mobileprogrammingproject.MapPost;
-import edu.fsu.cs.mobile.mobileprogrammingproject.Posts;
 import edu.fsu.cs.mobile.mobileprogrammingproject.ProfileActivity;
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
@@ -55,10 +52,8 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
     private EditText mNameEdit;
     private OnFragmentInteractionListener mListener;
     private Button mSubmit;
-    private Button mClassAdd;
     private FirebaseFirestore db;
     private AutoCompleteTextView mMajorEdit;
-    private Map<String, Boolean> classMap;
     public RegisterProfileFragment() {
         // Required empty public constructor
     }
@@ -111,16 +106,12 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
 
         //Setting Buttons and EditTexts
         mSubmit = view.findViewById(R.id.submitButton);
-        mClassAdd = view.findViewById(R.id.classButton);
         mClassesEdit = view.findViewById(R.id.classesEdit);
         mYearEdit = view.findViewById(R.id.yearEdit);
         mNameEdit = view.findViewById(R.id.nameEdit);
-
-        //Initializes map for nested classes
-        classMap = new HashMap<>();
-        //Calls overrided onClick for this Button views
+        //Calls overrided onClick for this Button view
         mSubmit.setOnClickListener(this);
-        mClassAdd.setOnClickListener(this);
+
         return view;
     }
 
@@ -130,21 +121,14 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
         {
             //Submit info to database when clicked here
             case R.id.submitButton:
-                if(mMajorEdit.getText().toString().matches(""))
-                {mMajorEdit.setError("Must add major"); break;}
+                addEditData(mClassesEdit, "classes");
                 addEditData(mYearEdit, "year");
                 addEditData(mNameEdit, "name");
                 addMajorData(mMajorEdit, "major");
-                submitClasses();
                 ProfileActivityFragment frag = new ProfileActivityFragment();
                 getFragmentManager().beginTransaction().addToBackStack(null).hide(RegisterProfileFragment.this).
                 add(R.id.outerFrag,frag).commit();
                 getFragmentManager().beginTransaction().replace(R.id.recent_feed_card, BlogFeedFragment.newInstance(), "outermostFrag2").commit();
-                break;
-            case R.id.classButton:
-                addClassData(mClassesEdit);
-                Toast.makeText(getActivity(), "Class Added!", Toast.LENGTH_SHORT).show();
-                mClassesEdit.setText("");
 
         }
 
@@ -160,18 +144,6 @@ public class RegisterProfileFragment extends Fragment implements View.OnClickLis
         Map<String, Object> update2 = new HashMap<>();
         update2.put(docname, editText.getText().toString());
         db.collection("users").document(currentUser).set(update2, SetOptions.merge());
-    }
-
-    public void addClassData(EditText editText)
-    {
-        classMap.put(editText.getText().toString(), true);
-
-    }
-
-    public void submitClasses(){
-        MapPost mMapPost = new MapPost("classes", classMap);
-
-        db.collection("users").document(currentUser).set(mMapPost, SetOptions.merge());
     }
 
     /**
