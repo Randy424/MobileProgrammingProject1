@@ -29,14 +29,7 @@ import java.util.List;
 
 import edu.fsu.cs.mobile.mobileprogrammingproject.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CreateMeetingFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CreateMeetingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CreateMeetingFragment extends Fragment {
     static Calendar startDate = Calendar.getInstance();
     static Calendar endDate = Calendar.getInstance();
@@ -48,6 +41,8 @@ public class CreateMeetingFragment extends Fragment {
     private int finishHour;
     private int finishMinute;*/
     public static int timeFlag;
+    double lat,lng;
+    boolean customLocation;
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,6 +77,8 @@ public class CreateMeetingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        customLocation = false;
+
         /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -159,24 +156,31 @@ public class CreateMeetingFragment extends Fragment {
                 //Spinner spinner = (Spinner)findViewById(R.id.spinner);
                 String locName = sItems.getSelectedItem().toString();
                 Double thisLat, thisLong;
-                if(locName.equals("Dirac Science Library")) {
-                    thisLat = 30.445;
-                    thisLong = -84.3003;
-                }
-                else if(locName.equals("Strozier Library")) {
-                    thisLat = 30.3328;
-                    thisLong = -84.295;
-                }
-                else if(locName.equals("Mobile Lab")) {
-                    thisLat = 30.44623;
-                    thisLong = -84.29974;
-                }
-                else {
-                    locName = "No Meeting Location Selected";
-                    thisLat = 99.999;
-                    thisLong = 99.999;
-                }
 
+                if(customLocation =! true) {
+
+                    if (locName.equals("Dirac Science Library")) {
+                        thisLat = 30.445;
+                        thisLong = -84.3003;
+                    } else if (locName.equals("Strozier Library")) {
+                        thisLat = 30.3328;
+                        thisLong = -84.295;
+                    } else if (locName.equals("Mobile Lab")) {
+                        thisLat = 30.44623;
+                        thisLong = -84.29974;
+                    } else {
+                        locName = "No Meeting Location Selected";
+                        thisLat = 99.999;
+                        thisLong = 99.999;
+                    }
+                }
+                else{
+                    thisLat = lat;
+                    thisLong = lng;
+
+                    sItems.getSelectedView().setEnabled(false);
+                    sItems.setEnabled(false);
+                }
                 Date meetingStart = startDate.getTime();
                 Date meetingEnd = endDate.getTime();
 
@@ -236,5 +240,20 @@ public class CreateMeetingFragment extends Fragment {
         public void showDatePickerDialog();
         public void loadMeetings();
 
+    }
+
+    public void setLat(double lat){
+
+        this.lat = lat;
+
+    }
+
+    public void setLng(double lng){
+
+        this.lng = lng;
+    }
+
+    public void customLoc(boolean value){
+        this.customLocation = value;
     }
 }

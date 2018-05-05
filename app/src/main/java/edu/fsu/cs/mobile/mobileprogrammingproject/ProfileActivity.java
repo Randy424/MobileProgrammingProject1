@@ -51,6 +51,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,6 +199,31 @@ public class ProfileActivity extends AppCompatActivity implements
                         }
                     }
                 });
+
+
+        db.collection("meetings")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                //restricting entries by proximity
+                                if (findDistance(new LatLng(document.getDouble("latitude"),
+                                        document.getDouble("longitude")), schoolLocate) <= 1000) {
+
+                                        addMeeting(new LatLng(document.getDouble("latitude"),
+                                                        document.getDouble("longitude")),
+                                                document.getString("description"),document.getDate("time").toString(),
+                                                googleMap);
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
 
 
         float zoomLevel = (float) 14.0;
@@ -491,11 +518,6 @@ public class ProfileActivity extends AppCompatActivity implements
 
 
 
-
-
-
-
-
         private void startTracking() {
 
         if (ActivityCompat.checkSelfPermission(this,
@@ -582,6 +604,16 @@ public class ProfileActivity extends AppCompatActivity implements
         ourMap.addMarker(options);
     }
 
+    private void addMeeting (LatLng coord, String Title, String time, GoogleMap ourMap){
+
+        options.position(coord);
+        options.title(Title);
+        options.snippet(time);
+        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        ourMap.addMarker(options);
+
+    }
+
     @Override
     public void updateDisplayedTime(TimePicker view, int hourOfDay, int minute) {
         TextView timeDisplayer;
@@ -625,6 +657,22 @@ public class ProfileActivity extends AppCompatActivity implements
 
     @Override
     public void onMapLongClick(LatLng latLng) {
+
+        double lat = latLng.latitude;
+        double lng = latLng.longitude;
+        boolean value = true;
+
+
+        CreateMeetingFragment frag = new CreateMeetingFragment();
+        frag.setLat(lat);
+        frag.setLng(lng);
+        frag.customLoc(value);
+        FragmentManager fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .replace(R.id.outsideFrag, frag, null)
+                .addToBackStack(null)
+                .commit();
 
     }
 
